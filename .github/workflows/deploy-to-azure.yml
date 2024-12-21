@@ -31,5 +31,5 @@ jobs:
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
       with:
-        app-name: henafrontend # Replace with your Azure App Service name
+        app-name: henamedmarktfrontend # Replace with your Azure App Service name
         images: "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/myapp:${{ github.sha }}"
