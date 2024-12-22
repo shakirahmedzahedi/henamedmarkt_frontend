@@ -29,9 +29,9 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
-    const blobServiceUrl = 'https://henastorage.blob.core.windows.net'; // Replace with your Blob service URL
+    const blobServiceUrl = 'https://henamedmarktstorage.blob.core.windows.net'; // Replace with your Blob service URL
     const sasToken =
-        'sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-12-22T05:54:03Z&st=2024-12-21T21:54:03Z&spr=https&sig=9h0A1Yeu9y%2FCVn%2B0%2FICS5Lt5dP6n5H2dtEmlfe4dCmA%3D'; // Replace with your SAS token
+        'sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-12-22T23:07:16Z&st=2024-12-22T15:07:16Z&spr=https&sig=KV0mMOUX3njIiG%2FbroXF6tzlsKeQ3AoWSvPzCwc9fxs%3D'; // Replace with your SAS token
     const containerName = 'product-images'; // Your Azure Blob Storage container name
 
     useEffect(() => {
