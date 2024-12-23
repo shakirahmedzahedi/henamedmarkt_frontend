@@ -5,7 +5,7 @@ import axios from 'axios';
 //const BASE_URL= 'http://ec2-52-90-100-28.compute-1.amazonaws.com/api/v1';
 
 //const BASE_URL = 'https://henaapi-ejbeate7gdajagaq.canadacentral-01.azurewebsites.net/api/v1';
-const BASE_URL = 'https://10.0.0.4/api/v1';
+const BASE_URL = 'https://backend.henamedmarkt.com/api/v1';
 
 // Retrieve the email and token from local storage
 const getHeaders = () => {
