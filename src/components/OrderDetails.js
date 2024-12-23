@@ -115,6 +115,9 @@ const OrderDetails = ({ order }) => {
             <strong>Discount:</strong> -BDT {order?.discountCoupon?.discountAmount?.toFixed(2)}
           </Typography>
         )}
+        <Typography variant="body1">
+          <strong>Delivery charge:</strong> BDT 120.00
+        </Typography>
         <Divider sx={{ my: 2 }} />
         <Typography variant="h5" fontWeight="bold" color="primary">
           Total: BDT {order?.totalAmount?.toFixed(2)}

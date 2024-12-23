@@ -30,7 +30,7 @@ import { clearCoupon } from '../reducer/slices/DiscountCouponSlice';
 const PaymentPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { subtotal, tax, initialDiscount, discount, total } = location.state;
+  const { subtotal, tax, initialDiscount, discount, deliveryCharge, total } = location.state;
   const user = useSelector((state) => state.auth.user);
   const cart = useSelector((state) => state.cart.cart);
   const discountCoupon = useSelector((state) => state.coupon.discountedCoupon);
@@ -267,6 +267,14 @@ const PaymentPage = () => {
                 </Box>
               }
 
+              <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="h6" fontWeight="bold">
+                  Delivery Charge:
+                </Typography>
+                <Typography variant="h6" fontWeight="bold" color="primary">
+                  ৳ {deliveryCharge}
+                </Typography>
+              </Box>
               <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="h6" fontWeight="bold">
                   Total:

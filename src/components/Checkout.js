@@ -36,6 +36,7 @@ const Checkout = () => {
   const [total, setTotal] = useState(0);
   const initialDiscount = user?.initialDiscount;
   const discount = discountCodeValue?.discountAmount;
+  const deliveryCharge= 120.00;
 
   useEffect(() => {
     dispatch(clearError());
@@ -281,6 +282,13 @@ const Checkout = () => {
                   </Typography>
                 )}
               </Box>
+              <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body1">Delivery Charge:</Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    ৳ {deliveryCharge}
+                  </Typography>
+                
+              </Box>
 
 
               <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
@@ -298,6 +306,7 @@ const Checkout = () => {
                   tax,
                   discount,
                   initialDiscount,
+                  deliveryCharge,
                   total,
                 }}
                 style={{ textDecoration: 'none' }}
