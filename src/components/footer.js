@@ -27,8 +27,8 @@ const Footer = () => {
 
   const menuList1 = [
     { key: '/newArrival', value: 'New Arrival' },
-    { key: '/baby', value: 'Baby&Kids' },
-    { key: '/mom', value: 'Family&Mom' }
+    { key: '/babyAndKids', value: 'Baby&Kids' },
+    { key: '/familyAndMom', value: 'Family&Mom' }
   ];
 
   const menuList2 = [

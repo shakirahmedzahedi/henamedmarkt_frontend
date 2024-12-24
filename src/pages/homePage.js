@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Grid, Typography, Divider } from '@mui/material'
 import hero from './../assets/hero.jpeg';
-import truck from './../assets/truck (1).png';
+import truck from './../assets/truck.png';
 import customer from './../assets/customer-service (2).png';
 import hand from './../assets/hand (1).png';
 import sale from './../assets/discount (2).png';

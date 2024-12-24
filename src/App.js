@@ -101,7 +101,7 @@ function App() {
         <Router>
           <AutoSignOut />
           <Header />
-          <Box sx={{ pt: { xs: '86px', md: '90px' }, pb: { xs: '0px', md: '0px' } }}>
+          <Box sx={{ pt: { xs: '90px', md: '90px' }, pb: { xs: '0px', md: '0px' } }}>
             <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="/signIn" element={<SignInPage />} />

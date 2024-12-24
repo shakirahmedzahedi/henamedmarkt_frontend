@@ -20,19 +20,19 @@ const ContactPage = () => {
     <Container maxWidth="md" sx={{ py: 8 }}>
        <Box sx={{ textAlign: 'center' }}>
                 <Typography variant='h1' align='center' color={'primary'} sx={{ fontFamily: 'Squada One', fontSize: { xs: '40px', md: '50px', lg: '60px' } }}>
-                   About Us
+                   Contact Us
                 </Typography>
             </Box>
             <Box >
                 <Divider sx={{ bgcolor: 'secondary.main', minHeight: '.2vh' }} />
             </Box >
       <Typography variant="body1" align="center" color="text.secondary" paragraph mt={3}>
-        We would love to hear from you! Reach out to us through the form below or using our contact information.
+        We would love to hear from you! Reach out to us through the below or using our contact information.
       </Typography>
 
       <Grid container spacing={4}>
         {/* Contact Information and Map Section */}
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
             Our Contact Information
           </Typography>
@@ -40,10 +40,10 @@ const ContactPage = () => {
             <strong>Address:</strong> 1234 Example Street, City, State, ZIP
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Phone:</strong> (123) 456-7890
+            <strong>Phone:</strong> <a href="tel:+8801903652681">+8801903652681</a>
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Email:</strong> contact@company.com
+            <strong>Email:</strong> customercare@henamedmarkt.com
           </Typography>
 
           {/* Embedded Google Map */}
@@ -68,7 +68,7 @@ const ContactPage = () => {
         </Grid>
 
         {/* Contact Form Section */}
-        <Grid item xs={12} md={6}>
+       {/*  <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 4 }}>
             <Typography variant="h4" gutterBottom>
               Send Us a Message
@@ -103,11 +103,9 @@ const ContactPage = () => {
               </Button>
             </form>
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
-      <Button onClick={connectToWhatsup} variant="contained" color="primary" fullWidth>
-                Call to what'sup
-              </Button>
+      
     </Container>
   );
 };

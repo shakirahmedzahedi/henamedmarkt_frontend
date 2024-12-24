@@ -72,7 +72,7 @@ const ImageSlider = () => {
       margin="auto" 
       sx={{
         overflow: 'hidden',
-        height: { xs: '300px', sm: '300px', md:'420px' }, // Responsive height
+        height: { xs: '150px', sm: '150px', md:'300px', lg:'420px', xl:'500px' }, // Responsive height
       }}
     >
       <Swiper

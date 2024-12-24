@@ -28,7 +28,7 @@ export default function BestSellerSection() {
             {bestSellerList?.length > 0 ? (
             <Grid container alignItems="center" justifyContent="space-between" spacing={1} mt={2}>
             {bestSellerList.map((item, index) => (
-                <Grid item key={item.id} xs={12} sm={6} md={3} lg={3} xl={3} sx={{ mt: 2/* , display: 'flex', justifyContent: 'left' */ }}>
+                <Grid item key={item.id} xs={6} sm={3} md={3} lg={2.4} xl={2.4} sx={{ mt: 2/* , display: 'flex', justifyContent: 'left' */ }}>
                     
                     <ProductCard product={item} />
                     

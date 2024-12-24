@@ -426,7 +426,7 @@ export default function Header() {
                     }}
                     sx={{
                         height: '30px', // Set the height of the search bar
-                        margin: 0,
+                        margin: .25,
                         padding:0, // Remove extra margins
                         '& .MuiOutlinedInput-root': {
                             height: '30px',
