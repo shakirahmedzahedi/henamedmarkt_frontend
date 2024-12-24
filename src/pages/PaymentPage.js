@@ -268,10 +268,10 @@ const PaymentPage = () => {
               }
 
               <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant="h6" fontWeight="bold">
+                <Typography variant="body1">
                   Delivery Charge:
                 </Typography>
-                <Typography variant="h6" fontWeight="bold" color="primary">
+                <Typography variant="body1">
                   ৳ {deliveryCharge}
                 </Typography>
               </Box>

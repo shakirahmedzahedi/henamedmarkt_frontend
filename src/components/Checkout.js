@@ -65,6 +65,7 @@ const Checkout = () => {
 
       calculatedTotal -= discountedcoupon?.discountAmount; // Apply discount
     }
+    calculatedTotal += deliveryCharge; 
     setTotal(calculatedTotal);
   }, [discountedcoupon, subtotal, tax]); // Trigger when discount, subtotal, or tax changes
 
