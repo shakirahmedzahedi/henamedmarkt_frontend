@@ -22,6 +22,9 @@ export const signIn = createAsyncThunk(
 
         } catch (error) {
             console.error('Sign-in error:', error);
+            localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('isAuthenticate');
             return rejectWithValue(error.response?.data || 'Sign-in failed');
         }
     }

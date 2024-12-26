@@ -28,7 +28,7 @@ const saveToken = (newToken) => {
 };
 
 // Generic function to handle requests
-const request = async (method, url, data = null, dispatch) => {
+const request = async (method, url, data = null) => {
     console.log(data);
     try {
         const response = await axios({
@@ -54,10 +54,20 @@ const request = async (method, url, data = null, dispatch) => {
             const { status, data } = error.response;
       
             if (status === 403) {
-              
+              localStorage.removeItem('token');
+                localStorage.removeItem('email');
+                localStorage.removeItem('isAuthenticate');
+                
+                // Navigate to the sign-in page (you can use useNavigate or history here if you're in a component)
+                window.location.href = "/signIn";
               throw new Error('Access denied. You do not have permission to perform this action.');
             } else if (status === 401) {
-              dispatch(logOut());
+              localStorage.removeItem('token');
+                localStorage.removeItem('email');
+                localStorage.removeItem('isAuthenticate');
+                
+                // Navigate to the sign-in page (you can use useNavigate or history here if you're in a component)
+                window.location.href = "/signIn";
               throw new Error('Unauthorized. Please log in again.');
             } else {
               throw new Error(data.message || 'An error occurred while processing your request.');
