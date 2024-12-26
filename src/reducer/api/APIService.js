@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { logOut } from '../services/AuthService';
 
 
 //const BASE_URL= 'http://ec2-52-90-100-28.compute-1.amazonaws.com/api/v1';
@@ -27,7 +28,7 @@ const saveToken = (newToken) => {
 };
 
 // Generic function to handle requests
-const request = async (method, url, data = null) => {
+const request = async (method, url, data = null, dispatch) => {
     console.log(data);
     try {
         const response = await axios({
@@ -53,8 +54,10 @@ const request = async (method, url, data = null) => {
             const { status, data } = error.response;
       
             if (status === 403) {
+              
               throw new Error('Access denied. You do not have permission to perform this action.');
             } else if (status === 401) {
+              dispatch(logOut());
               throw new Error('Unauthorized. Please log in again.');
             } else {
               throw new Error(data.message || 'An error occurred while processing your request.');
