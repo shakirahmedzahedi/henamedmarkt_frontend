@@ -20,7 +20,7 @@ const AutoSignOut = () => {
     // Function to reset the inactivity timer
     const resetTimer = () => {
       clearTimeout(timeoutId); // Clear previous timeout
-      timeoutId = setTimeout(handleSignOut, 29 * 60 * 1000); // Set a new timeout for 29 minutes
+      timeoutId = setTimeout(handleSignOut, 7 * 24 * 60 * 60 * 1000); // Set a new timeout for 29 minutes
     };
 
     // Add event listeners for user activities
