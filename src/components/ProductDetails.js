@@ -94,12 +94,30 @@ const ProductDetails = () => {
             <Grid container mt={0.5} spacing={4} sx={{ fontFamily: 'Poppins' }}>
               {/* Product Image */}
               <Grid item xs={12} md={6} textAlign={'right'}>
-                <CardMedia
-                  component="img"
-                  image={product?.thumbnail}
-                  alt=""
-                  sx={{ borderRadius: 2, width: '80%', objectFit: 'cover' }}
-                />
+                <Box
+                    sx={{
+                      position: 'relative',
+                      overflow: 'hidden',
+                      borderRadius: 2,
+                      width: '80%',
+                      margin: '0 auto',
+                      '&:hover img': {
+                        transform: 'scale(1.5)', // Scale image on hover
+                      },
+                    }}
+                >
+                  <CardMedia
+                      component="img"
+                      image={product?.thumbnail}
+                      alt="Product Thumbnail"
+                      sx={{
+                        transition: 'transform 0.3s ease-in-out', // Smooth zoom effect
+                        width: '100%',
+                        height: 'auto',
+                        objectFit: 'cover',
+                      }}
+                  />
+                </Box>
               </Grid>
 
               {/* Product Information */}
