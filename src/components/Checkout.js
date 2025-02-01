@@ -29,6 +29,7 @@ const Checkout = () => {
   const discountedcoupon = useSelector((state) => state.coupon.discountedCoupon); // Coupon state
   const articles = activeCart?.articles;
   const userId = user.id;
+  const userCity = user.address.city;
   const error = useSelector((state) => state.coupon.error);
   const [discountCodeValue, setDiscountCodeValue] = useState('');
   const [subtotal, setSubtotal] = useState(0);
@@ -36,7 +37,8 @@ const Checkout = () => {
   const [total, setTotal] = useState(0);
   const initialDiscount = user?.initialDiscount;
   const discount = discountCodeValue?.discountAmount;
-  const deliveryCharge= 120.00;
+  const [deliveryCharge,setDeliveryCharge]= useState(0);
+  const [totalWeight,setTotalWeight]= useState(0);
 
   useEffect(() => {
     dispatch(clearError());
@@ -50,6 +52,8 @@ const Checkout = () => {
     if (articles?.length > 0) {
       const calculatedSubtotal = calculateSubtotal();
       const calculatedTax = calculateTax(calculatedSubtotal);
+      const totalWeight = calculatTotalWeight();
+      setDeliveryCharge(calculatDeliveryCharge(totalWeight,userCity))
       setSubtotal(calculatedSubtotal);
       setTax(calculatedTax);
     }
@@ -106,6 +110,150 @@ const Checkout = () => {
     return price * item.unit;
   };
 
+  const calculatTotalWeight = () => {
+
+    return articles?.reduce((acc, item) => {
+      const weight = item.product.weight;
+        
+      return acc + (weight+100) * item.unit;
+    }, 0);
+  };
+
+  const calculatDeliveryCharge = (totalWeight, city) => {
+
+    if(city.toUpperCase()==="DHAKA"){
+      if(totalWeight<=1000){
+        return 80;
+      }
+      else if(totalWeight>1000 && totalWeight<=2000){
+        return 90;
+      }
+      else if(totalWeight>2000 && totalWeight<=3000){
+        return 110;
+      }
+      else if(totalWeight>3000 && totalWeight<=4000){
+        return 130;
+      }
+      else if(totalWeight>4000 && totalWeight<=5000){
+        return 150;
+      }
+      else if(totalWeight>5000 && totalWeight<=6000){
+        return 160;
+      }
+      else if(totalWeight>6000 && totalWeight<=7000){
+        return 180;
+      }
+      else if(totalWeight>7000 && totalWeight<=8000){
+        return 190;
+      }
+      else if(totalWeight>8000 && totalWeight<=9000){
+        return 210;
+      }
+      else if(totalWeight>9000 && totalWeight<=10000){
+        return 230;
+      }
+      else if(totalWeight>10000 && totalWeight<=12000){
+        return 270;
+      }
+      else if(totalWeight>12000 && totalWeight<=15000){
+        return 350;
+      }
+      else{
+        return 500;
+      }
+      
+    }
+
+    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ" ){
+      if(totalWeight<=1000){
+        return 100;
+      }
+      else if(totalWeight>1000 && totalWeight<=2000){
+        return 130;
+      }
+      else if(totalWeight>2000 && totalWeight<=3000){
+        return 160;
+      }
+      else if(totalWeight>3000 && totalWeight<=4000){
+        return 180;
+      }
+      else if(totalWeight>4000 && totalWeight<=5000){
+        return 210;
+      }
+      else if(totalWeight>5000 && totalWeight<=6000){
+        return 240;
+      }
+      else if(totalWeight>6000 && totalWeight<=7000){
+        return 270;
+      }
+      else if(totalWeight>7000 && totalWeight<=8000){
+        return 295;
+      }
+      else if(totalWeight>8000 && totalWeight<=9000){
+        return 320;
+      }
+      else if(totalWeight>9000 && totalWeight<=10000){
+        return 350;
+      }
+      else if(totalWeight>10000 && totalWeight<=12000){
+        return 390;
+      }
+      else if(totalWeight>12000 && totalWeight<=15000){
+        return 480;
+      }
+      else{
+        return 500;
+      }
+      
+    }
+    else{
+      if(totalWeight<=1000){
+        return 120;
+      }
+      else if(totalWeight>1000 && totalWeight<=2000){
+        return 160;
+      }
+      else if(totalWeight>2000 && totalWeight<=3000){
+        return 190;
+      }
+      else if(totalWeight>3000 && totalWeight<=4000){
+        return 180;
+      }
+      else if(totalWeight>4000 && totalWeight<=5000){
+        return 250;
+      }
+      else if(totalWeight>5000 && totalWeight<=6000){
+        return 270;
+      }
+      else if(totalWeight>6000 && totalWeight<=7000){
+        return 300;
+      }
+      else if(totalWeight>7000 && totalWeight<=8000){
+        return 325;
+      }
+      else if(totalWeight>8000 && totalWeight<=9000){
+        return 350;
+      }
+      else if(totalWeight>9000 && totalWeight<=10000){
+        return 380;
+      }
+      else if(totalWeight>10000 && totalWeight<=12000){
+        return 430;
+      }
+      else if(totalWeight>12000 && totalWeight<=15000){
+        return 520;
+      }
+      else{
+        return 700;
+      }
+      
+    }
+    
+    };
+
+    
+
+
   const calculateTax = (subtotal) => {
     return (subtotal * 0.1).toFixed(2); // Assume 10% tax rate
   };
@@ -113,6 +261,7 @@ const Checkout = () => {
   const calculateDiscountedPrice = (price, discount) => {
     return discount ? (price - (price * discount) / 100).toFixed(2) : price.toFixed(2);
   };
+
 
 
   const handleChange = (e) => {
@@ -163,7 +312,7 @@ const Checkout = () => {
                       </Box>
                     </Grid>
 
-                    <Grid item xs={7}>
+                    <Grid item xs={7 }>
                       <Box /* sx={{ width: 60, height: 60, overflow: 'hidden', mr: 2 }} */>
                         <Typography variant="body2" >
                           {item.product.title}

@@ -116,7 +116,7 @@ const OrderDetails = ({ order }) => {
           </Typography>
         )}
         <Typography variant="body1">
-          <strong>Delivery charge:</strong> BDT 120.00
+          <strong>Delivery charge:</strong> BDT {order?.shippingCharge}
         </Typography>
         <Divider sx={{ my: 2 }} />
         <Typography variant="h5" fontWeight="bold" color="primary">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Box,
@@ -33,11 +33,13 @@ const PaymentPage = () => {
   const { subtotal, tax, initialDiscount, discount, deliveryCharge, total } = location.state;
   const user = useSelector((state) => state.auth.user);
   const cart = useSelector((state) => state.cart.cart);
+  const articles = cart?.articles;
   const discountCoupon = useSelector((state) => state.coupon.discountedCoupon);
   const navigate = useNavigate();
   const [selectedPayment, setSelectedPayment] = useState('paymentOnDelivery');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [differentAddress, setDifferentAddress] = useState(false);
+  const [charge, setCharge] = useState(deliveryCharge);
   const [newAddress, setNewAddress] = useState({
     apartmentNo: '',
     houseNo: '',
@@ -45,6 +47,13 @@ const PaymentPage = () => {
     postOffice: '',
     city: '',
   });
+
+  useEffect(() => {
+    if (articles?.length > 0) {
+      const totalWeight = calculatTotalWeight();
+      setCharge(calculatDeliveryCharge(totalWeight, newAddress.city))
+    }
+  }, [newAddress]);
 
   const [buttonLoading, setButtonLoading] = useState(false);
 
@@ -83,6 +92,7 @@ const PaymentPage = () => {
       paymentStatus: selectedPayment === 'paymentOnDelivery' ? 'PENDING' : 'COMPLETE',
       orderStatus: 'PENDING',
       discountCouponNumber: discountCoupon?.number || null,
+      shippingCharge:charge
     };
 
     try {
@@ -97,6 +107,147 @@ const PaymentPage = () => {
       console.error('Order creation failed:', error);
     }
   };
+
+  const calculatTotalWeight = () => {
+
+    return articles?.reduce((acc, item) => {
+      const weight = item.product.weight;
+        
+      return acc + (weight+100) * item.unit;
+    }, 0);
+  };
+
+  const calculatDeliveryCharge = (totalWeight, city) => {
+
+    if(city.toUpperCase()==="DHAKA"){
+      if(totalWeight<=1000){
+        return 80;
+      }
+      else if(totalWeight>1000 && totalWeight<=2000){
+        return 90;
+      }
+      else if(totalWeight>2000 && totalWeight<=3000){
+        return 110;
+      }
+      else if(totalWeight>3000 && totalWeight<=4000){
+        return 130;
+      }
+      else if(totalWeight>4000 && totalWeight<=5000){
+        return 150;
+      }
+      else if(totalWeight>5000 && totalWeight<=6000){
+        return 160;
+      }
+      else if(totalWeight>6000 && totalWeight<=7000){
+        return 180;
+      }
+      else if(totalWeight>7000 && totalWeight<=8000){
+        return 190;
+      }
+      else if(totalWeight>8000 && totalWeight<=9000){
+        return 210;
+      }
+      else if(totalWeight>9000 && totalWeight<=10000){
+        return 230;
+      }
+      else if(totalWeight>10000 && totalWeight<=12000){
+        return 270;
+      }
+      else if(totalWeight>12000 && totalWeight<=15000){
+        return 350;
+      }
+      else{
+        return 500;
+      }
+      
+    }
+
+    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ" ){
+      if(totalWeight<=1000){
+        return 100;
+      }
+      else if(totalWeight>1000 && totalWeight<=2000){
+        return 130;
+      }
+      else if(totalWeight>2000 && totalWeight<=3000){
+        return 160;
+      }
+      else if(totalWeight>3000 && totalWeight<=4000){
+        return 180;
+      }
+      else if(totalWeight>4000 && totalWeight<=5000){
+        return 210;
+      }
+      else if(totalWeight>5000 && totalWeight<=6000){
+        return 240;
+      }
+      else if(totalWeight>6000 && totalWeight<=7000){
+        return 270;
+      }
+      else if(totalWeight>7000 && totalWeight<=8000){
+        return 295;
+      }
+      else if(totalWeight>8000 && totalWeight<=9000){
+        return 320;
+      }
+      else if(totalWeight>9000 && totalWeight<=10000){
+        return 350;
+      }
+      else if(totalWeight>10000 && totalWeight<=12000){
+        return 390;
+      }
+      else if(totalWeight>12000 && totalWeight<=15000){
+        return 480;
+      }
+      else{
+        return 500;
+      }
+      
+    }
+    else{
+      if(totalWeight<=1000){
+        return 120;
+      }
+      else if(totalWeight>1000 && totalWeight<=2000){
+        return 160;
+      }
+      else if(totalWeight>2000 && totalWeight<=3000){
+        return 190;
+      }
+      else if(totalWeight>3000 && totalWeight<=4000){
+        return 180;
+      }
+      else if(totalWeight>4000 && totalWeight<=5000){
+        return 250;
+      }
+      else if(totalWeight>5000 && totalWeight<=6000){
+        return 270;
+      }
+      else if(totalWeight>6000 && totalWeight<=7000){
+        return 300;
+      }
+      else if(totalWeight>7000 && totalWeight<=8000){
+        return 325;
+      }
+      else if(totalWeight>8000 && totalWeight<=9000){
+        return 350;
+      }
+      else if(totalWeight>9000 && totalWeight<=10000){
+        return 380;
+      }
+      else if(totalWeight>10000 && totalWeight<=12000){
+        return 430;
+      }
+      else if(totalWeight>12000 && totalWeight<=15000){
+        return 520;
+      }
+      else{
+        return 700;
+      }
+      
+    }
+    
+    };
 
   return (
 
@@ -272,7 +423,7 @@ const PaymentPage = () => {
                   Delivery Charge:
                 </Typography>
                 <Typography variant="body1">
-                  ৳ {deliveryCharge}
+                  ৳ {charge}
                 </Typography>
               </Box>
               <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>

@@ -17,7 +17,11 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Divider
+  Divider,
+  Select,
+  MenuItem as SelectMenuItem,
+  InputLabel,
+  FormControl
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProducts, updateProduct, deleteProduct } from '../../reducer/services/ProductService';
@@ -34,7 +38,7 @@ const ProductTable = () => {
   const [selectedProduct, setSelectedProduct] = useState(null); // Selected product
   const [amount, setAmount] = useState(''); // Stock amount input
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
-  const [itemsPerPage] = useState(5); // Items per page
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [searchQuery, setSearchQuery] = useState(''); // Search query
 
   // Fetch products when the component mounts
@@ -127,7 +131,7 @@ const ProductTable = () => {
 
   // Filter products by search query
   const filteredProducts = products.filter((product) =>
-    product.id.toString().includes(searchQuery) || // Search by ID
+    product.title.toString().includes(searchQuery) || // Search by title
     product.stock.toString().includes(searchQuery) || // Search by stock
     product.price.toString().includes(searchQuery) // Search by price
   );
@@ -141,6 +145,11 @@ const ProductTable = () => {
   // Handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleItemsPerPageChange = (event) => {
+    setItemsPerPage(Number(event.target.value));
+    setCurrentPage(1); // Reset to first page when items per page changes
   };
 
   const submitUpdate = async(product, productData) => {
@@ -246,7 +255,23 @@ const ProductTable = () => {
       </TableContainer>
 
       {/* Pagination Controls */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
+        
+        <FormControl size="small" sx={{ width: '100px' }}>
+          <Select
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            label="Items Per Page"
+          >
+            {[10, 15, 20, 25, 30].map((num) => (
+              <SelectMenuItem key={num} value={num}>
+                {num}
+              </SelectMenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Pagination Buttons */}
         {Array.from({ length: totalPages }, (_, index) => (
           <Button
             key={index}
