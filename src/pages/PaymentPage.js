@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Box,
@@ -40,18 +40,26 @@ const PaymentPage = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [differentAddress, setDifferentAddress] = useState(false);
   const [charge, setCharge] = useState(deliveryCharge);
-  const [newAddress, setNewAddress] = useState({
+  const isFirstRender = useRef(true);
+ /*  const [newAddress, setNewAddress] = useState({
     apartmentNo: '',
     houseNo: '',
     postCode: '',
     postOffice: '',
     city: '',
-  });
+  }); */
+  const [newAddress, setNewAddress] = useState(user.address);
 
+  
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // Skip first render
+    }
     if (articles?.length > 0) {
       const totalWeight = calculatTotalWeight();
       setCharge(calculatDeliveryCharge(totalWeight, newAddress.city))
+      console.log("Called");
     }
   }, [newAddress]);
 
