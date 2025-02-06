@@ -34,7 +34,7 @@ const Footer = () => {
   const menuList2 = [
     { key: '/return', value: 'Return Policy' },
     { key: '/legal', value: 'Terms of Service' },
-    { key: '/privecy', value: 'Privacy Policy' }
+    { key: '/privacy', value: 'Privacy Policy' }
   ];
 
   const privacy = menuList2.map((item, index) => (

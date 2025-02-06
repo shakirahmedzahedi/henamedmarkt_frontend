@@ -87,7 +87,7 @@ export default function AgeLimitSection() {
 
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3} lg={3} xl={3} sx={{ mt: 2 }} onClick={()=> navigate('/mon')}>
+                <Grid item xs={12} sm={6} md={3} lg={3} xl={3} sx={{ mt: 2 }} onClick={()=> navigate('/mom')}>
                     <Card sx={{ maxWidth: 400 }}>
                         <CardActionArea>
                             <CardMedia

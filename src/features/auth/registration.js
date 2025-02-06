@@ -38,7 +38,7 @@ const Registration = () => {
         const newErrors = [];
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^[0-9]{10,15}$/;
-        const alphanumericRegex = /^[a-zA-Z0-9]{1,8}$/;
+        const alphanumericRegex = /^.{1,20}$/;///^[a-zA-Z0-9]{1,20}$/;
         const numericRegex = /^[0-9]{4}$/;
         const letterRegex = /^[a-zA-Z]{1,15}$/;
 
@@ -49,10 +49,10 @@ const Registration = () => {
         if (!phoneRegex.test(inputs.phoneNo)) newErrors.push('Phone number must be between 10 and 15 digits,');
         if (!inputs.terms) newErrors.push('You must agree to the terms and conditions,');
 
-        if (!alphanumericRegex.test(inputs.address.apartmentNo)) newErrors.push('Apartment No must be alphanumeric and up to 8 characters,');
-        if (!alphanumericRegex.test(inputs.address.houseNo)) newErrors.push('House No must be alphanumeric and up to 8 characters,');
-        if (!numericRegex.test(inputs.address.postCode)) newErrors.push('Post Code must be exactly 4 digits,');
-        if (!letterRegex.test(inputs.address.postOffice)) newErrors.push('Post Office must contain only letters and be up to 15 characters,');
+        if (!alphanumericRegex.test(inputs.address.apartmentNo)) newErrors.push('Address Line must be  up to 20 characters,');
+        if (!alphanumericRegex.test(inputs.address.houseNo)) newErrors.push('Address Line must be  up to 20 characters,');
+        if (!letterRegex.test(inputs.address.postCode)) newErrors.push('Area up to 20 characters,');
+        if (!letterRegex.test(inputs.address.postOffice)) newErrors.push('Thana must contain only letters and be up to 15 characters,');
         if (!letterRegex.test(inputs.address.city)) newErrors.push('City must contain only letters and be up to 15 characters,');
 
         setErrors(newErrors);
@@ -111,6 +111,7 @@ const Registration = () => {
                                 label="First Name"
                                 name="firstName"
                                 value={inputs.firstName}
+                                inputProps={{ maxLength: 25 }}
                                 onChange={handleOnChange}
                                 autoComplete="firstName"
                                 autoFocus
@@ -124,6 +125,7 @@ const Registration = () => {
                                 label="Last Name"
                                 name="lastName"
                                 value={inputs.lastName}
+                                inputProps={{ maxLength: 20 }}
                                 onChange={handleOnChange}
                                 autoComplete="lastName"
                             />
@@ -136,6 +138,7 @@ const Registration = () => {
                                 label="Email Address"
                                 name="email"
                                 value={inputs.email}
+                                inputProps={{ maxLength: 25 }}
                                 onChange={handleOnChange}
                                 autoComplete="email"
                             />
@@ -152,6 +155,7 @@ const Registration = () => {
                                 id="password"
                                 autoComplete="current-password"
                                 InputProps={{
+                                    maxLength: 20,
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
@@ -174,15 +178,16 @@ const Registration = () => {
                                 label="Phone No"
                                 name="phoneNo"
                                 value={inputs.phoneNo}
+                                inputProps={{ maxLength: 15 }}
                                 onChange={handleOnChange}
                                 autoComplete="phoneNo"
                             />
                             <Typography component="h5" variant="subtitle1" sx={{ mt: 1.5, mb: 1 }}>Address</Typography>
                             <Grid container spacing={2}>
-                                <Grid item xs={6}><TextField required fullWidth size='small' label="Apartment No" name="address.apartmentNo" value={inputs.address.apartmentNo} onChange={handleOnChange} /></Grid>
-                                <Grid item xs={6}><TextField required fullWidth size='small' label="House No" name="address.houseNo" value={inputs.address.houseNo} onChange={handleOnChange} /></Grid>
-                                <Grid item xs={6}><TextField required fullWidth size='small' label="Post Code" name="address.postCode" value={inputs.address.postCode} onChange={handleOnChange} /></Grid>
-                                <Grid item xs={6}><TextField required fullWidth size='small' label="Post Office" name="address.postOffice" value={inputs.address.postOffice} onChange={handleOnChange} /></Grid>
+                                <Grid item xs={6}><TextField  fullWidth size='small' label="AddressLine 1" name="address.apartmentNo" value={inputs.address.apartmentNo} inputProps={{ maxLength: 20 }} onChange={handleOnChange} /></Grid>
+                                <Grid item xs={6}><TextField  fullWidth size='small' label="AddressLine 2" name="address.houseNo" value={inputs.address.houseNo} inputProps={{ maxLength: 20 }} onChange={handleOnChange} /></Grid>
+                                <Grid item xs={6}><TextField  fullWidth size='small' label="Area" name="address.postCode" value={inputs.address.postCode} onChange={handleOnChange} /></Grid>
+                                <Grid item xs={6}><TextField required fullWidth size='small' label="Thana" name="address.postOffice" value={inputs.address.postOffice} onChange={handleOnChange} /></Grid>
                                 <Grid item xs={12}><TextField required fullWidth size='small' label="City" name="address.city" value={inputs.address.city} onChange={handleOnChange} /></Grid>
                             </Grid>
                             <FormControlLabel

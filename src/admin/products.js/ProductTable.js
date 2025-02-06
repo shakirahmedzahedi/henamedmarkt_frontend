@@ -198,6 +198,7 @@ const ProductTable = () => {
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: '#1976d2' }}>
+            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Image</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Product Name</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
                 Stock
@@ -219,6 +220,7 @@ const ProductTable = () => {
                     backgroundColor: index % 2 === 0 ? '#f5f5f5' : 'white',
                   }}
                 >
+                  <TableCell><img src={product.thumbnail} alt={product.id} style={{ width: 50, height: 50 }} />{product.thumbnail}</TableCell>
                   <TableCell>{product.title}</TableCell>
                   <TableCell align="right">{product.stock}</TableCell>
                   <TableCell align="right">{product.price}</TableCell>

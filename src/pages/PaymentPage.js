@@ -74,6 +74,8 @@ const PaymentPage = () => {
   };
 
   const handleAddressToggle = (event) => {
+    Object.keys(newAddress).map(field => console.log(field))
+   
     setDifferentAddress(event.target.checked);
   };
 
@@ -170,7 +172,7 @@ const PaymentPage = () => {
       
     }
 
-    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ" ){
+    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ"||city.toUpperCase()==="Savar" ){
       if(totalWeight<=1000){
         return 100;
       }
@@ -333,17 +335,11 @@ const PaymentPage = () => {
                   <Box mt={2}>
                     <Typography variant="subtitle1">Shipping Address</Typography>
                     <Grid container spacing={2}>
-                      {['apartmentNo', 'houseNo', 'postCode', 'postOffice', 'city'].map((field) => (
-                        <Grid item xs={12} key={field}>
-                          <TextField
-                            label={field.split(/(?=[A-Z])/).join(' ')} // Split camelCase into words
-                            variant="outlined"
-                            fullWidth
-                            value={newAddress[field]}
-                            onChange={(e) => handleAddressChange(field, e.target.value)}
-                          />
-                        </Grid>
-                      ))}
+                    <Grid item xs={6}><TextField  fullWidth size='small' label="AddressLine 1" name="newAddress.apartmentNo" value={newAddress.apartmentNo} inputProps={{ maxLength: 20 }} onChange={(e) => handleAddressChange('apartmentNo', e.target.value)} /></Grid>
+                    <Grid item xs={6}><TextField  fullWidth size='small' label="AddressLine 2" name="newAddress.houseNo" value={newAddress.houseNo} inputProps={{ maxLength: 20 }} onChange={(e) => handleAddressChange('houseNo', e.target.value)} /></Grid>
+                    <Grid item xs={6}><TextField  fullWidth size='small' label="Area" name="newAddress.postCode" value={newAddress.postCode} onChange={(e) => handleAddressChange('postCode', e.target.value)} /></Grid>
+                    <Grid item xs={6}><TextField required fullWidth size='small' label="Thana" name="newAddress.postOffice" value={newAddress.postOffice} onChange={(e) => handleAddressChange('postOffice', e.target.value)} /></Grid>
+                    <Grid item xs={12}><TextField required fullWidth size='small' label="City" name="newAddress.city" value={newAddress.city} onChange={(e) => handleAddressChange('city', e.target.value)} /></Grid>
                     </Grid>
                   </Box>
                 </Collapse>

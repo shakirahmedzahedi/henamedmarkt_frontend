@@ -38,6 +38,8 @@ import Favorite from './components/Favorite';
 import FavoritePage from './pages/FavoritePage';
 import SearchProductPage from './pages/SearchProductPage';
 import FloatingWhatsupButton from './components/FloatingWhatsupButton';
+import ReturnPolicy from './pages/ReturnPolicy';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 
 
@@ -120,6 +122,8 @@ function App() {
               <Route path="/mom" element={<ProductPage filter={'MOM'} />} />
               <Route path="/addProduct" element={<ProtectedRoute><AddProductPage /></ProtectedRoute>} />
               <Route path="/legal" element={<TermsAndConditionPage />} />
+              <Route path="/return" element={<ReturnPolicy />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/favorite" element={<ProtectedRoute><FavoritePage /></ProtectedRoute>} />
               <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
               <Route path="/myPage" element={<ProtectedRoute><MyPage /></ProtectedRoute>} />

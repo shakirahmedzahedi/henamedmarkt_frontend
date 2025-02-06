@@ -104,7 +104,8 @@ const ProductDetails = () => {
                           position: 'relative',
                           overflow: 'hidden',
                           borderRadius: 2,
-                          width: '80%',
+                          width: '60%',
+                          height:'60%',
                           margin: '0 auto',
                           cursor: 'pointer', // Cursor change to indicate clickability
                         }}
@@ -187,13 +188,16 @@ const ProductDetails = () => {
                         </Typography>
                     ) : null}
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 0.5 }}>
-                      {product?.brand}
+                      Article: {product?.id}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" sx={{ mb: 0.5 }}>
+                      Brand: {product?.brand}
                     </Typography>
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 0.5 }}>
                       {product?.stock > 0 ? 'In Stock' : 'Out of Stock'}
                     </Typography>
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 0.5 }}>
-                      {product?.size}
+                      Size: {product?.size}
                     </Typography>
 
                     <Divider sx={{ my: 2 }} />
