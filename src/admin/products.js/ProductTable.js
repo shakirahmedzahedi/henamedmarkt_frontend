@@ -220,7 +220,7 @@ const ProductTable = () => {
                     backgroundColor: index % 2 === 0 ? '#f5f5f5' : 'white',
                   }}
                 >
-                  <TableCell><img src={product.thumbnail} alt={product.id} style={{ width: 50, height: 50 }} />{product.thumbnail}</TableCell>
+                  <TableCell><img src={product.thumbnail} alt={product.id} style={{ width: 50, height: 50 }} /></TableCell>
                   <TableCell>{product.title}</TableCell>
                   <TableCell align="right">{product.stock}</TableCell>
                   <TableCell align="right">{product.price}</TableCell>

@@ -172,7 +172,7 @@ const PaymentPage = () => {
       
     }
 
-    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ"||city.toUpperCase()==="Savar" ){
+    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ"||city.toUpperCase()==="SAVAR" ){
       if(totalWeight<=1000){
         return 100;
       }
