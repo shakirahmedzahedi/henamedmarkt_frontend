@@ -135,7 +135,16 @@ const ProductCard = ({ product }) => {
                             sx={{ objectFit: 'contain' }}
                         />
                         <CardContent sx={{ bgcolor: 'info.main', padding: .5 }}>
-                            <Typography gutterBottom variant="body2" noWrap>
+                            <Typography 
+                            gutterBottom 
+                            variant="body2" 
+                            sx={{
+                                display: '-webkit-box',
+                                WebkitBoxOrient: 'vertical',
+                                WebkitLineClamp: 2,  // Limit to 2 lines
+                                overflow: 'hidden'
+                            }}
+                            >
                                 {product?.title}
                             </Typography>
                             <Box display="flex" alignItems="center" gap={1}>
