@@ -160,7 +160,7 @@ const ProductCard = ({ product }) => {
 
                             {/* Price Display */}
                             {product?.discountPercentage ? (
-                                <Box display="block" alignItems="center" mt={1} gap={1}>
+                                <Box display="block" alignItems="center" mt={.5} gap={.5}>
                                     {/* Original Price */}
                                     <Box display="flex" justifyContent="space-between" alignItems="center">
                                         <Typography
@@ -179,7 +179,7 @@ const ProductCard = ({ product }) => {
                                     </Typography>
                                 </Box>
                             ) : (
-                                <Typography variant="body2" mt={3} fontWeight="bold" color="primary">
+                                <Typography variant="body2" mt={1} fontWeight="bold" color="primary">
                                     ৳ {product?.price.toFixed(2)}
                                 </Typography>
                             )}
