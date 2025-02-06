@@ -128,7 +128,7 @@ const ProductDetails = () => {
                     <Dialog
                         open={openImageDialog}
                         onClose={() => setOpenImageDialog(false)}
-                        maxWidth="xl"
+                        maxWidth="lg"
                         sx={{
                           '& .MuiDialog-paper': {
                             backgroundColor: 'transparent', // Remove dialog background
@@ -139,8 +139,8 @@ const ProductDetails = () => {
                       <Box
                           sx={{
                             position: 'relative',
-                            width: '90vw',
-                            height: '90vh',
+                            width: '70vw',
+                            height: '70vh',
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
