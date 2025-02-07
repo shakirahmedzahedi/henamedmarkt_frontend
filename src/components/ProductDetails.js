@@ -104,8 +104,7 @@ const ProductDetails = () => {
                           position: 'relative',
                           overflow: 'hidden',
                           borderRadius: 2,
-                          width: '60%',
-                          height:'60%',
+                          width: '80%',
                           margin: '0 auto',
                           cursor: 'pointer', // Cursor change to indicate clickability
                         }}
