@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductById } from '../reducer/services/ProductService';
 import { addToCart } from '../reducer/services/CartService';
+import ReactMarkdown from "react-markdown";
 
 const ProductDetails = () => {
   const { productId } = useParams(); // Get productId from the URL
@@ -237,7 +238,7 @@ const ProductDetails = () => {
                   <Typography variant="h6" gutterBottom>
                     Description
                   </Typography>
-                  <p>{product?.description}</p>
+                  <p><ReactMarkdown>{product?.description}</ReactMarkdown></p>
                   <Divider sx={{ my: 2 }} />
                   <Typography variant="h6">Additional Info</Typography>
                   <p>{product?.additionalInfo}</p>
