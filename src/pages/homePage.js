@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography, Divider } from '@mui/material'
+import { Box, Grid, Typography, Divider,useMediaQuery,useTheme } from '@mui/material'
 import hero from './../assets/hero.jpeg';
 import truck from './../assets/truck.png';
 import customer from './../assets/customer-service (2).png';
@@ -11,9 +11,13 @@ import ProductDetails from '../components/ProductDetails';
 import Checkout from '../components/Checkout';
 import AgeLimitSection from '../components/AgeLimitSection';
 import ImageSlider from '../components/ImageSlider';
+import SmallFooter from '../components/SmallFooter';
 
 
-const homePage = () => {
+const HomePage = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box >
 
@@ -143,9 +147,14 @@ const homePage = () => {
           </Grid>
         </Box>
       </Box>
+      {isSmallScreen && (
+        <Box sx={{ mt: 3, ml: { xs: 2, sm: 3, md: 15, lg: 19, xl: 23 }, mr: { xs: 2, sm: 3, md: 15, lg: 19, xl: 23 } }}>
+          <SmallFooter />
+        </Box>
+      )}
 
     </Box>
   )
 }
 
-export default homePage
+export default HomePage

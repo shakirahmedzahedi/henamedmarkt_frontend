@@ -121,7 +121,7 @@ const Checkout = () => {
 
   const calculatDeliveryCharge = (totalWeight, city) => {
 
-    if(city.toUpperCase()==="DHAKA"){
+    if(city.toUpperCase()==="DHAKA INTER CITY"){
       if(totalWeight<=1000){
         return 80;
       }
@@ -164,7 +164,7 @@ const Checkout = () => {
       
     }
 
-    if(city.toUpperCase()==="GAZIPURE" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ" ){
+    if(city.toUpperCase()==="DHAKA OUTER CITY" || city.toUpperCase() === "GAZIPUR DISTRICT" || city.toUpperCase() === "NARAYANGANJ DISTRICT" ){
       if(totalWeight<=1000){
         return 100;
       }

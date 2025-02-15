@@ -46,12 +46,12 @@ export default function NewNavBar() {
     };
 
     // Handle suggestion click
-    const handleSuggestionClick = async (suggestion) => {
+    const handleSuggestionClick = async(suggestion) => {
         setSearchInput(suggestion); // Update input with suggestion
         setSuggestions([]); // Clear suggestions
-        await dispatch(setSearchQuery(suggestion)); // Dispatch search query with the selected suggestion
+         await dispatch(setSearchQuery(suggestion)); // Dispatch search query with the selected suggestion
         setSearchInput('');
-        navigate('/searchProduct'); // Navigate to search results
+        navigate('/searchProduct'); 
     };
 
     // Handle search button click
@@ -187,7 +187,7 @@ export default function NewNavBar() {
                                 width: '100%',
                                 maxWidth: '600px',
                                 zIndex: 10,
-                                maxHeight: '200px',
+                                maxHeight: '600px',
                                 overflowY: 'auto',
                                 backgroundColor: 'white',
                                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',

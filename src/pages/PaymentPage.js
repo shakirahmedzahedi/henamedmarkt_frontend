@@ -17,7 +17,8 @@ import {
   Switch,
   Divider,
   Paper,
-  CircularProgress
+  CircularProgress,
+  MenuItem, Select, InputLabel
 } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -25,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { addNewOrder } from './../reducer/services/OrderService'; // Import your Redux service
 import { clearCoupon } from '../reducer/slices/DiscountCouponSlice';
+import data from "../assets/data.json"
 
 
 const PaymentPage = () => {
@@ -41,16 +43,18 @@ const PaymentPage = () => {
   const [differentAddress, setDifferentAddress] = useState(false);
   const [charge, setCharge] = useState(deliveryCharge);
   const isFirstRender = useRef(true);
- /*  const [newAddress, setNewAddress] = useState({
-    apartmentNo: '',
-    houseNo: '',
-    postCode: '',
-    postOffice: '',
-    city: '',
-  }); */
+  /*  const [newAddress, setNewAddress] = useState({
+     apartmentNo: '',
+     houseNo: '',
+     postCode: '',
+     postOffice: '',
+     city: '',
+   }); */
   const [newAddress, setNewAddress] = useState(user.address);
+  const division = ['Dhaka Division', 'Chittagong Division', 'Rajshahi Division', 'Khulna Division', 'Barishal Division',
+    'Sylhet Division', 'Rangpur Division', 'Mymensingh Division'];
 
-  
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -75,12 +79,23 @@ const PaymentPage = () => {
 
   const handleAddressToggle = (event) => {
     Object.keys(newAddress).map(field => console.log(field))
-   
+
     setDifferentAddress(event.target.checked);
   };
 
   const handleAddressChange = (field, value) => {
-    setNewAddress({ ...newAddress, [field]: value });
+    if(field==="city"){
+      setNewAddress({
+        ...newAddress,
+        city: value, 
+        postOffice: '',  // Reset postOffice
+        postCode: ''})
+    }
+    else
+    {
+      setNewAddress({ ...newAddress, [field]: value });
+    }
+    
   };
 
   const handlePlaceOrder = async () => {
@@ -102,7 +117,7 @@ const PaymentPage = () => {
       paymentStatus: selectedPayment === 'paymentOnDelivery' ? 'PENDING' : 'COMPLETE',
       orderStatus: 'PENDING',
       discountCouponNumber: discountCoupon?.number || null,
-      shippingCharge:charge
+      shippingCharge: charge
     };
 
     try {
@@ -122,142 +137,142 @@ const PaymentPage = () => {
 
     return articles?.reduce((acc, item) => {
       const weight = item.product.weight;
-        
-      return acc + (weight+100) * item.unit;
+
+      return acc + (weight + 100) * item.unit;
     }, 0);
   };
 
   const calculatDeliveryCharge = (totalWeight, city) => {
 
-    if(city.toUpperCase()==="DHAKA"){
-      if(totalWeight<=1000){
+    if (city.toUpperCase() === "DHAKA INTER CITY") {
+      if (totalWeight <= 1000) {
         return 80;
       }
-      else if(totalWeight>1000 && totalWeight<=2000){
+      else if (totalWeight > 1000 && totalWeight <= 2000) {
         return 90;
       }
-      else if(totalWeight>2000 && totalWeight<=3000){
+      else if (totalWeight > 2000 && totalWeight <= 3000) {
         return 110;
       }
-      else if(totalWeight>3000 && totalWeight<=4000){
+      else if (totalWeight > 3000 && totalWeight <= 4000) {
         return 130;
       }
-      else if(totalWeight>4000 && totalWeight<=5000){
+      else if (totalWeight > 4000 && totalWeight <= 5000) {
         return 150;
       }
-      else if(totalWeight>5000 && totalWeight<=6000){
+      else if (totalWeight > 5000 && totalWeight <= 6000) {
         return 160;
       }
-      else if(totalWeight>6000 && totalWeight<=7000){
+      else if (totalWeight > 6000 && totalWeight <= 7000) {
         return 180;
       }
-      else if(totalWeight>7000 && totalWeight<=8000){
+      else if (totalWeight > 7000 && totalWeight <= 8000) {
         return 190;
       }
-      else if(totalWeight>8000 && totalWeight<=9000){
+      else if (totalWeight > 8000 && totalWeight <= 9000) {
         return 210;
       }
-      else if(totalWeight>9000 && totalWeight<=10000){
+      else if (totalWeight > 9000 && totalWeight <= 10000) {
         return 230;
       }
-      else if(totalWeight>10000 && totalWeight<=12000){
+      else if (totalWeight > 10000 && totalWeight <= 12000) {
         return 270;
       }
-      else if(totalWeight>12000 && totalWeight<=15000){
+      else if (totalWeight > 12000 && totalWeight <= 15000) {
         return 350;
       }
-      else{
+      else {
         return 500;
       }
-      
+
     }
 
-    if(city.toUpperCase()==="GAZIPUR" || city.toUpperCase()==="KERANIGANJ"|| city.toUpperCase()==="NARAYANGANJ"||city.toUpperCase()==="NAWABGANJ"||city.toUpperCase()==="SAVAR" ){
-      if(totalWeight<=1000){
+    if (city.toUpperCase()==="DHAKA OUTER CITY" || city.toUpperCase() === "GAZIPUR DISTRICT" || city.toUpperCase() === "NARAYANGANJ DISTRICT") {
+      if (totalWeight <= 1000) {
         return 100;
       }
-      else if(totalWeight>1000 && totalWeight<=2000){
+      else if (totalWeight > 1000 && totalWeight <= 2000) {
         return 130;
       }
-      else if(totalWeight>2000 && totalWeight<=3000){
+      else if (totalWeight > 2000 && totalWeight <= 3000) {
         return 160;
       }
-      else if(totalWeight>3000 && totalWeight<=4000){
+      else if (totalWeight > 3000 && totalWeight <= 4000) {
         return 180;
       }
-      else if(totalWeight>4000 && totalWeight<=5000){
+      else if (totalWeight > 4000 && totalWeight <= 5000) {
         return 210;
       }
-      else if(totalWeight>5000 && totalWeight<=6000){
+      else if (totalWeight > 5000 && totalWeight <= 6000) {
         return 240;
       }
-      else if(totalWeight>6000 && totalWeight<=7000){
+      else if (totalWeight > 6000 && totalWeight <= 7000) {
         return 270;
       }
-      else if(totalWeight>7000 && totalWeight<=8000){
+      else if (totalWeight > 7000 && totalWeight <= 8000) {
         return 295;
       }
-      else if(totalWeight>8000 && totalWeight<=9000){
+      else if (totalWeight > 8000 && totalWeight <= 9000) {
         return 320;
       }
-      else if(totalWeight>9000 && totalWeight<=10000){
+      else if (totalWeight > 9000 && totalWeight <= 10000) {
         return 350;
       }
-      else if(totalWeight>10000 && totalWeight<=12000){
+      else if (totalWeight > 10000 && totalWeight <= 12000) {
         return 390;
       }
-      else if(totalWeight>12000 && totalWeight<=15000){
+      else if (totalWeight > 12000 && totalWeight <= 15000) {
         return 480;
       }
-      else{
+      else {
         return 500;
       }
-      
+
     }
-    else{
-      if(totalWeight<=1000){
+    else {
+      if (totalWeight <= 1000) {
         return 120;
       }
-      else if(totalWeight>1000 && totalWeight<=2000){
+      else if (totalWeight > 1000 && totalWeight <= 2000) {
         return 160;
       }
-      else if(totalWeight>2000 && totalWeight<=3000){
+      else if (totalWeight > 2000 && totalWeight <= 3000) {
         return 190;
       }
-      else if(totalWeight>3000 && totalWeight<=4000){
+      else if (totalWeight > 3000 && totalWeight <= 4000) {
         return 180;
       }
-      else if(totalWeight>4000 && totalWeight<=5000){
+      else if (totalWeight > 4000 && totalWeight <= 5000) {
         return 250;
       }
-      else if(totalWeight>5000 && totalWeight<=6000){
+      else if (totalWeight > 5000 && totalWeight <= 6000) {
         return 270;
       }
-      else if(totalWeight>6000 && totalWeight<=7000){
+      else if (totalWeight > 6000 && totalWeight <= 7000) {
         return 300;
       }
-      else if(totalWeight>7000 && totalWeight<=8000){
+      else if (totalWeight > 7000 && totalWeight <= 8000) {
         return 325;
       }
-      else if(totalWeight>8000 && totalWeight<=9000){
+      else if (totalWeight > 8000 && totalWeight <= 9000) {
         return 350;
       }
-      else if(totalWeight>9000 && totalWeight<=10000){
+      else if (totalWeight > 9000 && totalWeight <= 10000) {
         return 380;
       }
-      else if(totalWeight>10000 && totalWeight<=12000){
+      else if (totalWeight > 10000 && totalWeight <= 12000) {
         return 430;
       }
-      else if(totalWeight>12000 && totalWeight<=15000){
+      else if (totalWeight > 12000 && totalWeight <= 15000) {
         return 520;
       }
-      else{
+      else {
         return 700;
       }
-      
+
     }
-    
-    };
+
+  };
 
   return (
 
@@ -333,13 +348,58 @@ const PaymentPage = () => {
                 </Box>
                 <Collapse in={differentAddress}>
                   <Box mt={2}>
-                    <Typography variant="subtitle1">Shipping Address</Typography>
+                    <Typography variant="subtitle1" mb={1}>Shipping Address</Typography>
                     <Grid container spacing={2}>
-                    <Grid item xs={6}><TextField  fullWidth size='small' label="AddressLine 1" name="newAddress.apartmentNo" value={newAddress.apartmentNo} inputProps={{ maxLength: 20 }} onChange={(e) => handleAddressChange('apartmentNo', e.target.value)} /></Grid>
-                    <Grid item xs={6}><TextField  fullWidth size='small' label="AddressLine 2" name="newAddress.houseNo" value={newAddress.houseNo} inputProps={{ maxLength: 20 }} onChange={(e) => handleAddressChange('houseNo', e.target.value)} /></Grid>
-                    <Grid item xs={6}><TextField  fullWidth size='small' label="Area" name="newAddress.postCode" value={newAddress.postCode} onChange={(e) => handleAddressChange('postCode', e.target.value)} /></Grid>
-                    <Grid item xs={6}><TextField required fullWidth size='small' label="Thana" name="newAddress.postOffice" value={newAddress.postOffice} onChange={(e) => handleAddressChange('postOffice', e.target.value)} /></Grid>
-                    <Grid item xs={12}><TextField required fullWidth size='small' label="City" name="newAddress.city" value={newAddress.city} onChange={(e) => handleAddressChange('city', e.target.value)} /></Grid>
+                      <TextField margin='normal' fullWidth size='small' label="Address Line" name="newAddress.apartmentNo" value={newAddress.apartmentNo} inputProps={{ maxLength: 50 }} onChange={(e) => handleAddressChange('apartmentNo', e.target.value)} />
+                      
+                      <FormControl fullWidth size="small" margin='normal'>
+                        <InputLabel>Division</InputLabel>
+                        <Select label="Division" name="houseNo" value={newAddress.houseNo} onChange={(e) => handleAddressChange('houseNo', e.target.value)}>
+                          {Object.keys(division).map((d) => (
+                            <MenuItem key={d} value={division[d]}>
+                              <Typography >{division[d]}</Typography>
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <FormControl required fullWidth size="small" margin='normal'>
+                        <InputLabel>City</InputLabel>
+                        <Select label="City" name="city" value={newAddress.city} onChange={(e) => handleAddressChange('city', e.target.value)}>
+                          {Object.keys(data).map((city) => (
+                            <MenuItem key={city} value={city}>
+                              <Typography >{city}</Typography>
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <FormControl fullWidth size='small' margin='normal' disabled={!newAddress.city}>
+                        <InputLabel>Thana</InputLabel>
+                        <Select label="Thana" name="postOffice" value={newAddress.postOffice} onChange={(e) => handleAddressChange('postOffice', e.target.value)}>
+                          {newAddress.city &&
+                            Object.keys(data[newAddress.city]).map((upazila) => (
+                              <MenuItem key={upazila} value={upazila}>
+                                <Typography >{upazila}</Typography>
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      </FormControl>
+                      <FormControl fullWidth size='small' margin='normal' disabled={!newAddress.postOffice}>
+                        <InputLabel>Area</InputLabel>
+                        <Select
+                          label="Area"
+                          name="postCode"
+                          value={newAddress.postCode}
+                          onChange={(e) => handleAddressChange('postCode', e.target.value)}
+                        >
+
+                          {newAddress.postOffice &&
+                            data[newAddress.city][newAddress.postOffice].map((union) => (
+                              <MenuItem key={union} value={union}>
+                                <Typography >{union}</Typography>
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
                   </Box>
                 </Collapse>

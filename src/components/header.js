@@ -88,9 +88,12 @@ export default function Header() {
     };
 
     // Handle suggestion click
-    const handleSuggestionClick = (suggestion) => {
+    const handleSuggestionClick = async(suggestion) => {
         setSearchInput(suggestion); // Update input with suggestion
         setSuggestions([]); // Clear suggestions
+        await dispatch(setSearchQuery(suggestion)); // Dispatch search query with the selected suggestion
+        setSearchInput('');
+        navigate('/searchProduct');
     };
 
     // Handle search button click
@@ -131,13 +134,13 @@ export default function Header() {
         <>
             <Grid container  >
 
-                <Grid item xs={2} pt={1.5}
+                <Grid item xs={2} pt={1.5}pb={1}
                     alignItems="center" style={{ textAlign: 'left' }}>
                     <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <img
                             src={logo}
                             alt={logo}
-                            style={{ width: '190px', height: '55px' }}
+                            style={{ width: '190px', height: '45px' }}
 
                         />
                     </Link>
@@ -292,7 +295,7 @@ export default function Header() {
                         <img
                             src={logo}
                             alt="logo"
-                            style={{ width: '170px', height: '35px' }}
+                            style={{ width: '170px', height: '30px' }}
                         />
                     </Link>
                 </Grid>
@@ -450,7 +453,7 @@ export default function Header() {
                                 width: '100%',
                                 maxWidth: '600px',
                                 zIndex: 10,
-                                maxHeight: '200px',
+                                maxHeight: '600px',
                                 overflowY: 'auto',
                                 backgroundColor: 'white',
                                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',

@@ -199,7 +199,7 @@ const Footer = () => {
 
           </Grid>
           <Typography sx={{ textAlign: 'center' }} variant='subtitle2' pt={1}>
-            This is @ rights reseve CopyrightⒸ2024
+            Hena Med Markt LTD. @ rights reseve CopyrightⒸ2024
           </Typography>
         </Box>
       </Box>

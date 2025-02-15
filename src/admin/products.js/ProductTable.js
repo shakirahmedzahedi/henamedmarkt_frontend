@@ -131,7 +131,7 @@ const ProductTable = () => {
 
   // Filter products by search query
   const filteredProducts = products.filter((product) =>
-    product.title.toString().includes(searchQuery) || // Search by title
+    product.title.toString().toUpperCase().includes(searchQuery.toUpperCase()) || // Search by title
     product.stock.toString().includes(searchQuery) || // Search by stock
     product.price.toString().includes(searchQuery) // Search by price
   );
