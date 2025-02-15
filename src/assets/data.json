@@ -709,6 +709,135 @@
             "Jaliapalong"
         ]
     },
+    "Dinajpur District": {
+        "Birampur": [
+            "Benail",
+            "Mukundpur",
+            "Deor",
+            "Jotbani",
+            "Katla",
+            "Khanpur",
+            "Poliprayagpur"
+        ],
+        "Birganj": [
+            "Bhognagar",
+            "Moricha",
+            "Mohammadpur",
+            "Mohanpur",
+            "Nijpara",
+            "Palashbari",
+            "Paltapur",
+            "Shatagram",
+            "Satore",
+            "Shibrampur",
+            "Sujalpur"
+        ],
+        "Birol": [
+            "Azimpur",
+            "Bhandari",
+            "Birol",
+            "Bijora",
+            "Dhamair",
+            "Dharmapur",
+            "Farakkabad",
+            "Mangalpur",
+            "Ranipukur",
+            "Sahargram"
+        ],
+        "Bochaganj": [
+            "Atgaon",
+            "Chhatail",
+            "Ishania",
+            "Murshidhat",
+            "Nafanagar",
+            "Rangaon"
+        ],
+        "Chirirbandar": [
+            "Abdulpur",
+            "Alokdihi",
+            "Amarpur",
+            "Auliapukur",
+            "Bhiail",
+            "Fatehjangpur",
+            "Isabpur",
+            "Nasratpur",
+            "Punotti",
+            "Saintara",
+            "Satnala",
+            "Tentulia"
+        ],
+        "Dinajpur Sadar": [
+            "Askarpur",
+            "Auliapur",
+            "Chehelgazi",
+            "Fazilpur",
+            "Kamolpur",
+            "Shankarpur",
+            "Shashra",
+            "Sekhpura",
+            "Sundarban",
+            "Uthrail"
+        ],
+        "Fulbari": [
+            "Aladipur",
+            "Betdighi",
+            "Daulatpur",
+            "Eluary",
+            "Kazihal",
+            "Khoyerbari",
+            "Shibnagar"
+        ],
+        "Ghoraghat": [
+            "Bulakipur",
+            "Ghoraghat",
+            "Palash",
+            "Shingra"
+        ],
+        "Hakimpur": [
+            "Alihat",
+            "Boaldar",
+            "Khambamadhobpara"
+        ],
+        "Kaharol": [
+            "Dabor",
+            "Mukundapur",
+            "Ramchandrapur",
+            "Rasulpur",
+            "Sundarpur",
+            "Targaon"
+        ],
+        "Khanshama": [
+            "Alokjhari",
+            "Angarpara",
+            "Bhabki",
+            "Bherbheli",
+            "Goaldihi",
+            "Khamarpara"
+        ],
+        "Nawabganj": [
+            "Bhaduria",
+            "Binodpur",
+            "Daudpur",
+            "Gopalganj",
+            "Joypur",
+            "Kushdaha",
+            "Mahmudpur",
+            "Putimara",
+            "Shalkhuria"
+        ],
+        "Parbatipur": [
+            "Belaichandi",
+            "Chandipur",
+            "Habra",
+            "Hamidpur",
+            "Harirampur",
+            "Manmathapur",
+            "Mominpur",
+            "Mostafapur",
+            "Palashbari",
+            "Rampur"
+        ]
+    },
     "Gazipur District": {
         "Gazipur Sadar": [
             "Bhogra",
@@ -873,6 +1002,424 @@
             "Bagdi",
             "Shibnagar",
             "Bhorahra"
+        ]
+    },
+    "Feni District": {
+        "Feni Sadar": [
+            "Sharsadi",
+            "Dharmapur",
+            "Kazir Bagh",
+            "Panchgachia",
+            "Dhalia",
+            "Beligaon",
+            "Chanua",
+            "Lemua",
+            "Fazilpur",
+            "Farhadnagar",
+            "Kalidah",
+            "Motobi"
+        ],
+        "Daganbhuiyan": [
+            "Daganbhuiyan",
+            "Jaylaskar",
+            "Matubhuiyan",
+            "Rajapur",
+            "Ramnagar",
+            "Sindurpur",
+            "Yaqubnagar",
+            "Basurhat"
+        ],
+        "Chhagalnaiya": [
+            "Chhagalnaiya",
+            "Gopal",
+            "Radhanagar",
+            "Mohamaya",
+            "Pathannagar"
+        ],
+        "Sonagazi": [
+            "Sonagazi",
+            "Ahmadpur",
+            "Amirabad",
+            "Bhogdanga",
+            "Chardarbesh",
+            "Charchandia",
+            "Charchandia",
+            "Nababpur",
+            "Urkirchar",
+            "Ziauddin"
+        ],
+        "Parshuram": [
+            "Parshuram",
+            "Boxmahmmud",
+            "Chitholia"
+        ],
+        "Fulgazi": [
+            "Fulgazi",
+            "Amzadhat",
+            "Anandapur",
+            "Dorbarpur",
+            "G.M. Hat",
+            "Munshirhat"
+        ]
+    },
+    "Gaibandha District": {
+        "Gaibandha Sadar": [
+            "Lakshmipur",
+            "Malibari",
+            "Kuptala",
+            "Sahapara",
+            "Ballamjhar",
+            "Ramchandrapur",
+            "Badiakhali",
+            "Boali",
+            "Ghagoa",
+            "Gidari",
+            "Kholahati",
+            "Mollar Char",
+            "Kamarjani"
+        ],
+        "Palashbari": [
+            "Betkapa",
+            "Bharatkhali",
+            "Harinathpur",
+            "Kishoregari",
+            "Monoharpur",
+            "Pobnapur",
+            "Sadhanpur",
+            "Uria",
+            "Zamira"
+        ],
+        "Fulchhari": [
+            "Bharatkhali",
+            "Erendabari",
+            "Fazlupur",
+            "Fulchhari",
+            "Gazaria",
+            "Gozaria",
+            "Kanchipara",
+            "Udakhali"
+        ],
+        "Sadullapur": [
+            "Bamandanga",
+            "Bharatkhali",
+            "Damodarpur",
+            "Dhaperhat",
+            "Faridpur",
+            "Idilpur",
+            "Jamalpur",
+            "Kamarpara",
+            "Khedabari",
+            "Naldanga",
+            "Rasulpur"
+        ],
+        "Sundarganj": [
+            "Belka",
+            "Chandipur",
+            "Chhaparhati",
+            "Dhopadanga",
+            "Haripur",
+            "Kapasia",
+            "Ramjiban",
+            "Sreepur",
+            "Sonaroy",
+            "Tarapur",
+            "Bamandanga",
+            "Bharatkhali",
+            "Chandipur",
+            "Chhaparhati",
+            "Dhopadanga"
+        ],
+        "Gobindaganj": [
+            "Darban",
+            "Gumaniganj",
+            "Harirampur",
+            "Kamardaha",
+            "Katabari",
+            "Mahimaganj",
+            "Moktarpur",
+            "Nakai",
+            "Rakhalburuj",
+            "Shalmara",
+            "Shibpur",
+            "Sonarai",
+            "Taluk Kanupur",
+            "Taluk Kuchi Dhorla",
+            "Taluk Rajapur",
+            "Taluk Shimulbari",
+            "Taluk Shahbaz"
+        ],
+        "Saghata": [
+            "Bonarpara",
+            "Ghuridaha",
+            "Haldia",
+            "Jumarbari",
+            "Kachua",
+            "Kamalerpara",
+            "Muktinagar",
+            "Padumsahar",
+            "Saghata",
+            "Varotkhali"
+        ]
+    },
+    "Gopalganj District": {
+        "Gopalganj Sadar": [
+            "Borashi",
+            "Boultali",
+            "Chandradighalia",
+            "Durgapur",
+            "Gobra",
+            "Gopinathpur",
+            "Haridaspur",
+            "Jalalabad",
+            "Kajulia",
+            "Karpara",
+            "Kathi",
+            "Latifpur",
+            "Majhigati",
+            "Nizra",
+            "Paikkandi",
+            "Raghunathpur",
+            "Sahapur",
+            "Satpar",
+            "Suktail",
+            "Ulpur",
+            "Urafi"
+        ],
+        "Kashiani": [
+            "Bethuri",
+            "Fukura",
+            "Hatiara",
+            "Kashiani",
+            "Mamudpur",
+            "Maheshpur",
+            "Nijamkandi",
+            "Orakandi",
+            "Parulia",
+            "Puisur",
+            "Rajpat",
+            "Ratoil",
+            "Sajail",
+            "Singa"
+        ],
+        "Kotalipara": [
+            "Amtali",
+            "Bandhabari",
+            "Ghaghar",
+            "Hiron",
+            "Kalabari",
+            "Kandi",
+            "Kushla",
+            "Pinjuri",
+            "Radhaganj",
+            "Ramshil",
+            "Sadullapur",
+            "Suagram"
+        ],
+        "Muksudpur": [
+            "Bhabrasur",
+            "Bahugram",
+            "Banshbaria",
+            "Batikamari",
+            "Dignagar",
+            "Gobindapur",
+            "Gohala",
+            "Jalirpar",
+            "Kashalia",
+            "Khandarpara",
+            "Maharajpur",
+            "Mochna",
+            "Nanixmir",
+            "Pashargati",
+            "Radhdi",
+            "Ujani"
+        ],
+        "Tungipara": [
+            "Barni",
+            "Dumuria",
+            "Gopalpur",
+            "Kushli",
+            "Patgati"
+        ]
+    },
+    "Habiganj District": {
+        "Ajmiriganj Upazila": [
+            "Ajmiriganj",
+            "Badalpur",
+            "Jolsuka",
+            "Kakailseo",
+            "Shibpasha"
+        ],
+        "Bahubal Upazila": [
+            "Bahubal",
+            "Bhadeshwar",
+            "Lama",
+            "Mirpur",
+            "Patli",
+            "Putijuri",
+            "Snanghat"
+        ],
+        "Baniachong Upazila": [
+            "Baniachong",
+            "Dakshin East",
+            "Dakshin West",
+            "Kagapasha",
+            "Makrampur",
+            "Mandari",
+            "Pailarkandi",
+            "Purba Baniachong",
+            "Sujatpur",
+            "Uttar East",
+            "Uttar West"
+        ],
+        "Chunarughat Upazila": [
+            "Ahmadabad",
+            "Chandpur",
+            "Chunarughat",
+            "Deorgach",
+            "Gazipur",
+            "Kamalpur",
+            "Mirashi",
+            "Paikpara",
+            "Ranigaon",
+            "Shatiajuri"
+        ],
+        "Habiganj Sadar Upazila": [
+            "Gopaya",
+            "Laskarpur",
+            "Nijampur",
+            "Poil",
+            "Rajiura",
+            "Richi",
+            "Shayestaganj",
+            "Teghoria"
+        ],
+        "Lakhai Upazila": [
+            "Bamai",
+            "Bulla",
+            "Khaliajuri",
+            "Lakhai",
+            "Murakari",
+            "Shahapur"
+        ],
+        "Madhabpur Upazila": [
+            "Andiura",
+            "Bagashura",
+            "Bahara",
+            "Bulla",
+            "Chhatiain",
+            "Dharmaghar",
+            "Jagadishpur",
+            "Jalsuka",
+            "Noapara",
+            "Shahjahanpur",
+            "Shibpur"
+        ],
+        "Nabiganj Upazila": [
+            "Aushkandi",
+            "Bausha",
+            "Debparra",
+            "Dighalbak",
+            "Gaznaipur",
+            "Gopalpur",
+            "Inatganj",
+            "Kaliarbhanga",
+            "Kargaon",
+            "Kurshi",
+            "Nabiganj",
+            "Paniumda",
+            "Pura",
+            "Satgaon",
+            "Shibpasha"
+        ],
+        "Shaistaganj Upazila": [
+            "Brahmondora",
+            "Nijampur",
+            "Nurpur",
+            "Shaistaganj"
+        ]
+    },
+    "Jamalpur District": {
+        "Bakshiganj Upazila": [
+            "Bagar Char",
+            "Bakshiganj",
+            "Battajore",
+            "Dhanua Kamalpur",
+            "Merur Char",
+            "Nilaxmia",
+            "Sadhu Para"
+        ],
+        "Dewanganj Upazila": [
+            "Bahadurabad",
+            "Char Amkhaoa",
+            "Chikajani",
+            "Chukaibari",
+            "Dangdhara",
+            "Dewanganj",
+            "Hatebhanga",
+            "Parramrampur"
+        ],
+        "Islampur Upazila": [
+            "Belgachha",
+            "Char Goalini",
+            "Char Putimari",
+            "Chinaduli",
+            "Gaibandha",
+            "Goaler Char",
+            "Islampur",
+            "Kulkandi",
+            "Noarpara",
+            "Palbandha",
+            "Patharsi",
+            "Sapdhari"
+        ],
+        "Jamalpur Sadar Upazila": [
+            "Banshchara",
+            "Digpaith",
+            "Ghoradhap",
+            "Itail",
+            "Kendua",
+            "Laxmir Char",
+            "Meshta",
+            "Narundi",
+            "Ranagachha",
+            "Rashidpur",
+            "Sahabajpur",
+            "Sharifpur",
+            "Sreepur",
+            "Titpalla",
+            "Tulsir Char"
+        ],
+        "Madarganj Upazila": [
+            "Adarbhita",
+            "Balijuri",
+            "Char Pakerdaha",
+            "Gunaritola",
+            "Jorekhali",
+            "Karaichura",
+            "Sidhuli"
+        ],
+        "Melandaha Upazila": [
+            "Adra",
+            "Char Banipakuria",
+            "Durmut",
+            "Fulkocha",
+            "Ghosher Para",
+            "Jhaugara",
+            "Kulia",
+            "Mahmudpur",
+            "Nangla",
+            "Nayanagar",
+            "Shyampur"
+        ],
+        "Sarishabari Upazila": [
+            "Aona",
+            "Bhatara",
+            "Doail",
+            "Kamrabad",
+            "Mahadan",
+            "Pingna",
+            "Pogaldigha",
+            "Satpoa"
         ]
     }
 }
