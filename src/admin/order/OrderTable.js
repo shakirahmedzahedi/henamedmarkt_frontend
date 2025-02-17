@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Menu, MenuItem, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllOrders } from '../../reducer/services/OrderService';
+import PrintableOrder from '../../components/PrintableOrder';
+import { useReactToPrint } from "react-to-print";
 
 const OrderTable = ({ onShowDetails, onUpdateStatus }) => {
   const dispatch = useDispatch();
@@ -9,10 +11,13 @@ const OrderTable = ({ onShowDetails, onUpdateStatus }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [currentOrder, setCurrentOrder] = React.useState(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchAllOrders());
   }, [dispatch]);
+
+  
 
   const handleClickMenu = (event, order) => {
     setAnchorEl(event.currentTarget);
@@ -33,12 +38,24 @@ const OrderTable = ({ onShowDetails, onUpdateStatus }) => {
     handleCloseMenu();
     onUpdateStatus(currentOrder);
   };
+ /*  const handlePrint = useReactToPrint({
+    content: () =>{
+      alert("Hello");
+      console.log("Current Order: ", currentOrder);
+      console.log(componentRef.current); // Check if this logs the PrintableOrder component correctly
+      return componentRef.current;
+    },  // This is where you need to pass the ref
+    documentTitle: `Invoice_${currentOrder?.id}`,
+  }); */
+
+  const handlePrint = useReactToPrint({ contentRef });
 
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" sx={{ mb: 3, textAlign: 'center' }}>
         All Orders
       </Typography>
+      
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -76,6 +93,14 @@ const OrderTable = ({ onShowDetails, onUpdateStatus }) => {
                     <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
                       <MenuItem onClick={handleDetailsClick}>Show Details</MenuItem>
                       <MenuItem onClick={handleUpdateClick}>Update Status</MenuItem>
+                      <MenuItem onClick={() => {
+                        setCurrentOrder(order);
+                          handleCloseMenu();
+                          handlePrint();
+                        }}
+                        >
+                          Print
+                          </MenuItem>
                     </Menu>
                   </TableCell>
                 </TableRow>
@@ -90,6 +115,11 @@ const OrderTable = ({ onShowDetails, onUpdateStatus }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {currentOrder && (
+        <div style={{ display: "none" }}>
+          <PrintableOrder ref={contentRef} order={currentOrder} />
+        </div>
+      )}
     </Box>
   );
 };

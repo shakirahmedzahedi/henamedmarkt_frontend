@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   Box,
   Typography,
@@ -13,14 +13,15 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-const OrderDetails = ({ order }) => {
+const OrderDetails = ({ order })  => {
   // Helper function to format the date
   const formatDate = (date) => new Date(date).toLocaleString();
   const articles = order?.cart?.articles;
   const user = useSelector((state)=> state.auth.user);
 
   const addressToString = (address) => {
-    return `${address?.apartmentNo || ""}, ${address?.houseNo || ""}, ${address?.postCode || ""} ${address?.postOffice || ""}, ${address?.city || ""}`.trim().replace(/^,|,$/g, "");
+    console.log(address);
+    return `${address?.apartmentNo || ""},  ${address?.postCode || ""}, ${address?.postOffice || ""}, ${address?.city || ""},${address?.houseNo || ""}`;
   };
   
 
