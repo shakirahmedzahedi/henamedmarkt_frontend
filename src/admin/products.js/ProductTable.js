@@ -69,11 +69,11 @@ const ProductTable = () => {
     handleCloseMenu();
   };
 
-  const handleDeleteProductClick = async(product) => {
+  const handleDeleteProductClick = async (product) => {
     console.log("click delete");
     console.log(product);
-    await dispatch(deleteProduct({id: product.id}))
-   
+    await dispatch(deleteProduct({ id: product.id }))
+
     handleCloseMenu();
   };
 
@@ -152,15 +152,24 @@ const ProductTable = () => {
     setCurrentPage(1); // Reset to first page when items per page changes
   };
 
-  const submitUpdate = async(product, productData) => {
+  const submitUpdate = async (product, productData) => {
     console.log("Submit call in parents: ", productData);
     const updatedData = {
+      title: productData.title,
+      description: productData.description || '',
+      category: productData.category || '',
       price: parseFloat(productData.price),
       discountPercentage: parseFloat(productData.discountPercentage),
       rating: parseFloat(productData.rating),
       stock: parseInt(productData.stock),
+      tags: productData.tags || '',
+      brand: productData.brand || '',
+      size: productData.size || '',
+      weight:  parseInt(productData.weight) || 0,
       thumbnail: productData.thumbnail,
-      bestSeller: productData.bestSeller
+      bestSeller: productData.bestSeller,
+      newArrival: productData.newArrival
+
     };
 
     try {
@@ -198,7 +207,7 @@ const ProductTable = () => {
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: '#1976d2' }}>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Image</TableCell>
+              <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Image</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Product Name</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
                 Stock
@@ -258,7 +267,7 @@ const ProductTable = () => {
 
       {/* Pagination Controls */}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center' }}>
-        
+
         <FormControl size="small" sx={{ width: '100px' }}>
           <Select
             value={itemsPerPage}

@@ -9,18 +9,31 @@ import {
     Alert,
     FormControlLabel,
     Checkbox,
+    Select,
+    MenuItem,
+    InputLabel,
+    FormControl,
 } from '@mui/material';
 import { BlobServiceClient } from '@azure/storage-blob';
 
 const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
-    console.log("Product:",product);
+    const categories = ['BABY_AND_KIDS', 'FAMILY_AND_MOM', 'NEW_ARRIVAL'];
+    const tagsOptions = ['NEWBORN', 'TODDLER', 'CHILDREN', 'MOM'];
     const [formValues, setFormValues] = useState({
+        title: product.title || '',
+        description: product.description || '',
+        category: product.category || '',
         price: product.price || 0,
         discountPercentage: product.discountPercentage || 0,
         rating: product.rating || 0,
         stock: product.stock || 0,
+        tags: product.tags || '',
+        brand: product.brand || '',
+        size: product.size || 0,
+        weight: product.weight || 0,
         thumbnail: product.thumbnail || '',
         bestSeller: product.bestSeller || false,
+        newArrival: product.newArrival || true
     });
 
     const [thumbnailPreview, setThumbnailPreview] = useState(product.thumbnail || null);
@@ -37,12 +50,20 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
     useEffect(() => {
         // Update form values when product prop changes
         setFormValues({
+            title: product.title || '',
+            description: product.description || '',
+            category: product.category || '',
             price: product.price || 0,
             discountPercentage: product.discountPercentage || 0,
             rating: product.rating || 0,
             stock: product.stock || 0,
+            tags: product.tags || '',
+            brand: product.brand || '',
+            size: product.size || 0,
+            weight: product.weight || 0,
             thumbnail: product.thumbnail || '',
             bestSeller: product.bestSeller || false,
+            newArrival: product.newArrival || true
         });
         setThumbnailPreview(product.thumbnail || null);
     }, [product]);
@@ -105,7 +126,7 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
 
         try {
             console.log("Submit first call:, ", formValues);
-            await  onUpdate(product, formValues);;
+            await onUpdate(product, formValues);;
             setSuccess('Product updated successfully.');
         } catch (err) {
             setError('Failed to update product.');
@@ -114,20 +135,46 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
         }
     };
 
-   /*  const handleUpdate = () => {
-        onUpdate(product, formValues); // Call the parent-provided update function
-      }; */
+    /*  const handleUpdate = () => {
+         onUpdate(product, formValues); // Call the parent-provided update function
+       }; */
 
     return (
         <Container maxWidth="sm">
             <Typography variant="h4" gutterBottom>
-                Update Product {product?.title}
+                Update: {product?.title}
             </Typography>
             {error && <Alert severity="error">{error}</Alert>}
             {success && <Alert severity="success">{success}</Alert>}
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            label="Title"
+                            name="title"
+                            fullWidth
+                            value={formValues.title}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <FormControl fullWidth required>
+                            <InputLabel>Category</InputLabel>
+                            <Select
+                                name="category"
+                                value={formValues.category}
+                                onChange={handleChange}
+                            >
+                                {categories.map((category) => (
+                                    <MenuItem key={category} value={category}>
+                                        {category}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             label="Price"
                             name="price"
@@ -139,7 +186,17 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            label="Brand"
+                            name="brand"
+                            fullWidth
+                            value={formValues.brand}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             label="Discount Percentage"
                             name="discountPercentage"
@@ -151,7 +208,7 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             label="Rating"
                             name="rating"
@@ -163,7 +220,7 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             label="Stock"
                             name="stock"
@@ -175,7 +232,44 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6} sm={6}>
+                        <FormControl fullWidth required>
+                            <InputLabel>Tags</InputLabel>
+                            <Select
+                                name="tags"
+                                value={formValues.tags}
+                                onChange={handleChange}
+                            >
+                                {tagsOptions.map((tag) => (
+                                    <MenuItem key={tag} value={tag}>
+                                        {tag}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} sm={6}>
+                        <TextField
+                            label="Size"
+                            name="size"
+                            fullWidth
+                            value={formValues.size}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            type="number"
+                            label="Weight"
+                            name="weight"
+                            fullWidth
+                            value={formValues.weight}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <FormControlLabel
                             control={
                                 <Checkbox
@@ -185,6 +279,18 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                                 />
                             }
                             label="Best Seller"
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={formValues.newArrival}
+                                    onChange={handleChange}
+                                    name="newArrival"
+                                />
+                            }
+                            label="New Arrival"
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -212,6 +318,17 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                                 />
                             </div>
                         )}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Description"
+                            name="description"
+                            multiline
+                            rows={3}
+                            fullWidth
+                            value={formValues.description}
+                            onChange={handleChange}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <Button

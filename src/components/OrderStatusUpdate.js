@@ -36,6 +36,7 @@ const OrderStatusUpdate = ({ order, onUpdate, onCancel }) => {
         <MenuItem value="PENDING">PENDING</MenuItem>
         <MenuItem value="REVIEW">REVIEW</MenuItem>
         <MenuItem value="OUT_FOR_DELIVERY">OUT FOR DELIVERY</MenuItem>
+        <MenuItem value="CANCEL">CANCEL</MenuItem>
       </Select>
 
       <Box 
