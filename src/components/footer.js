@@ -158,17 +158,17 @@ const Footer = () => {
                 Follow us on
               </Typography>
               <Box>
-                <a href='https://www.facebook.com/HenaMarkt' target="_blank" rel="noopener noreferrer">
+                <a href='https://www.facebook.com/HenaMedmarktLtd' target="_blank" rel="noopener noreferrer">
                   <IconButton color="info" mt={2}>
                     <FacebookOutlinedIcon fontSize='medium' />
                   </IconButton>
                 </a>
-                <a href='https://www.instagram.com/vikingvoyages' target="_blank" rel="noopener noreferrer">
+                <a href='https://www.instagram.com/henamedmarktltd' target="_blank" rel="noopener noreferrer">
                   <IconButton color="info" style={{ margin: '10px', color: 'info' }}>
                     <InstagramIcon fontSize='medium' />
                   </IconButton>
                 </a>
-                <a href='https://wa.me/008801903652681' target="_blank" rel="noopener noreferrer">
+                <a href='https://wa.me/8801903652681' target="_blank" rel="noopener noreferrer">
                   <IconButton color="info" style={{ margin: '10px', color: 'info' }}>
                     <WhatsAppIcon fontSize='medium' />
                   </IconButton>

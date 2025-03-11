@@ -37,13 +37,13 @@ const ContactPage = () => {
             Our Contact Information
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Address:</strong> 1234 Example Street, City, State, ZIP
+            <strong>Address:</strong> Mirpur, Section-12, Block-C, Road-04, Pallabi, Dhaka-1216
           </Typography>
           <Typography variant="body1" paragraph>
             <strong>Phone:</strong> <a href="tel:+8801903652681">+8801903652681</a>
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Email:</strong> customercare@henamedmarkt.com
+            <strong>Email:</strong> info@henamedmarkt.com
           </Typography>
 
           {/* Embedded Google Map */}
@@ -57,7 +57,7 @@ const ContactPage = () => {
           >
             <iframe
               title="Company Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093705!2d144.95373531531796!3d-37.8172099797517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5775c2c72b2a1e0!2sEnvato!5e0!3m2!1sen!2sus!4v1616664872347!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d7299.746423926154!2d90.36227089700245!3d23.82310717921099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sSection-12%2C%20Block-C%2C%20Road-04%2C%20Pallabi%2C%20Dhaka-1216!5e0!3m2!1sen!2sse!4v1741659639136!5m2!1sen!2sse" 
               width="100%"
               height="250"
               style={{ border: 0 }}

@@ -132,6 +132,7 @@ const ProductCard = ({ product }) => {
 
                             image={product?.thumbnail}
                             alt={product?.title}
+                            loading="lazy"
                             sx={{ objectFit: 'contain' }}
                         />
                         <CardContent sx={{ bgcolor: 'info.main', padding: .5 }}>

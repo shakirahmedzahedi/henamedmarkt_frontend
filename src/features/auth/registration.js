@@ -202,7 +202,7 @@ const Registration = () => {
                             />
                             <Typography component="h5" variant="subtitle1" sx={{ mt: 1.5, mb: 1 }}>Address</Typography>
                             <Grid container spacing={2}>
-                                <Grid item xs={12}><TextField fullWidth size='small' label="AddressLine 1" name="address.apartmentNo" value={inputs.address.apartmentNo} inputProps={{ maxLength: 20 }} onChange={handleOnChange} /></Grid>
+                                <Grid item xs={12}><TextField fullWidth size='small' label="AddressLine 1" name="address.apartmentNo" value={inputs.address.apartmentNo} inputProps={{ maxLength: 50 }} onChange={handleOnChange} /></Grid>
                                  {/*<Grid item xs={6}><TextField fullWidth size='small' label="AddressLine 2" name="address.houseNo" value={inputs.address.houseNo} inputProps={{ maxLength: 20 }} onChange={handleOnChange} /></Grid>
                                  <Grid item xs={6}><TextField  fullWidth size='small' label="Area" name="address.postCode" value={inputs.address.postCode} onChange={handleOnChange} /></Grid>
                                 <Grid item xs={6}><TextField required fullWidth size='small' label="Thana" name="address.postOffice" value={inputs.address.postOffice} onChange={handleOnChange} /></Grid>
