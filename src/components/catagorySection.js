@@ -22,20 +22,35 @@ export default function CatagorySection() {
                 <Divider sx={{ bgcolor: 'info.dark', minHeight: '.2vh' }} />
             </Box >
 
-            <Grid container alignItems={'center'} spacing={1} mt={2}>
+            <Grid container alignItems={'center'} spacing={1}>
 
-                <Grid item xs={12} sm={6} md={4} lg={4} xl={4} sx={{ mt: 2 }} onClick={()=> navigate('/babyAndKids')}>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} sx={{ mt: .5 }} onClick={()=> navigate('/babyAndKids')}>
                     <Card sx={{ maxWidth: 400 }}>
                         <CardActionArea>
                             <CardMedia
                                 component="img"
-                                height="240"
-                                maxWidth="350"
+                                sx={{
+                                    height: { xs: 100, sm: 150, md: 200, lg: 220, xl: 240 }, // responsive height
+                                    objectFit: 'cover', // fills space and looks neat
+                                    width: '100%'
+                                }}
                                 image={children}
                                 alt="baby"
                             />
-                            <CardContent sx={{ bgcolor: 'info.dark' }}>
-                                <Typography gutterBottom variant="body1" component="div">
+                            <CardContent sx={{
+                                bgcolor: 'info.dark',
+                                py: { xs: 1, sm: 1.5, md: 2 }, // responsive vertical padding
+                                px: { xs: 1, sm: 2 },
+                            }}>
+                                <Typography
+                                    gutterBottom
+                                    variant="body1"
+                                    component="div"
+                                    sx={{
+                                        fontSize: { xs: '0.75rem', sm: '0.9rem', md: '1rem' }, // responsive font
+                                        fontWeight: 500,
+                                    }}
+                                >
                                     Baby&Kids
                                 </Typography>
                             </CardContent>
@@ -43,18 +58,33 @@ export default function CatagorySection() {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4} lg={4} xl={4} sx={{ mt: 2 }} onClick={()=> navigate('/familyAndMom')}>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} sx={{ mt: .5 }} onClick={()=> navigate('/familyAndMom')}>
                     <Card sx={{ maxWidth: 400 }}>
                         <CardActionArea>
                             <CardMedia
                                 component="img"
-                                height="240"
-                                maxWidth="350"
+                                sx={{
+                                    height: { xs: 100, sm: 150, md: 200, lg: 220, xl: 240 }, // responsive height
+                                    objectFit: 'cover', // fills space and looks neat
+                                    width: '100%'
+                                }}
                                 image={mom}
                                 alt="mom"
                             />
-                            <CardContent sx={{ bgcolor: 'info.dark' }}>
-                                <Typography gutterBottom variant="body1" component="div">
+                            <CardContent sx={{
+                                bgcolor: 'info.dark',
+                                py: { xs: 1, sm: 1.5, md: 2 }, // responsive vertical padding
+                                px: { xs: 1, sm: 2 },
+                            }}>
+                                <Typography
+                                    gutterBottom
+                                    variant="body1"
+                                    component="div"
+                                    sx={{
+                                        fontSize: { xs: '0.75rem', sm: '0.9rem', md: '1rem' }, // responsive font
+                                        fontWeight: 500,
+                                    }}
+                                >
                                     Family&Mom
                                 </Typography>
                             </CardContent>
@@ -63,18 +93,33 @@ export default function CatagorySection() {
 
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4} lg={4} xl={4} sx={{ mt: 2 }} onClick={()=> navigate('/newArrival')}>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} sx={{ mt: .5 }} onClick={()=> navigate('/newArrival')}>
                     <Card sx={{ maxWidth: 400 }}>
                         <CardActionArea>
                             <CardMedia
                                 component="img"
-                                height="240"
-                                maxWidth="350"
+                                sx={{
+                                    height: { xs: 100, sm: 150, md: 200, lg: 220, xl: 240 }, // responsive height
+                                    objectFit: 'cover', // fills space and looks neat
+                                    width: '100%'
+                                }}
                                 image={family}
                                 alt="new arrival"
                             />
-                            <CardContent sx={{ bgcolor: 'info.dark' }}>
-                                <Typography gutterBottom variant="body1" component="div">
+                            <CardContent sx={{
+                                bgcolor: 'info.dark',
+                                py: { xs: 1, sm: 1.5, md: 2 }, // responsive vertical padding
+                                px: { xs: 1, sm: 2 },
+                            }}>
+                                <Typography
+                                    gutterBottom
+                                    variant="body1"
+                                    component="div"
+                                    sx={{
+                                        fontSize: { xs: '0.75rem', sm: '0.9rem', md: '1rem' }, // responsive font
+                                        fontWeight: 500,
+                                    }}
+                                >
                                     New Arrival
                                 </Typography>
                             </CardContent>

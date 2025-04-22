@@ -40,6 +40,9 @@ import SearchProductPage from './pages/SearchProductPage';
 import FloatingWhatsupButton from './components/FloatingWhatsupButton';
 import ReturnPolicy from './pages/ReturnPolicy';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import OtpVerification from './pages/OtpVerificationPage';
+import AgentChatComponent from './liveChat/AgentChatComponent';
+import { useState } from 'react';
 
 
 
@@ -81,20 +84,52 @@ function App() {
     }
 
   });
+  const [messages, setMessages] = useState([]);
+  const [clientList, setClientList] = useState([]);
+  const [lastMessageTime, setLastMessageTime] = useState({});
+  const [unread, setUnread] = useState({});
+  const [openDialogs, setOpenDialogs] = useState({});
+  const [stompClient, setStompClient] = useState(null);
+  const [showClientList, setShowClientList] = useState(true);
+
+  const [roles, setRoles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('email');
-    const user = JSON.parse(localStorage.getItem('user'));
+    const userRoles = localStorage.getItem('userRole');
     const isAuthenticate = localStorage.getItem('isAuthenticate');
     console.log("Auth Check - token, email, isAuthenticated:", token, email, isAuthenticate); // Log values
+    setRoles(userRoles);
 
     if (token && email && isAuthenticate) {
       // Update Redux state with token and user data if token exists
       console.log("Renew token...................");
       dispatch(renewToken(email));
     }
+   
   }, [dispatch]);
+
+  useEffect(() => {
+    
+  }, [roles]);
+
+  const handleLiveChat=()=>{
+    setRoles(["ADMIN"]);
+  }
+
+  const clearChatState = () => {
+    setMessages([]);
+    setClientList([]);
+    setLastMessageTime({});
+    setUnread({});
+    setOpenDialogs({});
+    setShowClientList(false);
+    if (stompClient && stompClient.connected) {
+      stompClient.disconnect(() => console.log("Disconnected on logout"));
+    }
+  };
 
   return (
     <>
@@ -102,8 +137,8 @@ function App() {
         <CssBaseline />
         <Router>
           <AutoSignOut />
-          <Header />
-          <Box sx={{ pt: { xs: '90px', md: '90px' }, pb: { xs: '0px', md: '0px' } }}>
+          <Header onSignOut={clearChatState} onLiveChat={handleLiveChat} />
+          <Box sx={{ pt: { xs: '50px', md: '90px' }, pb: { xs: '0px', md: '0px' } }}>
             <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="/signIn" element={<SignInPage />} />
@@ -128,6 +163,7 @@ function App() {
               <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
               <Route path="/myPage" element={<ProtectedRoute><MyPage /></ProtectedRoute>} />
               <Route path="/orderSuccess" element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
+              <Route path="/otp-verification" element={<OtpVerification />} />
 
               <Route path="/adminPortal/*" element={<ProtectedRoute><AdminHome /></ProtectedRoute>} >
                 <Route path="" element={<Dashboard />} />
@@ -135,6 +171,7 @@ function App() {
                 <Route path="users" element={<UsersSection />} />
                 <Route path="coupons" element={<CouponsSection />} />
                 <Route path="products" element={<ProductsSection />} />
+                <Route path="chat" element={<AgentChatComponent />} />
                 <Route path="products/addNew" element={<AddProductPage />} />
                 <Route path="products/showAll" element={<ProductTable />} />
                 <Route path="coupons/allCoupons" element={<CouponTable />} />
@@ -148,6 +185,25 @@ function App() {
           </Box>
 
           <FloatingWhatsupButton />
+          {roles && roles.includes('ADMIN') && (
+            <AgentChatComponent
+              messages={messages}
+              setMessages={setMessages}
+              clientList={clientList}
+              setClientList={setClientList}
+              lastMessageTime={lastMessageTime}
+              setLastMessageTime={setLastMessageTime}
+              unread={unread}
+              setUnread={setUnread}
+              openDialogs={openDialogs}
+              setOpenDialogs={setOpenDialogs}
+              stompClient={stompClient}
+              setStompClient={setStompClient}
+              clearChatState={clearChatState}
+              showClientList={showClientList}
+              setShowClientList={setShowClientList}
+            />
+          )}
           <Footer />
         </Router>
 

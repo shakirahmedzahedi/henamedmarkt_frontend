@@ -109,9 +109,9 @@ const PrintableOrder = forwardRef(({ order }, ref) => {
                     <Typography variant="body1">
                         <strong>Subtotal:</strong> BDT {calculateSubtotal()}
                     </Typography>
-                    <Typography variant="body1">
+                    {/* <Typography variant="body1">
                         <strong>Tax (10%):</strong> BDT {calculateTax(calculateSubtotal())}
-                    </Typography>
+                    </Typography> */}
                     {order?.discountCoupon && (
                         <Typography variant="body1">
                             <strong>Discount:</strong> -BDT {order?.discountCoupon?.discountAmount?.toFixed(2)}

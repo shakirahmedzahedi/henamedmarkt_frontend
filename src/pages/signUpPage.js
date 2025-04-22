@@ -17,7 +17,7 @@ const SignUpPage = () => {
  
                     />
                 </Grid>
-                <Grid item sm={5} >
+                <Grid item sm={12} md={10} lg={6} >
                     <Registration />
 
                 </Grid>

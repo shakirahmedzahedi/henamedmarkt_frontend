@@ -74,7 +74,7 @@ const ProductPage = ({ filter }) => {
             <Divider sx={{ bgcolor: 'info.dark', minHeight: '.2vh' }} />
             <Grid container alignItems="center" justifyContent="left" spacing={1} mt={2}>
                 {filteredProducts?.map((product, index) => (
-                    <Grid key={product.id} item xs={6} sm={3} md={3} lg={2.4} xl={2.4} sx={{ mt: 2/* , display: 'flex', justifyContent: 'center'  */}}>
+                    <Grid key={product.id} item xs={6} sm={3} md={3} lg={2.4} xl={2} sx={{ mt: 2/* , display: 'flex', justifyContent: 'center'  */}}>
 
                         <ProductCard product={product} />
 

@@ -28,8 +28,8 @@ const Checkout = () => {
   const [loadingItems, setLoadingItems] = useState({});
   const discountedcoupon = useSelector((state) => state.coupon.discountedCoupon); // Coupon state
   const articles = activeCart?.articles;
-  const userId = user.id;
-  const userCity = user.address.city;
+  const userId = user?.id;
+  const userCity = user?.address.city;
   const error = useSelector((state) => state.coupon.error);
   const [discountCodeValue, setDiscountCodeValue] = useState('');
   const [subtotal, setSubtotal] = useState(0);
@@ -392,12 +392,12 @@ const Checkout = () => {
                 </Typography>
               </Box>
 
-              <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
+              {/* <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="body1">Tax <span>included</span> (10%):</Typography>
                 <Typography variant="body1" color="text.secondary">
                   ৳ {tax}
                 </Typography>
-              </Box>
+              </Box> */}
               {user?.initialDiscount && (
                 <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
                   <Typography variant="body1">Welcome Discount:</Typography>

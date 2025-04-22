@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import { IconButton } from "@mui/material"; // Material-UI for the button
 import WhatsAppIcon from "@mui/icons-material/WhatsApp"; // WhatsApp Icon from Material-UI Icons
 import ChatIcon from "@mui/icons-material/Chat";
+import ClientChatComponent from "../liveChat/ClientChatComponent";
 
 const FloatingWhatsupButton = () => {
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const handleWhatsAppClick = () => {
     const phoneNumber = "8801903652681"; // Replace with the target WhatsApp number
     const message = "Hello! I need assistance."; // Default message
@@ -14,12 +17,15 @@ const FloatingWhatsupButton = () => {
     window.open(whatsappURL, "_blank");
   };
   const handleLiveChatClick = () => {
-    // Logic to open your Live Chat functionality
-    alert("Live Chat button clicked! Under construction");
-    // Example: Open a live chat widget or redirect to a live chat page
+    setIsChatOpen(true); // Show the chat component
+  };
+
+  const handleCloseChat = () => {
+    setIsChatOpen(false); // Close chat from within the chat component
   };
 
   return (
+    <>
     <div style={styles.floatingButtonsContainer}>
       {/* WhatsApp Button */}
       <IconButton
@@ -39,6 +45,13 @@ const FloatingWhatsupButton = () => {
         <ChatIcon fontSize="large" />
       </IconButton>
     </div>
+    {isChatOpen && (
+        <div style={styles.chatContainer}>
+          <ClientChatComponent onClose={handleCloseChat} />
+        </div>
+      )}
+
+    </>
   );
 };
 
@@ -67,6 +80,18 @@ const styles = {
         height: "60px",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow
       },
+      /* chatContainer: {
+        position: "fixed",
+        bottom: "80px",
+        right: "20px",
+        zIndex: 2000,
+        width: "350px",
+        height: "450px",
+        boxShadow: "0px 0px 12px rgba(0,0,0,0.2)",
+        borderRadius: "10px",
+        backgroundColor: "#fff",
+        overflow: "hidden",
+      }, */
 };
 
 export default FloatingWhatsupButton;

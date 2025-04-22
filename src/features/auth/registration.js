@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     Box, Paper, Avatar, Typography, TextField, FormControlLabel, Checkbox, Button, Grid, Link, IconButton, InputAdornment,
-    MenuItem, FormControl, Select, InputLabel, CircularProgress
+    MenuItem, FormControl, Select, InputLabel, CircularProgress, Alert
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Visibility from '@mui/icons-material/Visibility';
@@ -10,7 +10,8 @@ import { post } from '../../reducer/api/APIService';
 import { clearError } from '../../reducer/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from '../../reducer/services/AuthService';
-import data from "../../assets/data.json"
+import data from "../../assets/data1.json"
+import { useNavigate } from 'react-router-dom';
 
 
 const Registration = () => {
@@ -29,7 +30,7 @@ const Registration = () => {
             city: ''
         }
     });
-
+    const navigate = useNavigate();
     const [errors, setErrors] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -37,8 +38,10 @@ const Registration = () => {
     const loading = useSelector((state) => state.auth.loading);
     const responseError = useSelector((state) => state.auth.error);
     const message = useSelector((state) => state.auth.text);
-    const division =['Dhaka Division','Chittagong Division','Rajshahi Division','Khulna Division','Barishal Division',
-        'Sylhet Division','Rangpur Division','Mymensingh Division'];
+    /* const division =['Dhaka Division','Chittagong Division','Rajshahi Division','Khulna Division','Barishal Division',
+        'Sylhet Division','Rangpur Division','Mymensingh Division']; */
+
+    const division = Object.keys(data);
 
     const validate = () => {
         const newErrors = [];
@@ -54,12 +57,9 @@ const Registration = () => {
         if (inputs.password.length < 6) newErrors.push('Password must be at least 6 characters long,');
         if (!phoneRegex.test(inputs.phoneNo)) newErrors.push('Phone number must be between 10 and 15 digits,');
         if (!inputs.terms) newErrors.push('You must agree to the terms and conditions,');
-
-       /*  if (!alphanumericRegex.test(inputs.address.apartmentNo)) newErrors.push('Address Line must be  up to 20 characters,');
-        if (!alphanumericRegex.test(inputs.address.houseNo)) newErrors.push('Address Line must be  up to 20 characters,');
-        if (!letterRegex.test(inputs.address.postCode)) newErrors.push('Area up to 20 characters,');
-        if (!letterRegex.test(inputs.address.postOffice)) newErrors.push('Thana must contain only letters and be up to 15 characters,');*/
-        if (!(inputs.address.city)) newErrors.push('City required,'); 
+        if (!(inputs.address.apartmentNo)) newErrors.push('Address Line requied,');
+        if (!(inputs.address.houseNo)) newErrors.push('Division required,');
+        if (!(inputs.address.city)) newErrors.push('City required,');
 
         setErrors(newErrors);
         return newErrors.length === 0;
@@ -67,27 +67,48 @@ const Registration = () => {
 
     const handleOnChange = (e) => {
         const { name, value, type, checked } = e.target;
-        if (name === 'address.city') {
-            // Reset postOffice and postCode when city is changed
-            setInputs(prevState => ({
-                ...prevState,
-                address: { 
-                    ...prevState.address, 
-                    city: value, 
-                    postOffice: '',  // Reset postOffice
-                    postCode: ''     // Reset postCode
+
+        if (name === 'address.houseNo') { // Division
+            setInputs(prev => ({
+                ...prev,
+                address: {
+                    ...prev.address,
+                    houseNo: value,
+                    city: '',
+                    postOffice: '',
+                    postCode: ''
                 }
             }));
-        }
-        else if (name.startsWith('address.')) {
-            const field = name.split('.')[1];
-            setInputs(prevState => ({
-                ...prevState,
-                address: { ...prevState.address, [field]: value }
+        } else if (name === 'address.city') {
+            setInputs(prev => ({
+                ...prev,
+                address: {
+                    ...prev.address,
+                    city: value,
+                    postOffice: '',
+                    postCode: ''
+                }
             }));
-        } else {
-            setInputs(prevState => ({
-                ...prevState,
+        } else if (name === 'address.postOffice') {
+            setInputs(prev => ({
+                ...prev,
+                address: {
+                    ...prev.address,
+                    postOffice: value,
+                    postCode: ''
+                }
+            }));
+        } else if (name.startsWith('address.')) {
+            const field = name.split('.')[1];
+            setInputs(prev => ({
+                ...prev,
+                address: { ...prev.address, [field]: value }
+            }));
+        } 
+        
+        else {
+            setInputs(prev => ({
+                ...prev,
                 [name]: type === 'checkbox' ? checked : value
             }));
         }
@@ -101,17 +122,41 @@ const Registration = () => {
         e.preventDefault();
         dispatch(clearError());
         if (validate()) {
-            dispatch(signUp(inputs));
-        }
+            try {
+                const phone=inputs.phoneNo;
+                const prefiz='+88';
+                inputs.phoneNo=prefiz+phone;
+                const resultAction = await dispatch(signUp(inputs));
 
-        console.log(message);
+                console.log(resultAction);
+
+                // Check for fulfilled action
+                if (resultAction.type === 'auth/signup/fulfilled' && resultAction.payload === 'User registered. OTP verification needed.') {
+                    navigate('/otp-verification', {
+                        state: {
+                            email: inputs.email,
+                            phoneNo: inputs.phoneNo,
+                            action: "signUp"
+                        }
+                    });
+                } else {
+                    console.error("Signup failed:", resultAction.payload || resultAction.error);
+                }
+
+            } catch (error) {
+                console.error("Error during signup:", error);
+            }
+        }
     };
 
     return (
         <>
             {loading ? <CircularProgress size={96} /> :
                 <Box sx={{ p: 2 }}>
-                    <Box component={Paper} elevation={6} square sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Box component={Paper}
+                        elevation={6}
+                        square
+                        sx={{ width: '100%', maxWidth: '100%', p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Avatar sx={{ m: 1, bgcolor: 'primary.main', textAlign: 'center' }}>
                             <LockOutlinedIcon />
                         </Avatar>
@@ -196,68 +241,81 @@ const Registration = () => {
                                 label="Phone No"
                                 name="phoneNo"
                                 value={inputs.phoneNo}
-                                inputProps={{ maxLength: 15 }}
+                                inputProps={{
+                                    maxLength: 15
+                                }}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">+88</InputAdornment>,
+                                }}
                                 onChange={handleOnChange}
                                 autoComplete="phoneNo"
                             />
                             <Typography component="h5" variant="subtitle1" sx={{ mt: 1.5, mb: 1 }}>Address</Typography>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12}><TextField fullWidth size='small' label="AddressLine 1" name="address.apartmentNo" value={inputs.address.apartmentNo} inputProps={{ maxLength: 50 }} onChange={handleOnChange} /></Grid>
-                                 {/*<Grid item xs={6}><TextField fullWidth size='small' label="AddressLine 2" name="address.houseNo" value={inputs.address.houseNo} inputProps={{ maxLength: 20 }} onChange={handleOnChange} /></Grid>
-                                 <Grid item xs={6}><TextField  fullWidth size='small' label="Area" name="address.postCode" value={inputs.address.postCode} onChange={handleOnChange} /></Grid>
-                                <Grid item xs={6}><TextField required fullWidth size='small' label="Thana" name="address.postOffice" value={inputs.address.postOffice} onChange={handleOnChange} /></Grid>
-                                <Grid item xs={12}><TextField required fullWidth size='small' label="City" name="address.city" value={inputs.address.city} onChange={handleOnChange} /></Grid> */}
-                                <Grid item xs={6}>
-                                    <FormControl fullWidth size="small">
+                            <Grid container spacing={2} >
+                                <Grid item xs={12}>
+                                    <TextField required fullWidth size='small'
+                                        label="Address Line"
+                                        name="address.apartmentNo"
+                                        value={inputs.address.apartmentNo}
+                                        inputProps={{
+                                            maxLength: 50
+                                        }}
+                                        onChange={handleOnChange} />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl required fullWidth size="small">
                                         <InputLabel>Division</InputLabel>
                                         <Select label="Division" name="address.houseNo" value={inputs.address.houseNo} onChange={handleOnChange}>
                                             {Object.keys(division).map((d) => (
                                                 <MenuItem key={d} value={division[d]}>
-                                                   <Typography >{division[d]}</Typography> 
+                                                    <Typography >{division[d]}</Typography>
                                                 </MenuItem>
                                             ))}
                                         </Select>
                                     </FormControl>
                                 </Grid>
-                                <Grid item xs={6}>
-                                    <FormControl required fullWidth size="small">
+                                <Grid item xs={12} md={6}>
+                                    <FormControl required fullWidth size="small" disabled={!inputs.address.houseNo}>
                                         <InputLabel>City</InputLabel>
                                         <Select label="City" name="address.city" value={inputs.address.city} onChange={handleOnChange}>
-                                            {Object.keys(data).map((city) => (
-                                                <MenuItem key={city} value={city}>
-                                                   <Typography >{city}</Typography> 
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <FormControl fullWidth size='small' disabled={!inputs.address.city}>
-                                        <InputLabel>Thana</InputLabel>
-                                        <Select label="Thana" name="address.postOffice" value={inputs.address.postOffice} onChange={handleOnChange}>
-                                            {inputs.address.city &&
-                                                Object.keys(data[inputs.address.city]).map((upazila) => (
-                                                    <MenuItem key={upazila} value={upazila}>
-                                                       <Typography >{upazila}</Typography> 
+                                            {inputs.address.houseNo &&
+                                                Object.keys(data[inputs.address.houseNo]).map((city) => (
+                                                    <MenuItem key={city} value={city}>
+                                                        <Typography >{city}</Typography>
                                                     </MenuItem>
                                                 ))}
                                         </Select>
                                     </FormControl>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl fullWidth size='small' disabled={!inputs.address.city}>
+                                        <InputLabel>Thana</InputLabel>
+                                        <Select label="Thana" name="address.postOffice" value={inputs.address.postOffice} onChange={handleOnChange}>
+                                            {inputs.address.houseNo &&
+                                                inputs.address.city &&
+                                                Object.keys(data[inputs.address.houseNo][inputs.address.city]).map((thana) => (
+                                                    <MenuItem key={thana} value={thana}>
+                                                        <Typography>{thana}</Typography>
+                                                    </MenuItem>
+                                                ))}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
                                     <FormControl fullWidth size='small' disabled={!inputs.address.postOffice}>
                                         <InputLabel>Area</InputLabel>
                                         <Select
-                                        label="Area"
+                                            label="Area"
                                             name="address.postCode"
                                             value={inputs.address.postCode}
                                             onChange={handleOnChange}
                                         >
-                                            {inputs.address.postOffice &&
-                                                data[inputs.address.city][inputs.address.postOffice].map((union) => (
-                                                    <MenuItem key={union} value={union}>
-                                                      <Typography >{union}</Typography>  
-                                                    </MenuItem>
+                                            {inputs.address.houseNo &&
+                                                inputs.address.city &&
+                                                inputs.address.postOffice &&
+                                                Array.isArray(data[inputs.address.houseNo][inputs.address.city][inputs.address.postOffice]) &&
+                                                data[inputs.address.houseNo][inputs.address.city][inputs.address.postOffice].map((area) => (
+                                                    <MenuItem key={area} value={area}>{area}</MenuItem>
                                                 ))}
                                         </Select>
                                     </FormControl>
@@ -288,7 +346,7 @@ const Registration = () => {
                                 <Box sx={{ mt: 2 }}>
                                     {errors.map((error, index) => (
                                         <body1 key={index} color="info.main">
-                                            {error}
+                                            <Alert severity="error">{error}</Alert>
                                         </body1>
                                     ))}
                                 </Box>

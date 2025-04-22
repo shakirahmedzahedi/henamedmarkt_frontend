@@ -92,59 +92,72 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <Box sx={{ position: 'relative', width: '200px' }}>
-        {buttonLoading && (
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)', // White with opacity for blur effect
-                    backdropFilter: 'blur(.5px)', // Blurring effect
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 2, // Ensure it's above the card
-                }}
-            >
-                <CircularProgress size={40} />
-            </Box>
-        )}
+        <Box sx={{ position: 'relative', /* width: { xs: '100%', sm: '48%', md: '31%', lg: '24%' } */ m: 1 }}>
+            {buttonLoading && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        backdropFilter: 'blur(.5px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 2,
+                    }}
+                >
+                    <CircularProgress size={40} />
+                </Box>
+            )}
+
             <Card
                 sx={{
-                    maxWidth: 200, // Set a maximum width
-                    height: 400, // Set a fixed height for the card
+                    width: '100%',
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between', // Adjust alignment
+                    justifyContent: 'space-between',
                     boxShadow: 3,
                     borderRadius: 2,
                 }}
             >
-                <CardActionArea >
+                <CardActionArea sx={{ flexGrow: 1 }}>
                     <Link to={`/productDetails/${product?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <CardMedia
                             component="img"
-                            height="200"
-                            maxWidth="200"// Adjust height to fit the fixed card size
-
                             image={product?.thumbnail}
                             alt={product?.title}
                             loading="lazy"
-                            sx={{ objectFit: 'contain' }}
-                        />
-                        <CardContent sx={{ bgcolor: 'info.main', padding: .5 }}>
-                            <Typography 
-                            gutterBottom 
-                            variant="body2" 
                             sx={{
-                                display: '-webkit-box',
-                                WebkitBoxOrient: 'vertical',
-                                WebkitLineClamp: 2,  // Limit to 2 lines
-                                overflow: 'hidden'
+                                width: '100%',
+                                height: { xs: 120, sm: 160, md: 180, lg: 200 },
+                                objectFit: 'contain'
                             }}
+                        />
+                        <CardContent
+                            sx={{
+                                bgcolor: 'info.main',
+                                p: { xs: 1, sm: 1.5 },
+                                flexGrow: 1,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                minHeight: 140,
+                            }}
+                        >
+                            <Typography
+                                gutterBottom
+                                variant="body2"
+                                sx={{
+                                    display: '-webkit-box',
+                                    WebkitBoxOrient: 'vertical',
+                                    WebkitLineClamp: 2,
+                                    overflow: 'hidden',
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                                }}
                             >
                                 {product?.title}
                             </Typography>
@@ -159,16 +172,10 @@ const ProductCard = ({ product }) => {
                                 />
                             </Box>
 
-                            {/* Price Display */}
                             {product?.discountPercentage ? (
-                                <Box display="block" alignItems="center" mt={.5} gap={.5}>
-                                    {/* Original Price */}
+                                <Box mt={0.5}>
                                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                                        <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                            sx={{ textDecoration: 'line-through' }}
-                                        >
+                                        <Typography variant="body2" color="textSecondary" sx={{ textDecoration: 'line-through' }}>
                                             ৳ {product?.price}
                                         </Typography>
                                         <Typography variant="body2" color="secondary">
@@ -180,34 +187,70 @@ const ProductCard = ({ product }) => {
                                     </Typography>
                                 </Box>
                             ) : (
-                                <Typography variant="body2" mt={1} fontWeight="bold" color="primary">
-                                    ৳ {product?.price.toFixed(2)}
-                                </Typography>
+                                <Box mt={0.5}>
+                                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                                        <Typography variant="body2" color="textSecondary" sx={{ textDecoration: 'line-through' }}>
+
+                                        </Typography>
+                                        <Typography variant="body2" color="secondary">
+
+                                        </Typography>
+                                    </Box>
+                                    <Typography variant="body2" mt={1} fontWeight="bold" color="primary">
+                                        ৳ {product?.price.toFixed(2)}
+                                    </Typography>
+                                </Box>
                             )}
                         </CardContent>
                     </Link>
                 </CardActionArea>
-                <Box display="flex" flexDirection="column" gap={1} justifyContent="space-between">
+
+                {/* <Box display="flex" gap={1} p={1}>
                     <Button
                         disabled={product?.stock <= 0}
                         variant="contained"
                         onClick={handleAddToCart}
                         fullWidth
                     >
-                        {buttonLoading ? <CircularProgress size={24} /> : <AddShoppingCartOutlinedIcon />}
+                        <AddShoppingCartOutlinedIcon />
                     </Button>
+                    <IconButton onClick={handleToggleFavorite} color="error">
+                        {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    </IconButton>
+                </Box> */}
+                <Box display="flex" gap={1} p={1}>
                     <Button
+                        disabled={product?.stock <= 0}
                         variant="contained"
-                        onClick={handleToggleFavorite}
+                        onClick={handleAddToCart}
                         fullWidth
+                        sx={{
+                            minWidth: 0,
+                            px: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
                     >
-                        {isFavorite ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+                        <AddShoppingCartOutlinedIcon />
                     </Button>
 
+                    <Button
+                        onClick={handleToggleFavorite}
+                        variant="contained"
+                        color={isFavorite ? 'error' : 'inherit'}
+                        sx={{
+                            minWidth: 0,
+                            px: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    </Button>
                 </Box>
-
             </Card>
-            
         </Box>
     );
 };

@@ -39,6 +39,9 @@ const UserTable = () => {
                         Email
                     </TableCell>
                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
+                        phoneNo
+                    </TableCell>
+                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
                         Roles
                     </TableCell>
                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
@@ -59,6 +62,7 @@ const UserTable = () => {
                             <TableCell align="right">{user.firstName}</TableCell>
                             <TableCell align="right">{user.lastName}</TableCell>
                             <TableCell align="right">{user.email}</TableCell>
+                            <TableCell align="right">{user.phoneNo}</TableCell>
                             <TableCell align="right">{user.roles}</TableCell>
                             <TableCell align="right"><Button disabled= {user.roles.includes('ADMIN')} onClick={()=>handleMakeAdmin(user)}>
                                 Make Admin

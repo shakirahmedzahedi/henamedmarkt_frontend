@@ -67,12 +67,13 @@ const images = [
 
 const ImageSlider = () => {
   return (
-    <Box 
-      width="100%" 
-      margin="auto" 
+    <Box
+      width="100%"
+      margin="auto"
       sx={{
         overflow: 'hidden',
-        height: { xs: '150px', sm: '150px', md:'300px', lg:'420px', xl:'500px' }, // Responsive height
+        position: 'relative',
+        height: { xs: '200px', sm: '350px', md: '300px', lg: '350px', xl: '350px' },
       }}
     >
       <Swiper
@@ -82,18 +83,32 @@ const ImageSlider = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000 }}
         loop
+        style={{ height: '100%' }}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <img 
-              src={image} 
-              alt={`Slide ${index + 1}`} 
+          <SwiperSlide key={index} style={{ height: '100%' }}>
+            {/* <img
+              src={image}
+              alt={`Slide ${index + 1}`}
               style={{
                 width: '100%',
                 height: '100%', // Ensures the image fills the height of the container
                 borderRadius: '8px',
-                objectFit: 'contain' // Ensures the image covers the container, cropping if necessary
-              }} 
+                objectFit: 'scale-down', // Ensures the image covers the container, cropping if necessary
+                display: 'block',
+                mx: 'auto'
+
+              }}
+            /> */}
+            <Box
+              component="img"
+              src={image}
+              alt={`Slide ${index + 1}`}
+              sx={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain', // OR 'contain' depending on image type
+              }}
             />
           </SwiperSlide>
         ))}

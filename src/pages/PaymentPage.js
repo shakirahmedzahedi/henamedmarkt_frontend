@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { addNewOrder } from './../reducer/services/OrderService'; // Import your Redux service
 import { clearCoupon } from '../reducer/slices/DiscountCouponSlice';
-import data from "../assets/data.json"
+import data from "../assets/data1.json"
 
 
 const PaymentPage = () => {
@@ -42,19 +42,30 @@ const PaymentPage = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [differentAddress, setDifferentAddress] = useState(false);
   const [charge, setCharge] = useState(deliveryCharge);
+  const [deliveryTime, setDeliveryTime] = useState("");
   const isFirstRender = useRef(true);
-  /*  const [newAddress, setNewAddress] = useState({
-     apartmentNo: '',
-     houseNo: '',
-     postCode: '',
-     postOffice: '',
-     city: '',
-   }); */
-  const [newAddress, setNewAddress] = useState(user.address);
-  const division = ['Dhaka Division', 'Chittagong Division', 'Rajshahi Division', 'Khulna Division', 'Barishal Division',
-    'Sylhet Division', 'Rangpur Division', 'Mymensingh Division'];
+  const [buttonLoading, setButtonLoading] = useState(false);
 
+  const [newAddress, setNewAddress] = useState(user?.address || {
+    apartmentNo: '',
+    houseNo: '',
+    postCode: '',
+    postOffice: '',
+    city: '',
+  });
+ 
 
+  const division = Object.keys(data);
+
+ 
+ 
+  // 2. Set delivery time when user loads
+  useEffect(() => {
+    if (user?.address?.city) {
+      setNewAddress(user.address); // also set address initially if needed
+      setDeliveryTime(calculateDeliveryTime(user.address.city));
+    }
+  }, [user]);
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -63,12 +74,19 @@ const PaymentPage = () => {
     if (articles?.length > 0) {
       const totalWeight = calculatTotalWeight();
       setCharge(calculatDeliveryCharge(totalWeight, newAddress.city))
+      setDeliveryTime(calculateDeliveryTime(newAddress.city))
       console.log("Called");
     }
   }, [newAddress]);
 
-  const [buttonLoading, setButtonLoading] = useState(false);
+  if (!user) {
+    return <Typography>Loading...</Typography>;
+  }
 
+
+ 
+
+  
   const handlePaymentChange = (event) => {
     setSelectedPayment(event.target.value);
   };
@@ -84,18 +102,45 @@ const PaymentPage = () => {
   };
 
   const handleAddressChange = (field, value) => {
-    if(field==="city"){
+     if (field === "apartmentNo") {
       setNewAddress({
         ...newAddress,
-        city: value, 
+        apartmentNo: value,
+        houseNo:'',
+        city: '',
         postOffice: '',  // Reset postOffice
-        postCode: ''})
+        postCode: ''
+      })
     }
-    else
-    {
-      setNewAddress({ ...newAddress, [field]: value });
+    else if (field === "houseNo") {
+      setNewAddress({
+        ...newAddress,
+        houseNo:value,
+        city: '',
+        postOffice: '',  // Reset postOffice
+        postCode: ''
+      })
     }
     
+    else if (field === "city") {
+      setNewAddress({
+        ...newAddress,
+        city: value,
+        postOffice: '',  // Reset postOffice
+        postCode: ''
+      })
+    }
+    else if (field === "postOffice") {
+      setNewAddress({
+        ...newAddress,
+        postOffice: value,  // Reset postOffice
+        postCode: ''
+      })
+    }
+    else {
+      setNewAddress({ ...newAddress, [field]: value });
+    }
+
   };
 
   const handlePlaceOrder = async () => {
@@ -140,6 +185,18 @@ const PaymentPage = () => {
 
       return acc + (weight + 100) * item.unit;
     }, 0);
+  };
+
+  let calculateDeliveryTime = (city) => {
+    if (city.toUpperCase() === "DHAKA INTER CITY") {
+      return " 0-1 days";
+    }
+    if (city.toUpperCase() === "DHAKA OUTER CITY" || city.toUpperCase() === "GAZIPUR DISTRICT" || city.toUpperCase() === "NARAYANGANJ DISTRICT") {
+      return " 1-2 days";
+    }
+    else {
+      return " 2-3 days";
+    }
   };
 
   const calculatDeliveryCharge = (totalWeight, city) => {
@@ -187,7 +244,8 @@ const PaymentPage = () => {
 
     }
 
-    if (city.toUpperCase()==="DHAKA OUTER CITY" || city.toUpperCase() === "GAZIPUR DISTRICT" || city.toUpperCase() === "NARAYANGANJ DISTRICT") {
+    if (city.toUpperCase() === "DHAKA OUTER CITY" || city.toUpperCase() === "GAZIPUR DISTRICT" || city.toUpperCase() === "NARAYANGANJ DISTRICT") {
+      setDeliveryTime("1-2 days");
       if (totalWeight <= 1000) {
         return 100;
       }
@@ -230,6 +288,7 @@ const PaymentPage = () => {
 
     }
     else {
+      setDeliveryTime("2-4 days");
       if (totalWeight <= 1000) {
         return 120;
       }
@@ -275,7 +334,7 @@ const PaymentPage = () => {
   };
 
   return (
-
+  
     <Box sx={{ padding: .5, minHeight: '78vh', ml: { xs: .5, sm: 3, md: 11, lg: 15, xl: 23 }, mr: { xs: .5, sm: 3, md: 11, lg: 15, xl: 23 }, pb: 9 }}>
       <Box sx={{ textAlign: 'center' }}>
         <Typography variant="h3" align="center" color="primary" sx={{ fontSize: { xs: '24px', md: '36px', lg: '36px' } }}>
@@ -350,8 +409,8 @@ const PaymentPage = () => {
                   <Box mt={2}>
                     <Typography variant="subtitle1" mb={1}>Shipping Address</Typography>
                     <Grid container spacing={2}>
-                      <TextField margin='normal' fullWidth size='small' label="Address Line" name="newAddress.apartmentNo" value={newAddress.apartmentNo} inputProps={{ maxLength: 50 }} onChange={(e) => handleAddressChange('apartmentNo', e.target.value)} />
-                      
+                      <TextField margin='normal' required fullWidth size='small' label="Address Line" name="newAddress.apartmentNo" value={newAddress.apartmentNo} inputProps={{ maxLength: 50 }} onChange={(e) => handleAddressChange('apartmentNo', e.target.value)} />
+
                       <FormControl fullWidth size="small" margin='normal'>
                         <InputLabel>Division</InputLabel>
                         <Select label="Division" name="houseNo" value={newAddress.houseNo} onChange={(e) => handleAddressChange('houseNo', e.target.value)}>
@@ -362,23 +421,25 @@ const PaymentPage = () => {
                           ))}
                         </Select>
                       </FormControl>
-                      <FormControl required fullWidth size="small" margin='normal'>
+                      <FormControl required fullWidth size="small" margin='normal' disabled={!newAddress.houseNo}>
                         <InputLabel>City</InputLabel>
                         <Select label="City" name="city" value={newAddress.city} onChange={(e) => handleAddressChange('city', e.target.value)}>
-                          {Object.keys(data).map((city) => (
-                            <MenuItem key={city} value={city}>
-                              <Typography >{city}</Typography>
-                            </MenuItem>
-                          ))}
+                          {newAddress.houseNo &&
+                            Object.keys(data[newAddress.houseNo]).map((city) => (
+                              <MenuItem key={city} value={city}>
+                                <Typography >{city}</Typography>
+                              </MenuItem>
+                            ))}
                         </Select>
                       </FormControl>
                       <FormControl fullWidth size='small' margin='normal' disabled={!newAddress.city}>
                         <InputLabel>Thana</InputLabel>
                         <Select label="Thana" name="postOffice" value={newAddress.postOffice} onChange={(e) => handleAddressChange('postOffice', e.target.value)}>
-                          {newAddress.city &&
-                            Object.keys(data[newAddress.city]).map((upazila) => (
-                              <MenuItem key={upazila} value={upazila}>
-                                <Typography >{upazila}</Typography>
+                          {newAddress.houseNo &&
+                            newAddress.city &&
+                            Object.keys(data[newAddress.houseNo][newAddress.city]).map((thana) => (
+                              <MenuItem key={thana} value={thana}>
+                                <Typography>{thana}</Typography>
                               </MenuItem>
                             ))}
                         </Select>
@@ -392,11 +453,12 @@ const PaymentPage = () => {
                           onChange={(e) => handleAddressChange('postCode', e.target.value)}
                         >
 
-                          {newAddress.postOffice &&
-                            data[newAddress.city][newAddress.postOffice].map((union) => (
-                              <MenuItem key={union} value={union}>
-                                <Typography >{union}</Typography>
-                              </MenuItem>
+                          {newAddress.houseNo &&
+                            newAddress.city &&
+                            newAddress.postOffice &&
+                            Array.isArray(data[newAddress.houseNo][newAddress.city][newAddress.postOffice]) &&
+                            data[newAddress.houseNo][newAddress.city][newAddress.postOffice].map((area) => (
+                              <MenuItem key={area} value={area}>{area}</MenuItem>
                             ))}
                         </Select>
                       </FormControl>
@@ -433,13 +495,13 @@ const PaymentPage = () => {
                     disabled={!termsAccepted}
                     onClick={handlePlaceOrder}
                   >
-                    ORDER SUMMERY
+                    PLACE ORDER
                   </Button>
                 </Box>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item textAlign={'right'} xs={12} md={4} pl={3} >
+          <Grid item textAlign={'right'} xs={12} md={4} pl={0} mt={2}>
             <Paper elevation={3}>
               <Typography variant="h5" textAlign={'center'} gutterBottom>
                 Order Summary
@@ -454,12 +516,12 @@ const PaymentPage = () => {
                 </Typography>
               </Box>
 
-              <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
+              {/* <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="body1">Tax <span>included</span> (10%):</Typography>
                 <Typography variant="body1" color="text.secondary">
                   ৳ {tax}
                 </Typography>
-              </Box>
+              </Box> */}
               {initialDiscount &&
                 <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
                   <Typography variant="body1">Welcome Discount:</Typography>
@@ -496,6 +558,11 @@ const PaymentPage = () => {
                 </Typography>
                 <Typography variant="h6" fontWeight="bold" color="primary">
                   ৳ {total}
+                </Typography>
+              </Box>
+              <Box sx={{ mb: 1, p: 1, display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body1" color="primary">
+                  Estimated Delivery Time:{deliveryTime}
                 </Typography>
               </Box>
             </Paper>

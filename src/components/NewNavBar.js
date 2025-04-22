@@ -87,7 +87,7 @@ export default function NewNavBar() {
                         textColor="secondary"
                         indicatorColor="none"
                         aria-label="navigation tabs"
-                        disableRipple
+                        
                         sx={{
                             height: '30px', // Set height of Tabs
                             minHeight: '30px', // Override default min-height
@@ -109,24 +109,28 @@ export default function NewNavBar() {
                             label="Products"
                             component={Link}
                             to="/allproduct"
+                            disableRipple
                         />
                         <Tab
                             value="/newArrival"
                             label="New Arrival"
                             component={Link}
                             to="/newArrival"
+                            disableRipple
                         />
                         <Tab
                             value="/babyAndKids"
                             label="Baby & Kids"
                             component={Link}
                             to="/babyAndKids"
+                            disableRipple
                         />
                         <Tab
                             value="/familyAndMom"
                             label="Family & Mom"
                             component={Link}
                             to="/familyAndMom"
+                            disableRipple
                         />
                     </Tabs>
                 </Grid>

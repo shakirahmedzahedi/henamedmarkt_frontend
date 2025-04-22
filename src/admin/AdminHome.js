@@ -24,6 +24,7 @@ const AdminHome = () => {
         setCollapsed(!collapsed);
     };
 
+    console.log("ADH");
     return (
         <div>
 

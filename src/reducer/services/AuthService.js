@@ -16,15 +16,13 @@ export const signIn = createAsyncThunk(
             localStorage.setItem('token', response.token);
             localStorage.setItem('email', credentials.email); 
             localStorage.setItem('isAuthenticate', true); 
+            localStorage.setItem('userRole', JSON.stringify(response.data.roles)); 
             console.error(response.data);
 
             return response.data; 
 
         } catch (error) {
             console.error('Sign-in error:', error);
-            localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    localStorage.removeItem('isAuthenticate');
             return rejectWithValue(error.response?.data || 'Sign-in failed');
         }
     }
@@ -56,6 +54,7 @@ export const logOut = createAsyncThunk(
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('isAuthenticate');
+    localStorage.removeItem('userRole');
      dispatch(signout());
      return true;
 

@@ -95,7 +95,7 @@ const SmallFooter = () => {
   return (
     <>
 
-    <Box sx={{ minHeight: '20vh', bgcolor: 'primary.main', color: 'info.main', padding: 2 }}>
+    <Box sx={{ minHeight: '20vh', bgcolor: 'primary.main', color: 'info.main', padding: 2,mb:10 }}>
       <Box sx={{ ml: { sm: 11, md: 15, lg: 19, xl: 23 }, mr: { sm: 11, md: 15, lg: 19, xl: 23 } }}>
         <Grid container>
           <Grid item xs={10} sm={6}>

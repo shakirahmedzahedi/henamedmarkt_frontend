@@ -53,6 +53,9 @@ const CouponsSection = () => {
     const handleShowAllCoupons = () => {
         navigate('/adminPortal/coupons/allCoupons');
     };
+   
+      
+     
 
     return (
         <>
@@ -61,6 +64,7 @@ const CouponsSection = () => {
                 <Typography variant="h4" sx={{ mb: 3 }}>
                     Coupon Section
                 </Typography>
+            
 
                 {/* Cards Container using Grid */}
                 <Grid container spacing={2} justifyContent="center">

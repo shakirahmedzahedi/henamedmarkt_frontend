@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 import { post } from './../reducer/api/APIService';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 
 
@@ -12,6 +12,8 @@ function ResetPassword() {
   const [success, setSuccess] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
+  const { email } = location.state || {};
  const [message, setMessage] = useState('');
 
     useEffect(() => {
@@ -30,11 +32,17 @@ function ResetPassword() {
     }
     setError('');
     const req = {
-        email: message,
+        email: email,
         password
     }
     try {
-        await post(`/auth/forgetPassword`, req); 
+        const result = await post(`/auth/forgetPassword`, req); 
+        if(result.errors.length == 0 ){
+          setSuccess(true);
+          setError('');
+        }else {
+          setError(result.errors[0].message); 
+        }
         setSuccess(true);
         setError('');
       } catch (err) {
@@ -45,7 +53,7 @@ function ResetPassword() {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 5 }}>
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 5, minHeight:'70vh' }}>
       <Typography variant="h5" align="center" gutterBottom>
         Reset Password
       </Typography>

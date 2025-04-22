@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from './../assets/logo1.png';
 import {
     AppBar, Tabs, Tab, Button, Grid, Toolbar, useTheme, useMediaQuery, Typography, Box, IconButton,
-    Badge, TextField, InputAdornment, Avatar, Menu, MenuItem,List, Paper, ListItem, ListItemButton, ListItemText
+    Badge, TextField, InputAdornment, Avatar, Menu, MenuItem, List, Paper, ListItem, ListItemButton, ListItemText
 } from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
@@ -18,8 +18,11 @@ import NewNavBar from './NewNavBar';
 import { setSearchQuery } from '../reducer/slices/ProductSlice';
 import { feachActiveCartsByUser } from '../reducer/services/CartService';
 import { clearCart } from '../reducer/slices/CartSlice';
+import { Send, Chat, Close, Minimize, OpenInFull } from '@mui/icons-material';
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
-export default function Header() {
+export default function Header({ onSignOut, onLiveChat }) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -37,14 +40,16 @@ export default function Header() {
     };
 
     const [anchorEl, setAnchorEl] = useState(null); // Menu anchor for user avatar
-   
+    const [newOrderCount, setNewOrderCount] = useState(0);
+    const [unreadCount, setUnreadCount] = useState(0);
+
     const user = useSelector((state) => state.auth.user);
     //const userCarts = useSelector((state) => state.auth.user?.carts);
     const activeCart = useSelector((state) => state.cart.cart);
     const articleItems = activeCart?.articles?.length || 0;
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const favoriteItems = user?.favorites?.length || 0;
-    
+
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -55,7 +60,7 @@ export default function Header() {
         handleMenuClose();
     };
     const handleAdminClick = () => {
-        navigate('/adminPortal', { state: { user } });
+        navigate('/adminPortal', { state: { user, newOrder: newOrderCount } });
         handleMenuClose();
     };
 
@@ -88,7 +93,7 @@ export default function Header() {
     };
 
     // Handle suggestion click
-    const handleSuggestionClick = async(suggestion) => {
+    const handleSuggestionClick = async (suggestion) => {
         setSearchInput(suggestion); // Update input with suggestion
         setSuggestions([]); // Clear suggestions
         await dispatch(setSearchQuery(suggestion)); // Dispatch search query with the selected suggestion
@@ -109,6 +114,7 @@ export default function Header() {
     const handleSignOut = () => {
         console.log("Sign Out clicked.....");
         dispatch(logOut());
+        onSignOut();
         handleMenuClose();
         navigate('/signIn');
     };
@@ -124,17 +130,19 @@ export default function Header() {
 
     useEffect(() => {
         dispatch(clearError());
-    if (user?.id) {
-      dispatch(feachActiveCartsByUser(user.id));
-    }
-        
+        if (user?.id) {
+            dispatch(feachActiveCartsByUser(user.id));
+        }
+
     }, [user, articleItems, dispatch]);
+
+    
 
     const bigContent = (
         <>
             <Grid container  >
 
-                <Grid item xs={2} pt={1.5}pb={1}
+                <Grid item xs={2} pt={1.5} pb={1}
                     alignItems="center" style={{ textAlign: 'left' }}>
                     <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <img
@@ -245,10 +253,18 @@ export default function Header() {
                                 <MenuItem onClick={handleMyPageClick}>My Page</MenuItem>
                                 <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                                 {user?.roles.includes('ADMIN') && (
-                                        <MenuItem onClick={handleAdminClick}>
-                                            Admin Portal
-                                        </MenuItem>
-                                    )}
+                                    <><MenuItem onClick={handleAdminClick}>
+                                        Admin Portal
+                                    </MenuItem><MenuItem onClick={() => {
+                                        //navigate('/adminPortal/chat'); // navigate to chat page
+                                        setUnreadCount(0); // reset unread messages
+                                        handleMenuClose();
+                                    }}>
+                                            <Badge badgeContent={unreadCount} color="error">
+                                                <Typography onClick={onLiveChat}>liveChat</Typography>
+                                            </Badge>
+                                        </MenuItem></>
+                                )}
                             </Menu>
                         </>
                     ) : (
@@ -279,6 +295,7 @@ export default function Header() {
                 </Grid>
             </Grid>
 
+
         </>
 
 
@@ -290,7 +307,7 @@ export default function Header() {
         <>
             <Grid container sx={{ margin: 0, padding: 0 }}>
                 {/* Logo Section */}
-                <Grid item mt={1} xs={8} sx={{ textAlign: 'left', paddingLeft:3  }}>
+                <Grid item mt={1} xs={8} sx={{ textAlign: 'left', paddingLeft: 3 }}>
                     <Link to="/">
                         <img
                             src={logo}
@@ -299,9 +316,9 @@ export default function Header() {
                         />
                     </Link>
                 </Grid>
-    
+
                 {/* Icons Section */}
-                <Grid item  mt={1.5} xs={4} sx={{ textAlign: 'right', padding: 0 }}>
+                <Grid item mt={1.5} xs={4} sx={{ textAlign: 'right', padding: 0 }}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -326,9 +343,13 @@ export default function Header() {
                             <>
                                 <IconButton onClick={handleMenuOpen}>
                                     <Avatar
-                                        sx={{ width: 24, height: 24, bgcolor: 'primary.main' }}
+                                        sx={{
+                                            width: 24,
+                                            height: 24,
+                                            bgcolor: 'primary.main',
+                                        }}
                                     >
-                                        {user?.firstName.charAt(0).toUpperCase()}
+                                        {user?.email.charAt(0).toUpperCase()}
                                     </Avatar>
                                 </IconButton>
                                 <Menu
@@ -378,6 +399,7 @@ export default function Header() {
                                         <MenuItem onClick={handleAdminClick}>
                                             Admin Portal
                                         </MenuItem>
+
                                     )}
                                 </Menu>
                             </>
@@ -405,7 +427,7 @@ export default function Header() {
                     </Box>
                 </Grid>
             </Grid>
-    
+
             {/* Search Bar Section */}
             <Box sx={{ width: '100%', margin: 0, padding: 0 }}>
                 <TextField
@@ -430,7 +452,7 @@ export default function Header() {
                     sx={{
                         height: '30px', // Set the height of the search bar
                         margin: .25,
-                        padding:0, // Remove extra margins
+                        padding: 0, // Remove extra margins
                         '& .MuiOutlinedInput-root': {
                             height: '30px',
                             fontSize: '.7rem', // Adjust font size
@@ -445,38 +467,38 @@ export default function Header() {
                 />
             </Box>
             {suggestions.length > 0 && (
-                        <Paper
-                            sx={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                width: '100%',
-                                maxWidth: '600px',
-                                zIndex: 10,
-                                maxHeight: '600px',
-                                overflowY: 'auto',
-                                backgroundColor: 'white',
-                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                            }}
-                        >
-                            <List>
-                                {suggestions.map((suggestion, index) => (
-                                    <ListItem
-                                        key={index}
-                                        disablePadding
-                                        onClick={() => handleSuggestionClick(suggestion)} // Select suggestion
-                                    >
-                                        <ListItemButton>
-                                            <ListItemText primary={suggestion} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Paper>
-                    )}
+                <Paper
+                    sx={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        width: '100%',
+                        maxWidth: '600px',
+                        zIndex: 10,
+                        maxHeight: '600px',
+                        overflowY: 'auto',
+                        backgroundColor: 'white',
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    }}
+                >
+                    <List>
+                        {suggestions.map((suggestion, index) => (
+                            <ListItem
+                                key={index}
+                                disablePadding
+                                onClick={() => handleSuggestionClick(suggestion)} // Select suggestion
+                            >
+                                <ListItemButton>
+                                    <ListItemText primary={suggestion} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Paper>
+            )}
         </>
     );
-    
+
 
     //smallScreen ? smallContent :
     return (

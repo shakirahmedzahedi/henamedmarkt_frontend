@@ -1,11 +1,12 @@
 
 import axios from 'axios';
 import { logOut } from '../services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 
 //const BASE_URL= 'http://ec2-52-90-100-28.compute-1.amazonaws.com/api/v1';
 
-//const BASE_URL = 'https://henaapi-ejbeate7gdajagaq.canadacentral-01.azurewebsites.net/api/v1';
+//const BASE_URL = 'http://localhost:8080/api/v1';
 const BASE_URL = 'https://backend.henamedmarkt.com/api/v1';
 
 // Retrieve the email and token from local storage
