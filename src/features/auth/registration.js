@@ -124,7 +124,7 @@ const Registration = () => {
         if (validate()) {
             try {
                 const phone=inputs.phoneNo;
-                const prefiz='+88';
+                const prefiz='+46';
                 inputs.phoneNo=prefiz+phone;
                 const resultAction = await dispatch(signUp(inputs));
 
