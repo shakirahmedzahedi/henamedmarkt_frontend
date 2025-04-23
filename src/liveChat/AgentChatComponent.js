@@ -51,7 +51,7 @@ const AgentChatComponent = ({
         console.log(formattedClients);
         setClientList(formattedClients);
 
-        const socket = new SockJS('https://backend.henamedmarkt.com/ws');
+        const socket = new SockJS('//backend.henamedmarkt.com/ws');
         client = Stomp.over(socket);
 
         client.connect({}, () => {

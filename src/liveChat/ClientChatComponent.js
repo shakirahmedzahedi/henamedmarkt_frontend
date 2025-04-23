@@ -145,7 +145,7 @@ const ClientChatComponent = ({ onClose }) => {
 
         setMessages(savedMessages);
 
-        const socket = new SockJS('https://backend.henamedmarkt.com/ws');
+        const socket = new SockJS('//backend.henamedmarkt.com/ws');
         const client = Stomp.over(socket);
 
         client.connect({}, () => {
