@@ -245,7 +245,7 @@ const Registration = () => {
                                     maxLength: 15
                                 }}
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">+88</InputAdornment>,
+                                    startAdornment: <InputAdornment position="start">+46</InputAdornment>,
                                 }}
                                 onChange={handleOnChange}
                                 autoComplete="phoneNo"
