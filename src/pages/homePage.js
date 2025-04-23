@@ -29,7 +29,7 @@ const HomePage = () => {
   const [clientList, setClientList] = useState([]);
   const user = useSelector((state) => state.auth.user);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (user?.roles.includes('ADMIN')) {
         const socket = new SockJS('https://backend.henamedmarkt.com/ws');
         const client = Stomp.over(socket);
@@ -101,7 +101,7 @@ const sendMessage = (clientId) => {
           zIndex: 9999
         }}
       >
-        {/* Header */}
+        
         <Box
           sx={{
             backgroundColor: 'primary.main',
@@ -130,7 +130,7 @@ const sendMessage = (clientId) => {
           </Box>
         </Box>
 
-        {/* Body */}
+        
         {!minimizedDialogs[clientId] && (
           <>
             <Box sx={{ flex: 1, p: 1, overflowY: 'auto', background: '#f9f9f9' }}>
@@ -153,7 +153,7 @@ const sendMessage = (clientId) => {
               </List>
             </Box>
 
-            {/* Footer Input */}
+           
             <Box sx={{ display: 'flex', p: 1, borderTop: '1px solid #ccc' }}>
               <TextField
                 fullWidth
@@ -173,7 +173,7 @@ const sendMessage = (clientId) => {
     ) : null
   )}
     </>
-  )
+  ) */
 
   return (
     <Box >
