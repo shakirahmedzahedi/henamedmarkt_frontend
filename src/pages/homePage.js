@@ -31,7 +31,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (user?.roles.includes('ADMIN')) {
-        const socket = new SockJS('http://localhost:8080/ws');
+        const socket = new SockJS('https://backend.henamedmarkt.com/ws');
         const client = Stomp.over(socket);
         let subscription;
 
