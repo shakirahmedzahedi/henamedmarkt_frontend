@@ -40,8 +40,13 @@ const OtpVerificationPage = () => {
     try {
       setLoading(true);
       const response = await get(`/auth/varifyOTP?phoneNo=${encodeURIComponent(phoneNo)}&otp=${encodeURIComponent(otp)}`);
-      setMessage(response?.data || 'Account verified successfully!');
-      setError('');
+      if(response.errors.length > 0){
+        setError(response.errors[1]);
+      }
+      else{
+        setMessage(response?.data || 'Account verified successfully!');
+      }
+      
       if(action === 'forgetPass'){
         navigate('/forgetPassword', {
           state: {
