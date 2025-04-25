@@ -73,13 +73,13 @@ export default function NewNavBar() {
                 setSuggestions([]); // Close dropdown
             }
         };
-    
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-    
+
     return (
         <div>
             <Grid
@@ -221,10 +221,23 @@ export default function NewNavBar() {
                                     <ListItem
                                         key={index}
                                         disablePadding
+                                        sx={{
+                                            padding: '0px 8px', // Reduce padding inside ListItem to reduce space between items
+                                        }}
                                         onClick={() => handleSuggestionClick(suggestion)} // Select suggestion
                                     >
-                                        <ListItemButton>
-                                            <ListItemText primary={suggestion} />
+                                        <ListItemButton
+                                            sx={{
+                                                padding: '0px', // Reduce padding inside ListItemButton to further reduce space
+                                            }}
+                                        >
+                                            <ListItemText
+                                                primary={suggestion}
+                                                sx={{
+                                                    fontSize: '0.25rem', // Set the font size smaller (you can adjust this value)
+                                                    color: 'text.primary', // Optional: Ensure the text color is correct
+                                                }}
+                                            />
                                         </ListItemButton>
                                     </ListItem>
                                 ))}

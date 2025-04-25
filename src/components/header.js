@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import logo from './../assets/logo1.png';
 import {
     AppBar, Tabs, Tab, Button, Grid, Toolbar, useTheme, useMediaQuery, Typography, Box, IconButton,
@@ -49,6 +49,7 @@ export default function Header({ onSignOut, onLiveChat }) {
     const articleItems = activeCart?.articles?.length || 0;
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const favoriteItems = user?.favorites?.length || 0;
+    const searchRef = useRef(null);
 
 
     const handleMenuOpen = (event) => {
@@ -87,8 +88,12 @@ export default function Header({ onSignOut, onLiveChat }) {
                 )
                 .map((product) => product.title); // Extract titles
             setSuggestions(filtered);
+            dispatch(setSearchQuery(input)); // Keep global state updated
+            navigate(`/searchProduct`);
         } else {
             setSuggestions([]); // Clear suggestions if input is empty
+            dispatch(setSearchQuery(''));
+            navigate('/searchProduct');
         }
     };
 
@@ -135,6 +140,19 @@ export default function Header({ onSignOut, onLiveChat }) {
         }
 
     }, [user, articleItems, dispatch]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setSuggestions([]); // Close dropdown
+            }
+        };
+    
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     
 
@@ -480,16 +498,30 @@ export default function Header({ onSignOut, onLiveChat }) {
                         backgroundColor: 'white',
                         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                     }}
+                    ref={searchRef}
                 >
                     <List>
                         {suggestions.map((suggestion, index) => (
                             <ListItem
                                 key={index}
                                 disablePadding
+                                sx={{
+                                    padding: '0px 8px', // Reduce padding inside ListItem to reduce space between items
+                                }}
                                 onClick={() => handleSuggestionClick(suggestion)} // Select suggestion
                             >
-                                <ListItemButton>
-                                    <ListItemText primary={suggestion} />
+                                <ListItemButton
+                                sx={{
+                                    padding: '0px', // Reduce padding inside ListItemButton to further reduce space
+                                }}
+                                >
+                                <ListItemText 
+                                            primary={suggestion} 
+                                            sx={{
+                                                fontSize: '0.25rem', // Set the font size smaller (you can adjust this value)
+                                                color: 'primary', // Optional: Ensure the text color is correct
+                                            }}
+                                            />
                                 </ListItemButton>
                             </ListItem>
                         ))}
