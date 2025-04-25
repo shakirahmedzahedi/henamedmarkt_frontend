@@ -124,7 +124,7 @@ const Registration = () => {
         if (validate()) {
             try {
                 const phone=inputs.phoneNo;
-                const prefiz='+88';
+                const prefiz='+46';
                 inputs.phoneNo=prefiz+phone;
                 const resultAction = await dispatch(signUp(inputs));
 
@@ -245,7 +245,7 @@ const Registration = () => {
                                     maxLength: 15
                                 }}
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">+88</InputAdornment>,
+                                    startAdornment: <InputAdornment position="start">+46</InputAdornment>,
                                 }}
                                 onChange={handleOnChange}
                                 autoComplete="phoneNo"
