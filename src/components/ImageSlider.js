@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import hero from './../assets/hero.jpeg';
-import banner_one from './../assets/banner_one.png';
+import banner_one from './../assets/pexels-jahoo-388415.jpg';
 import banner_two from './../assets/banner_two.png';
 import banner_three from './../assets/banner_three.png';
 import banner_four from './../assets/banner_four.png';
@@ -43,7 +43,7 @@ const ImageSlider = () => {
   );
 };
 
-export default ImageSlider; */
+export default ImageSlider;  */
 
 import React from 'react';
 import { Box } from '@mui/material';
@@ -68,13 +68,15 @@ const images = [
 const ImageSlider = () => {
   return (
     <Box
-      width="100%"
-      margin="auto"
+       width="100%"
+       margin="auto"
       sx={{
+
         overflow: 'hidden',
         position: 'relative',
-        height: { xs: '200px', sm: '350px', md: '300px', lg: '350px', xl: '350px' },
+        height: { xs: '200px', sm: '25vh', md: '300px', lg: '350px', xl: '450px' },
       }}
+      
     >
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
@@ -87,19 +89,6 @@ const ImageSlider = () => {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index} style={{ height: '100%' }}>
-            {/* <img
-              src={image}
-              alt={`Slide ${index + 1}`}
-              style={{
-                width: '100%',
-                height: '100%', // Ensures the image fills the height of the container
-                borderRadius: '8px',
-                objectFit: 'scale-down', // Ensures the image covers the container, cropping if necessary
-                display: 'block',
-                mx: 'auto'
-
-              }}
-            /> */}
             <Box
               component="img"
               src={image}
@@ -107,9 +96,20 @@ const ImageSlider = () => {
               sx={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'contain', // OR 'contain' depending on image type
+                objectFit: {
+                  xs:'contain',
+                  sm: 'contain',
+                  md: 'contain',
+                  lg: 'cover',
+                  xl: 'cover',
+                }, // OR 'contain' depending on image type
+                objectPosition: 'center',
               }}
+             
             />
+            
+          
+            
           </SwiperSlide>
         ))}
       </Swiper>
@@ -118,3 +118,49 @@ const ImageSlider = () => {
 };
 
 export default ImageSlider;
+
+
+/* import React, { useState, useEffect } from 'react';
+import './ImageSlider.css'; // Import the CSS file for styling
+
+import banner_one from './../assets/pexels-jahoo-388415.jpg';
+import banner_two from './../assets/banner_two.png';
+import banner_three from './../assets/banner_three.png';
+import banner_four from './../assets/banner_four.png';
+import banner_1 from './../assets/banner_01.png'
+import banner_2 from './../assets/banner_02.png'
+
+// Sample images
+const images = [
+  banner_1,banner_2,banner_one,banner_two,banner_three,banner_four
+];
+
+const ImageSlider = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const length = images.length;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((currentIndex + 1) % length);
+    }, 5000); // Change slide every 5 seconds
+    return () => clearInterval(interval);
+  }, [currentIndex, length]);
+
+  return (
+    <div className="slider-container">
+      {images.map((image, index) => (
+        <div
+          className={index === currentIndex ? 'slide active' : 'slide'}
+          key={index}
+        >
+          {index === currentIndex && (
+            <img src={image} alt={`Slide ${index}`} className="image" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default ImageSlider;
+ */
