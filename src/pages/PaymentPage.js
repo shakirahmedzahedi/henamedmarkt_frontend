@@ -189,13 +189,13 @@ const PaymentPage = () => {
 
   let calculateDeliveryTime = (city) => {
     if (city.toUpperCase() === "DHAKA INTER CITY") {
-      return " 0-1 days";
+      return " 24-48 hours ";
     }
     if (city.toUpperCase() === "DHAKA OUTER CITY" || city.toUpperCase() === "GAZIPUR DISTRICT" || city.toUpperCase() === "NARAYANGANJ DISTRICT") {
-      return " 1-2 days";
+      return " 24-48 hours";
     }
     else {
-      return " 2-3 days";
+      return " 2-4 days";
     }
   };
 

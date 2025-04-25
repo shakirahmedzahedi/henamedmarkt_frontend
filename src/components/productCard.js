@@ -133,8 +133,8 @@ const ProductCard = ({ product }) => {
                             loading="lazy"
                             sx={{
                                 width: '100%',
-                                height: { xs: 120, sm: 160, md: 180, lg: 200 },
-                                objectFit: 'contain'
+                                height: { xs: 150, sm: 180, md: 180, lg: 200 },
+                                objectFit: 'cover'
                             }}
                         />
                         <CardContent

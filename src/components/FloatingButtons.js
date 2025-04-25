@@ -1,42 +1,32 @@
 import React, { useState } from "react";
-import { Box, Fab, Zoom } from "@mui/material";
+import { Box, Fab } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ChatIcon from "@mui/icons-material/Chat";
 import PhoneIcon from "@mui/icons-material/Phone";
-import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
 import ClientChatComponent from "../liveChat/ClientChatComponent";
 
 const FloatingButtons = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+
   const handleWhatsAppClick = () => {
-    const phoneNumber = "8801903652681"; // Replace with the target WhatsApp number
-    const message = "Hello! I need assistance."; // Default message
+    const phoneNumber = "8801903652681";
+    const message = "Hello! I need assistance.";
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-    // Open WhatsApp link
     window.open(whatsappURL, "_blank");
   };
+
   const handleLiveChatClick = () => {
-    setIsChatOpen(true); // Show the chat component
+    setIsChatOpen(true);
   };
 
   const handlePhoneClick = () => {
-    const phoneNumber = "8801903652681"; // Replace with the phone number to call
-    const phoneURL = `tel:${phoneNumber}`;
-
-    // Open phone dialer
+    const phoneURL = `tel:8801903652681`;
     window.location.href = phoneURL;
-  };
-  const [open, setOpen] = useState(false);
-
-  const toggleButtons = () => {
-    setOpen((prev) => !prev);
   };
 
   const handleCloseChat = () => {
-    setIsChatOpen(false); // Close chat from within the chat component
+    setIsChatOpen(false);
   };
 
   return (
@@ -49,52 +39,40 @@ const FloatingButtons = () => {
         flexDirection: "column",
         alignItems: "center",
         zIndex: 9999,
-        color:"primary"
       }}
     >
-      <Zoom in={open}>
-        <Fab
-          color="success"
-          size="small"
-          sx={{ mb: 1 }}
-          onClick={() => handleWhatsAppClick()}
-        >
-          <WhatsAppIcon />
-        </Fab>
-      </Zoom>
-      <Zoom in={open}>
-        <Fab
-          color="primary"
-          size="small"
-          sx={{ mb: 1 }}
-          onClick={() => handleLiveChatClick()}
-        >
-          <ChatIcon />
-        </Fab>
-      </Zoom>
-      <Zoom in={open}>
-        <Fab
-          color="secondary"
-          size="small"
-          sx={{ mb: 1 }}
-          onClick={() => handlePhoneClick()}
-        >
-          <PhoneIcon />
-        </Fab>
-      </Zoom>
-
-      <Fab size="small" color="default" onClick={toggleButtons}>
-        {open ? <CloseIcon /> : <AddIcon />}
+      <Fab
+        color="success"
+        size="small"
+        sx={{ mb: 1 }}
+        onClick={handleWhatsAppClick}
+      >
+        <WhatsAppIcon />
       </Fab>
+      <Fab
+        color="primary"
+        size="small"
+        sx={{ mb: 1 }}
+        onClick={handleLiveChatClick}
+      >
+        <ChatIcon />
+      </Fab>
+      <Fab
+        color="secondary"
+        size="small"
+        sx={{ mb: 1 }}
+        onClick={handlePhoneClick}
+      >
+        <PhoneIcon />
+      </Fab>
+
       {isChatOpen && (
-        <div >
+        <div>
           <ClientChatComponent onClose={handleCloseChat} />
         </div>
       )}
     </Box>
   );
 };
-
-
 
 export default FloatingButtons;

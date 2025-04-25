@@ -115,10 +115,8 @@
                 "Kaundia",
                 "Tentuljhora",
                 "Amin Bazar"
-            ]
-        },
-        "Gazipur District": {
-            "Gazipur Sadar": [
+            ],
+            "Gazipur Sadar(Gazipur)": [
                 "Bhogra",
                 "Gacha",
                 "Kashimpur",
@@ -126,7 +124,7 @@
                 "Pubail",
                 "Tongi"
             ],
-            "Kaliakair": [
+            "Kaliakair(Gazipur)": [
                 "Kaliakair",
                 "Fulbaria",
                 "Mouchak",
@@ -134,7 +132,7 @@
                 "Srifaltali",
                 "Chapair"
             ],
-            "Kapasia": [
+            "Kapasia(Gazipur)": [
                 "Kapasia",
                 "Chandpur",
                 "Tok",
@@ -142,7 +140,7 @@
                 "Singhasree",
                 "Borat"
             ],
-            "Sreepur": [
+            "Sreepur(Gazipur)": [
                 "Sreepur",
                 "Maona",
                 "Gazipur",
@@ -150,7 +148,7 @@
                 "Gosinga",
                 "Barmi"
             ],
-            "Kaliganj": [
+            "Kaliganj(Gazipur)": [
                 "Kaliganj",
                 "Nagari",
                 "Jangalia",
@@ -158,6 +156,7 @@
                 "Tumulia"
             ]
         },
+        
         "Kishoreganj District": {
             "Austagram Upazila": [
                 "Bhuiyanpur",

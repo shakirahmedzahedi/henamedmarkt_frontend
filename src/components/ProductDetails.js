@@ -50,7 +50,7 @@ const ProductDetails = () => {
   const newPrice = oldPrice - (oldPrice * (product?.discountPercentage || 0) / 100);
 
   return (
-      <Box>
+      <Box sx={{pb: 9}}>
         {isProcessing && (
             // Fullscreen Loader
             <Box
@@ -188,7 +188,7 @@ const ProductDetails = () => {
                         </Typography>
                     ) : null}
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 0.5 }}>
-                      Article: {product?.id}
+                      ProductId: {product?.id}
                     </Typography>
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 0.5 }}>
                       Brand: {product?.brand}

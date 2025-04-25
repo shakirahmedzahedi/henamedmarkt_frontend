@@ -178,9 +178,9 @@ const sendMessage = (clientId) => {
   return (
     <Box >
 
-      <Box sx={{ ml: { xs: 2, sm: 3, md: 15, lg: 19, xl: 23 }, mr: { xs: 2, sm: 3, md: 15, lg: 19, xl: 23 } }} >
-
-        <ImageSlider />
+      
+      <Box sx={{ mt: 2, ml: { xs: 2, sm: 3, md: 15, lg: 19, xl: 23 }, mr: { xs: 2, sm: 3, md: 15, lg: 19, xl: 23 } }}>
+      <ImageSlider />
       </Box>
 
 

@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import children from './../assets/children.jpg'
 import mom from './../assets/family.jpg'
-import family from './../assets/family.jpeg'
+import family from './../assets/NEW arrival.png'
 import { useNavigate } from 'react-router';
 
 export default function CatagorySection() {

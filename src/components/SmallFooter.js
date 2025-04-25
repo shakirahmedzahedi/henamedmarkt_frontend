@@ -127,17 +127,17 @@ const SmallFooter = () => {
         <Divider sx={{ bgcolor: 'secondary.main', padding: "2px" }} />
       </Box>
 
-      <Box sx={{ ml: { sm: 11, md: 15, lg: 19, xl: 23 }, mr: { sm: 11, md: 15, lg: 19, xl: 23 } }}>
+      <Box sx={{ ml: { sm: 1, md: 15, lg: 19, xl: 23 }, mr: { sm: 1, md: 15, lg: 19, xl: 23 } }}>
         <Grid container>
-          <Grid item xs={10} sm={4} mt={2} sx={{ textAlign: 'center' }}>
+          <Grid item xs={12} sm={4} mt={2} sx={{ textAlign: 'center' }}>
             {privacy}
           </Grid>
-          <Grid item xs={10} sm={4} mt={2} sx={{ textAlign: 'center' }}>
+          <Grid item xs={12} sm={4} mt={2} sx={{ textAlign: 'center' }}>
             {catagory}
 
           </Grid>
 
-          <Grid item xs={10} sm={4} mt={2} sx={{ textAlign: 'center' }}>
+          <Grid item xs={12} sm={4} mt={2} sx={{ textAlign: 'center' }}>
             {content}
 
           </Grid>

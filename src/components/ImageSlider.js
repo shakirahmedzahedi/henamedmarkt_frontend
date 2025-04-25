@@ -59,10 +59,12 @@ import banner_three from './../assets/banner_three.png';
 import banner_four from './../assets/banner_four.png';
 import banner_1 from './../assets/banner_01.png'
 import banner_2 from './../assets/banner_02.png'
+import banner_3 from './../assets/banner_011.png'
+import banner_4 from './../assets/banner_12.png'
 
 // Sample images
 const images = [
-  banner_1, banner_2, banner_one, banner_four
+  banner_1, banner_2, banner_4
 ];
 
 const ImageSlider = () => {
@@ -70,11 +72,13 @@ const ImageSlider = () => {
     <Box
        width="100%"
        margin="auto"
+       
+
       sx={{
 
         overflow: 'hidden',
         position: 'relative',
-        height: { xs: '200px', sm: '25vh', md: '300px', lg: '350px', xl: '450px' },
+        height: { xs: '200px', sm: '250px', md: '350px', lg: '350px', xl: '450px' },
       }}
       
     >
@@ -98,7 +102,7 @@ const ImageSlider = () => {
                 height: '100%',
                 objectFit: {
                   xs:'contain',
-                  sm: 'contain',
+                  sm: 'cover',
                   md: 'contain',
                   lg: 'cover',
                   xl: 'cover',
