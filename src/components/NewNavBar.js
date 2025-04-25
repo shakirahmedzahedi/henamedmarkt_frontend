@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     Grid,
     TextField,
@@ -26,6 +26,7 @@ export default function NewNavBar() {
     // Local state
     const [searchInput, setSearchInput] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+    const searchRef = useRef(null);
 
     // Handle input change
     const handleInputChange = (e) => {
@@ -40,18 +41,22 @@ export default function NewNavBar() {
                 )
                 .map((product) => product.title); // Extract titles
             setSuggestions(filtered);
+            dispatch(setSearchQuery(input)); // Keep global state updated
+            navigate(`/searchProduct`);
         } else {
             setSuggestions([]); // Clear suggestions if input is empty
+            dispatch(setSearchQuery(''));
+            navigate('/searchProduct');
         }
     };
 
     // Handle suggestion click
-    const handleSuggestionClick = async(suggestion) => {
+    const handleSuggestionClick = async (suggestion) => {
         setSearchInput(suggestion); // Update input with suggestion
         setSuggestions([]); // Clear suggestions
-         await dispatch(setSearchQuery(suggestion)); // Dispatch search query with the selected suggestion
+        await dispatch(setSearchQuery(suggestion)); // Dispatch search query with the selected suggestion
         setSearchInput('');
-        navigate('/searchProduct'); 
+        navigate('/searchProduct');
     };
 
     // Handle search button click
@@ -62,6 +67,19 @@ export default function NewNavBar() {
         navigate('/searchProduct'); // Navigate to search results
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setSuggestions([]); // Close dropdown
+            }
+        };
+    
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+    
     return (
         <div>
             <Grid
@@ -87,7 +105,7 @@ export default function NewNavBar() {
                         textColor="secondary"
                         indicatorColor="none"
                         aria-label="navigation tabs"
-                        
+
                         sx={{
                             height: '30px', // Set height of Tabs
                             minHeight: '30px', // Override default min-height
@@ -145,6 +163,7 @@ export default function NewNavBar() {
                         pl: 3,
                         position: 'relative', // Required for suggestion dropdown
                     }}
+                    ref={searchRef}
                 >
                     <TextField
                         placeholder="Search..."

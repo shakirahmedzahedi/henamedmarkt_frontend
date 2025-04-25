@@ -43,6 +43,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import OtpVerification from './pages/OtpVerificationPage';
 import AgentChatComponent from './liveChat/AgentChatComponent';
 import { useState } from 'react';
+import FloatingButtons from './components/FloatingButtons';
 
 
 
@@ -184,7 +185,8 @@ function App() {
 
           </Box>
 
-          <FloatingWhatsupButton />
+          
+          <FloatingButtons/>
           {roles && roles.includes('ADMIN') && (
             <AgentChatComponent
               messages={messages}
