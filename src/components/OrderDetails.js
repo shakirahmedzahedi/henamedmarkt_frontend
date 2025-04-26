@@ -54,7 +54,7 @@ const OrderDetails = ({ order })  => {
 
   return (
     <Box sx={{ p: { xs: 2, md: 4 } }}>
-  {/* Header Section */}
+  
   <Box
     display="flex"
     flexDirection={{ xs: 'column', md: 'row' }}
@@ -63,7 +63,7 @@ const OrderDetails = ({ order })  => {
     mb={4}
     flexWrap="wrap"
   >
-    {/* Invoice Info */}
+    
     <Box>
       <Typography variant="h4" fontWeight="bold" color="primary">
         Invoice
@@ -73,7 +73,7 @@ const OrderDetails = ({ order })  => {
       <Typography variant="body1">Updated: {formatDate(order?.updatedAt)}</Typography>
     </Box>
 
-    {/* Customer Info */}
+    
     <Box>
       <Typography variant="h6" fontWeight="bold">
         Customer Details:
@@ -87,7 +87,7 @@ const OrderDetails = ({ order })  => {
     </Box>
   </Box>
 
-  {/* Responsive Table Container */}
+  
   <TableContainer component={Paper} sx={{ mb: 4, overflowX: 'auto' }}>
     <Table size="small">
       <TableHead>

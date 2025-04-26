@@ -5,6 +5,7 @@ import OrderDetails from '../../components/OrderDetails';
 import OrderStatusUpdate from '../../components/OrderStatusUpdate';
 import { useDispatch } from 'react-redux';
 import { updateOrder } from '../../reducer/services/OrderService';
+import ShowInvoice from '../../components/ShowInvoice';
 
 const OrderSection = () => {
 
@@ -57,7 +58,8 @@ const OrderSection = () => {
         <DialogContent>
           {selectedOrder && (
             <>
-              <OrderDetails order={selectedOrder} />
+              {/* <OrderDetails order={selectedOrder} /> */}
+              <ShowInvoice order={selectedOrder}/>
             </>
           )}
         </DialogContent>

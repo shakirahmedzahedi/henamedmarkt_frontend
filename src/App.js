@@ -160,7 +160,7 @@ function App() {
               <Route path="/legal" element={<TermsAndConditionPage />} />
               <Route path="/return" element={<ReturnPolicy />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/favorite" element={<ProtectedRoute><FavoritePage /></ProtectedRoute>} />
+              <Route path="/favorite" element={<FavoritePage />} />
               <Route path="/cart" element={<CartPage />}/>
               <Route path="/myPage" element={<ProtectedRoute><MyPage /></ProtectedRoute>} />
               <Route path="/orderSuccess" element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />

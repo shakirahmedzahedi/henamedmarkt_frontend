@@ -19,7 +19,11 @@ export const Store = configureStore({
         /*
         cart: cartReducer,
         order: orderReducer */
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: false, // <<< 👈
+        }),
 });
 
 export default Store;

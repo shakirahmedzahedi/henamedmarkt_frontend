@@ -111,6 +111,24 @@ export const addToFavorite = createAsyncThunk(
     }
 );
 
+export const migrateGuestFavorite = createAsyncThunk(
+    'cart/migrateGuestFavorite',
+    async ({ userId, guestFavorite }, { dispatch, rejectWithValue }) => {
+      try {
+        console.log(guestFavorite);
+        for (const item of guestFavorite) {
+          
+          const {id} = item;
+          console.log(id);
+          await dispatch(addToFavorite({ userId, productId:id }));
+        }
+        return 'Guest favorite migrated';
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+
 export const removeFromFavorite = createAsyncThunk(
     'auth/removeFromFavorite',
     async (req, { rejectWithValue }) => {

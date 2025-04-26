@@ -49,15 +49,16 @@ export default function Header({ onSignOut, onLiveChat }) {
         const saved = localStorage.getItem('guest_cart');
         return saved ? JSON.parse(saved) : [];
     });
-    //const userCarts = useSelector((state) => state.auth.user?.carts);
-    const activeCart = useSelector((state) => state.cart.cart);
-    const articleItems = activeCart?.articles?.length || guestCart?.length || 0;
-    /* const articleItems = isAuthenticated
-    ? activeCart?.articles?.reduce((sum, item) => sum + (item.unit || 1), 0) || 0
-    : guestCart?.reduce((sum, item) => sum + (item.unit || 1), 0); */
+    const [guestFavorite, setGuestFavorite] = useState(() => {
+        const saved = localStorage.getItem('guest_favorites');
+        return saved ? JSON.parse(saved) : [];
+    });
 
-    
-    const favoriteItems = user?.favorites?.length || 0;
+    const activeCart = useSelector((state) => state.cart.cart);
+    const articleItems = activeCart?.articles !== undefined
+        ? activeCart.articles.length
+        : (guestCart?.length || 0);
+    const favoriteItems = user?.favorites?.length || guestFavorite?.length || 0;
     const searchRef = useRef(null);
 
 
@@ -136,18 +137,23 @@ export default function Header({ onSignOut, onLiveChat }) {
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/');
+            //setGuestCart([]);
         }
         if (!isAuthenticated) {
             dispatch(clearCart()); // Action to reset active cart in Redux
             const saved = localStorage.getItem('guest_cart');
             const parsed = saved ? JSON.parse(saved) : [];
+            const saved1 = localStorage.getItem('guest_favorites');
+            const parsed1 = saved1 ? JSON.parse(saved1) : [];
             setGuestCart(parsed);
+            setGuestFavorite(parsed1);
         }
-    }, [isAuthenticated, guestCart]);
+    }, [isAuthenticated]);
 
     useEffect(() => {
         dispatch(clearError());
         if (user?.id) {
+            
             dispatch(feachActiveCartsByUser(user.id));
         }
 

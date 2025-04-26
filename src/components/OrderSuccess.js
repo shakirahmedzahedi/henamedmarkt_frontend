@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import OrderDetails from './OrderDetails';
+import ShowInvoice from './ShowInvoice';
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
@@ -32,18 +33,18 @@ const OrderSuccess = () => {
         >
           Go to Home
         </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mt: 3 }}
-          onClick={handlelog}
-        >
-          Invoice
-        </Button>
-
+        
       </Box>
-      <Box textAlign="center" mt={5}>
-        <OrderDetails order={order} />
+      <Box  
+      mt={3}
+      sx={{
+        border: '1px solid',
+        borderColor: 'grey.300', // use MUI's theme colors
+        borderRadius: 2, // optional: round the corners a bit
+        p: 2, // optional: padding inside
+      }}
+      >
+        <ShowInvoice order={order} />
       </Box>
     </Box>
   );

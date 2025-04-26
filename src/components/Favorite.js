@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Box, Grid, Typography, List, ListItem, ListItemText, Divider, Button, IconButton, TextField, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromFavorite } from '../reducer/services/AuthService';
@@ -10,13 +10,17 @@ const Favorite = () => {
     const dispatch = useDispatch();
     const user = useSelector((state)=> state.auth.user);
     const userId = user?.id;
-    const favoriteList = user?.favorites;
+    const favoriteList = user?.favorites|| JSON.parse(localStorage.getItem('guest_favorites')) || [];
+    const [updated, setUpdated]= useState(favoriteList);
 
     useEffect(() => {
+      if(user){
         
         dispatch(fetchUserById(userId));
+      }
        
-      }, [dispatch]);
+      }, [dispatch,updated]);
+      
     const calculateItemTotal = (item) => {
         const price = item.discountPercentage
           ? item.price - (item.price * item.discountPercentage) / 100
@@ -30,7 +34,16 @@ const Favorite = () => {
       };
     
       const handleRemoveItem = (productId) => {
-        dispatch(removeFromFavorite({ userId, productId }));
+        if(user){
+          dispatch(removeFromFavorite({ userId, productId }));
+        }
+        else{
+          const favList = JSON.parse(localStorage.getItem('guest_favorites')) || [];
+          const newList = favList.filter(p=>p.id !=productId );
+          localStorage.setItem('guest_favorites', JSON.stringify(newList))
+          setUpdated(newList);
+        }
+        
       };
   return (
     <div>

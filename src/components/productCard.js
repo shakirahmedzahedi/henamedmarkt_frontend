@@ -14,15 +14,24 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
+    const [isFavorite, setIsFavorite] = useState(false);
     const userId = user?.id;
-    const favoriteList = user?.favorites;
-    const isFavorite = favoriteList?.some(p => p.id === product.id);
     const loading = useSelector((state) => state.cart.loading);
     const error = useSelector((state) => state.cart.error);
 
     const [showError, setShowError] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+          const favoriteList = user?.favorites || [];
+          setIsFavorite(favoriteList.some(p => p.id === product.id));
+        } else {
+          // For guests, check localStorage
+          const guestFavorites = JSON.parse(localStorage.getItem('guest_favorites')) || [];
+          setIsFavorite(guestFavorites.some(p => p.id === product.id));
+        }
+      }, [user, product, isFavorite]);
 
     useEffect(() => {
         if (error) {
@@ -57,7 +66,8 @@ const ProductCard = ({ product }) => {
                 if (existingIndex !== -1) {
                     cart[existingIndex].unit += 1;
                 } else {
-                    cart.push({product:{ ...product},  unit: 1 });
+                    const {id}=product;
+                    cart.push({ product: { id }, unit: 1 });
                 }
 
                 localStorage.setItem('guest_cart', JSON.stringify(cart));
@@ -79,26 +89,50 @@ const ProductCard = ({ product }) => {
         }
         setButtonLoading(true);
 
-        if (isFavorite) {
-            try {
-                await dispatch(removeFromFavorite(req));
-                setButtonLoading(false);
+        if(user){
+            if (isFavorite) {
+                try {
+                    await dispatch(removeFromFavorite(req));
+                    
+    
+                } catch (error) {
+                    setShowError(true);
+                }
+            }
+            else {
+                try {
+                    await dispatch(addToFavorite(req));
+                    setButtonLoading(false);
+                } catch (error) {
+                    setShowError(true);
+                }
+    
+            }
 
+        }
+        else{
+            try {
+                const guestFavorites = JSON.parse(localStorage.getItem('guest_favorites')) || [];
+                const alreadyFavorite = guestFavorites.some(p => p.id === product.id);
+    
+                if (alreadyFavorite) {
+                    // Remove from guest favorites
+                    const updatedFavorites = guestFavorites.filter(p => p.id !== product.id);
+                    localStorage.setItem('guest_favorites', JSON.stringify(updatedFavorites));
+                } else {
+                    // Add to guest favorites
+                    const updatedFavorites = [...guestFavorites, product];
+                    localStorage.setItem('guest_favorites', JSON.stringify(updatedFavorites));
+                }
+                setIsFavorite(!alreadyFavorite);
             } catch (error) {
+                console.error("Guest favorite error:", error);
                 setShowError(true);
             }
         }
-        else {
-            try {
-                await dispatch(addToFavorite(req));
-                setButtonLoading(false);
-            } catch (error) {
-                setShowError(true);
-            }
-
-        }
-
-
+ 
+        setButtonLoading(false);
+        
     };
 
     const calculateDiscountedPrice = () => {

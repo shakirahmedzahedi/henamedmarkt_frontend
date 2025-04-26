@@ -122,7 +122,12 @@ const Checkout = () => {
         )
         .filter(item => item.unit > 0);
 
-      setGuestCart(updatedCart);
+        if(updatedCart.length === 0){
+          setGuestCart([]);
+        }else{
+          setGuestCart(updatedCart);
+        }
+      
       localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
     }
 

@@ -28,6 +28,10 @@ export default function NewNavBar() {
     const [suggestions, setSuggestions] = useState([]);
     const searchRef = useRef(null);
 
+    const allowedTabValues = ["/allproduct", "/newArrival", "/babyAndKids", "/familyAndMom"];
+    const currentPath = location.pathname;
+    const tabValue = allowedTabValues.includes(currentPath) ? currentPath : false;
+
     // Handle input change
     const handleInputChange = (e) => {
         const input = e.target.value;
@@ -101,7 +105,7 @@ export default function NewNavBar() {
                     }}
                 >
                     <Tabs
-                        value={location.pathname}
+                        value={tabValue}
                         textColor="secondary"
                         indicatorColor="none"
                         aria-label="navigation tabs"

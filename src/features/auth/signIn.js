@@ -10,6 +10,9 @@ import { clearError } from '../../reducer/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../../reducer/services/AuthService';
 import { migrateGuestCart } from '../../reducer/services/CartService';
+import { migrateGuestFavorite } from '../../reducer/services/AuthService';
+import {feachActiveCartsByUser} from '../../reducer/services/CartService';
+import {fetchUserById} from '../../reducer/services/AuthService';
 
 
 const SignIn = (props) => {
@@ -92,16 +95,27 @@ const SignIn = (props) => {
     };
 
     useEffect(() => {
+       
         if (isAuthenticated) {
             const guestCart = JSON.parse(localStorage.getItem('guest_cart'));
+            const guestFavorite = JSON.parse(localStorage.getItem('guest_favorites'))
             const userId = user?.id;
+            console.log(guestFavorite);
             if (guestCart && guestCart.length > 0 && userId) {
                 dispatch(migrateGuestCart({ userId, guestCart }));
                 localStorage.removeItem('guest_cart');
+               // dispatch(feachActiveCartsByUser(userId));
+            }
+            if (guestFavorite && guestFavorite.length > 0 && userId) {
+                 dispatch(migrateGuestFavorite({ userId, guestFavorite }));
+                localStorage.removeItem('guest_favorites');
+                //dispatch(fetchUserById(userId));
             }
     
             navigate('/');
         }
+  
+    
     }, [isAuthenticated, navigate, dispatch]);
 
     return (
@@ -124,13 +138,14 @@ const SignIn = (props) => {
                         fullWidth
                         size='small'
                         id="email"
-                        label="Email Address"
+                        label="Email Address/ Phone No"
                         name="email"
                         value={inputs.email}
                         onChange={handleOnChange}
                         onBlur={handleOnBlur}
                         autoComplete="email"
                         autoFocus
+                         helperText="  (e.g. user@example.com) or (8801712125226)"
                     />
                     <TextField
                         margin="normal"
