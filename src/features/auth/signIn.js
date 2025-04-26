@@ -9,6 +9,7 @@ import {post} from '../../reducer/api/APIService'
 import { clearError } from '../../reducer/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../../reducer/services/AuthService';
+import { migrateGuestCart } from '../../reducer/services/CartService';
 
 
 const SignIn = (props) => {
@@ -29,6 +30,7 @@ const SignIn = (props) => {
     const responseError = useSelector((state) => state.auth.error);
     const successMessage = useSelector((state) => state.auth.message);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const user = useSelector((state) => state.auth.user);
 
     const navigate = useNavigate();
     const validate = () => {
@@ -91,9 +93,16 @@ const SignIn = (props) => {
 
     useEffect(() => {
         if (isAuthenticated) {
+            const guestCart = JSON.parse(localStorage.getItem('guest_cart'));
+            const userId = user?.id;
+            if (guestCart && guestCart.length > 0 && userId) {
+                dispatch(migrateGuestCart({ userId, guestCart }));
+                localStorage.removeItem('guest_cart');
+            }
+    
             navigate('/');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, dispatch]);
 
     return (
         <>

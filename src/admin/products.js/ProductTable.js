@@ -15,6 +15,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   TextField,
   Divider,
@@ -40,6 +41,8 @@ const ProductTable = () => {
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [searchQuery, setSearchQuery] = useState(''); // Search query
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedProduct1, setSelectedProduct1] = useState(null);
 
   // Fetch products when the component mounts
   useEffect(() => {
@@ -70,11 +73,21 @@ const ProductTable = () => {
   };
 
   const handleDeleteProductClick = async (product) => {
-    console.log("click delete");
-    console.log(product);
-    await dispatch(deleteProduct({ id: product.id }))
+
+    setSelectedProduct1(product);
+    setOpenDeleteDialog(true);
+
 
     handleCloseMenu();
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedProduct) {
+      await dispatch(deleteProduct({ id: selectedProduct.id }));
+      handleCloseMenu();
+    }
+    setOpenDeleteDialog(false);
+    setSelectedProduct1(null);
   };
 
   // Close stock update dialog
@@ -165,10 +178,11 @@ const ProductTable = () => {
       tags: productData.tags || '',
       brand: productData.brand || '',
       size: productData.size || '',
-      weight:  parseInt(productData.weight) || 0,
+      weight: parseInt(productData.weight) || 0,
       thumbnail: productData.thumbnail,
       bestSeller: productData.bestSeller,
-      newArrival: productData.newArrival
+      newArrival: productData.newArrival,
+      extraInfo:productData.extra
 
     };
 
@@ -241,11 +255,6 @@ const ProductTable = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleCloseMenu}
                       >
-                        <MenuItem onClick={handleMakeBestSeller}>
-                          Make Bestseller
-                        </MenuItem>
-                        <MenuItem onClick={handleUpdateStockClick}>Update Stock</MenuItem>
-                        <Divider sx={{ bgcolor: 'info.dark', minHeight: '.2vh' }} />
                         <MenuItem onClick={() => handleUpdateProductClick(selectedProduct)}>Update Product</MenuItem>
                         <Divider sx={{ bgcolor: 'info.dark', minHeight: '.2vh' }} />
                         <MenuItem onClick={() => handleDeleteProductClick(selectedProduct)}>Delete Product</MenuItem>
@@ -316,6 +325,30 @@ const ProductTable = () => {
           </Button>
           <Button onClick={handleUpdateStock} color="primary">
             Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+      >
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete{" "}
+            <br />
+            <strong>{selectedProduct?.title}</strong>?
+            <br />
+            This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDeleteDialog(false)} color="inherit">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" variant="contained">
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

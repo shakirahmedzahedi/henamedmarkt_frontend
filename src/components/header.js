@@ -44,10 +44,19 @@ export default function Header({ onSignOut, onLiveChat }) {
     const [unreadCount, setUnreadCount] = useState(0);
 
     const user = useSelector((state) => state.auth.user);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const [guestCart, setGuestCart] = useState(() => {
+        const saved = localStorage.getItem('guest_cart');
+        return saved ? JSON.parse(saved) : [];
+    });
     //const userCarts = useSelector((state) => state.auth.user?.carts);
     const activeCart = useSelector((state) => state.cart.cart);
-    const articleItems = activeCart?.articles?.length || 0;
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const articleItems = activeCart?.articles?.length || guestCart?.length || 0;
+    /* const articleItems = isAuthenticated
+    ? activeCart?.articles?.reduce((sum, item) => sum + (item.unit || 1), 0) || 0
+    : guestCart?.reduce((sum, item) => sum + (item.unit || 1), 0); */
+
+    
     const favoriteItems = user?.favorites?.length || 0;
     const searchRef = useRef(null);
 
@@ -130,8 +139,11 @@ export default function Header({ onSignOut, onLiveChat }) {
         }
         if (!isAuthenticated) {
             dispatch(clearCart()); // Action to reset active cart in Redux
+            const saved = localStorage.getItem('guest_cart');
+            const parsed = saved ? JSON.parse(saved) : [];
+            setGuestCart(parsed);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, guestCart]);
 
     useEffect(() => {
         dispatch(clearError());
@@ -147,14 +159,14 @@ export default function Header({ onSignOut, onLiveChat }) {
                 setSuggestions([]); // Close dropdown
             }
         };
-    
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
 
-    
+
 
     const bigContent = (
         <>
@@ -511,17 +523,17 @@ export default function Header({ onSignOut, onLiveChat }) {
                                 onClick={() => handleSuggestionClick(suggestion)} // Select suggestion
                             >
                                 <ListItemButton
-                                sx={{
-                                    padding: '0px', // Reduce padding inside ListItemButton to further reduce space
-                                }}
+                                    sx={{
+                                        padding: '0px', // Reduce padding inside ListItemButton to further reduce space
+                                    }}
                                 >
-                                <ListItemText 
-                                            primary={suggestion} 
-                                            sx={{
-                                                fontSize: '0.25rem', // Set the font size smaller (you can adjust this value)
-                                                color: 'primary', // Optional: Ensure the text color is correct
-                                            }}
-                                            />
+                                    <ListItemText
+                                        primary={suggestion}
+                                        sx={{
+                                            fontSize: '0.25rem', // Set the font size smaller (you can adjust this value)
+                                            color: 'primary', // Optional: Ensure the text color is correct
+                                        }}
+                                    />
                                 </ListItemButton>
                             </ListItem>
                         ))}

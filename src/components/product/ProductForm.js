@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   TextField,
@@ -19,14 +19,14 @@ import { BlobServiceClient } from "@azure/storage-blob";
 
 const ProductForm = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state)=> state.product.products);
-  const loading = useSelector((state)=> state.product.loading);
-  const error = useSelector((state)=> state.product.error);
-  const successMessage = useSelector((state)=> state.product.success);
+  const products = useSelector((state) => state.product.products);
+  const loading = useSelector((state) => state.product.loading);
+  const error = useSelector((state) => state.product.error);
+  const successMessage = useSelector((state) => state.product.success);
   const categories = ['BABY_AND_KIDS', 'FAMILY_AND_MOM', 'NEW_ARRIVAL'];
   const tagsOptions = ['NEWBORN', 'TODDLER', 'CHILDREN', 'MOM'];
 
-   const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState({
     title: '',
     description: '',
     additionalInfo: '',
@@ -43,12 +43,13 @@ const ProductForm = () => {
     thumbnail: null, // Changed to null for file upload
   });
 
-  const [uploading, setUploading] = useState(false); 
+  const [discountedPrice, setDiscountedPrice] = useState(0);
+  const [uploading, setUploading] = useState(false);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const blobServiceUrl ="https://henamedmarktstorage.blob.core.windows.net"; // Replace with your Blob service URL
-  const sasToken ="sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-12-22T23:07:16Z&st=2024-12-22T15:07:16Z&spr=https&sig=KV0mMOUX3njIiG%2FbroXF6tzlsKeQ3AoWSvPzCwc9fxs%3D"; // Your SAS token
+  const blobServiceUrl = "https://henamedmarktstorage.blob.core.windows.net"; // Replace with your Blob service URL
+  const sasToken = "sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-12-22T23:07:16Z&st=2024-12-22T15:07:16Z&spr=https&sig=KV0mMOUX3njIiG%2FbroXF6tzlsKeQ3AoWSvPzCwc9fxs%3D"; // Your SAS token
   const containerName = "product-images"; // Your Azure Blob Storage container name
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const ProductForm = () => {
         weight: 0,
         thumbnail: null, // Changed to null for file upload
       }); // Reset the form to initial values after successful submission
-    setThumbnailPreview(null);
+      setThumbnailPreview(null);
 
       // Hide the error message after 5 seconds
       const timer = setTimeout(() => {
@@ -107,54 +108,63 @@ const ProductForm = () => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-        setUploading(true);
+      setUploading(true);
 
-        try {
-           
-            const blobServiceClient = new BlobServiceClient(`${blobServiceUrl}/?${sasToken}`);
-            const containerClient = blobServiceClient.getContainerClient(containerName);
+      try {
 
-            // Generate unique blob name
-            const blobName = `${Date.now()}-${file.name}`;
-            const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        const blobServiceClient = new BlobServiceClient(`${blobServiceUrl}/?${sasToken}`);
+        const containerClient = blobServiceClient.getContainerClient(containerName);
 
-            //await blockBlobClient.uploadBrowserData(file);
-            const uploadBlobResponse = await blockBlobClient.uploadBrowserData(file, {
-                blobHTTPHeaders: { blobContentType: file.type }, // Set content type
-            });
+        // Generate unique blob name
+        const blobName = `${Date.now()}-${file.name}`;
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-            // Get public URL of the uploaded file
+        //await blockBlobClient.uploadBrowserData(file);
+        const uploadBlobResponse = await blockBlobClient.uploadBrowserData(file, {
+          blobHTTPHeaders: { blobContentType: file.type }, // Set content type
+        });
 
-            const imageUrl = `${blobServiceUrl}/${containerName}/${blobName}`;
+        // Get public URL of the uploaded file
+
+        const imageUrl = `${blobServiceUrl}/${containerName}/${blobName}`;
 
 
-            setFormValues({ ...formValues, thumbnail: imageUrl });
-            setThumbnailPreview(URL.createObjectURL(file));
-            //setSuccessMessage("Thumbnail uploaded successfully!!!!");
-        } catch (uploadError) {
-            setShowError("Error uploading image to Azure Blob Storage.");
-            console.error(uploadError);
-        } finally {
-            setUploading(false);
-        }
+        setFormValues({ ...formValues, thumbnail: imageUrl });
+        setThumbnailPreview(URL.createObjectURL(file));
+        //setSuccessMessage("Thumbnail uploaded successfully!!!!");
+      } catch (uploadError) {
+        setShowError("Error uploading image to Azure Blob Storage.");
+        console.error(uploadError);
+      } finally {
+        setUploading(false);
+      }
     }
-};
+  };
 
   // Handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(clearError);
-    
+
     const formData = new FormData();
     for (const key in formValues) {
       const value = formValues[key];
 
-     formData.append(key, value);
-      
+      formData.append(key, value);
+
     }
-    
+
     await dispatch(addProduct(formData));
   };
+
+  useEffect(() => {
+    const { price, discountPercentage } = formValues;
+
+    if (!isNaN(price) && !isNaN(discountPercentage)) {
+      const discounted = price - (price * discountPercentage / 100);
+      setDiscountedPrice(discounted.toFixed(2)); // rounded to 2 decimal places
+    }
+  }, [formValues.price, formValues.discountPercentage]);
 
   return (
     <Container maxWidth="md">
@@ -236,6 +246,16 @@ const ProductForm = () => {
               onChange={handleChange}
               inputProps={{ min: 0, max: 50 }}
             />
+
+            {formValues.discountPercentage > 0 && (
+              <Typography
+                variant="subtitle2"
+                sx={{ mt: 1, color: 'red' }}
+              >
+                Price After Discount: {discountedPrice}
+              </Typography>
+            )}
+
           </Grid>
 
           <Grid item xs={12} sm={6}>
@@ -314,7 +334,7 @@ const ProductForm = () => {
                 {uploading ? <CircularProgress size={24} /> : 'Upload Thumbnail'}
               </Button>
             </label>
-            {thumbnailPreview  && (
+            {thumbnailPreview && (
               <div>
                 <Typography variant="body2" gutterBottom>
                   Thumbnail Preview:
@@ -364,7 +384,7 @@ const ProductForm = () => {
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" fullWidth disabled={loading}>
-            {loading ? <CircularProgress size={24} /> : 'Add Product'}
+              {loading ? <CircularProgress size={24} /> : 'Add Product'}
             </Button>
           </Grid>
         </Grid>

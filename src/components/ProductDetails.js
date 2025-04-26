@@ -32,13 +32,27 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = async () => {
-    if (!isAuthenticate) {
-      navigate('/signin'); // Redirect to sign-in page if not logged in
-      return;
-    }
+  
     setIsProcessing(true); // Start processing (blur and loader)
     try {
-      await dispatch(addToCart({ userId, productId: product?.id, unit: quantity }));
+      //await dispatch(addToCart({ userId, productId: product?.id, unit: quantity }));
+      if (user) {
+        await dispatch(addToCart({ userId, productId: product?.id, unit: quantity }));
+    }
+    else {
+        let cart = JSON.parse(localStorage.getItem('guest_cart')) || [];
+
+        const existingIndex = cart.findIndex(item => item.product.id === product.id);
+
+        if (existingIndex !== -1) {
+            cart[existingIndex].unit += quantity;
+        } else {
+            cart.push({product:{ ...product},  unit: quantity });
+        }
+
+        localStorage.setItem('guest_cart', JSON.stringify(cart));
+
+    }
     } catch (error) {
       console.error(error);
     } finally {

@@ -65,3 +65,19 @@ export const addToCart = createAsyncThunk(
       }
     }
   );
+
+  export const migrateGuestCart = createAsyncThunk(
+    'cart/migrateGuestCart',
+    async ({ userId, guestCart }, { dispatch, rejectWithValue }) => {
+      try {
+        for (const item of guestCart) {
+          const { product, unit } = item;
+          const {id} = product;
+          await dispatch(addToCart({ userId, productId:id, unit }));
+        }
+        return 'Guest cart migrated';
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );

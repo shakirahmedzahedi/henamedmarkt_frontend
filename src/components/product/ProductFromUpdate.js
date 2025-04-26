@@ -33,7 +33,8 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
         weight: product.weight || 0,
         thumbnail: product.thumbnail || '',
         bestSeller: product.bestSeller || false,
-        newArrival: product.newArrival || true
+        newArrival: product.newArrival || false,
+        extra:product.extraInfo||''
     });
 
     const [thumbnailPreview, setThumbnailPreview] = useState(product.thumbnail || null);
@@ -63,7 +64,8 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
             weight: product.weight || 0,
             thumbnail: product.thumbnail || '',
             bestSeller: product.bestSeller || false,
-            newArrival: product.newArrival || true
+            newArrival: product.newArrival || false,
+             extra:product.extraInfo||''
         });
         setThumbnailPreview(product.thumbnail || null);
     }, [product]);
@@ -232,7 +234,7 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} sm={6}>
+                    <Grid item xs={12} sm={6}>
                         <FormControl fullWidth required>
                             <InputLabel>Tags</InputLabel>
                             <Select
@@ -249,7 +251,7 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                         </FormControl>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} sm={6}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             label="Size"
                             name="size"
@@ -331,6 +333,17 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
+                        <TextField
+                            label="extra"
+                            name="extra"
+                            multiline
+                            rows={3}
+                            fullWidth
+                            value={formValues.extra}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
                         <Button
                             variant="contained"
                             color="primary"
@@ -344,6 +357,8 @@ const ProductFormUpdate = ({ product, onUpdate, onCancel }) => {
                         <Button
                             variant="outlined"
                             color="error"
+                            fullWidth
+                            sx={{mt:1}}
                             onClick={onCancel}>
                             Cancel
                         </Button>
