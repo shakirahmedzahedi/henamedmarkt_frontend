@@ -59,7 +59,7 @@ const OrderDetails = ({ order })  => {
     display="flex"
     flexDirection={{ xs: 'column', md: 'row' }}
     justifyContent="space-between"
-    gap={4}
+    gap={2}
     mb={4}
     flexWrap="wrap"
   >

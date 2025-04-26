@@ -167,12 +167,13 @@ const PaymentPage = () => {
 
     try {
       setButtonLoading(true);
-      await dispatch(addNewOrder(orderRequest)).unwrap(); // Unwrap to handle success/failure
+      const result = await dispatch(addNewOrder(orderRequest)).unwrap(); // Unwrap to handle success/failure
       if (discountCoupon) {
         dispatch(clearCoupon());
       }
       setButtonLoading(false);
-      navigate('/orderSuccess'); // Navigate to the success page
+      console.log(result);
+      navigate('/orderSuccess',{ state: { order: result} }); // Navigate to the success page
     } catch (error) {
       console.error('Order creation failed:', error);
     }
