@@ -46,7 +46,24 @@ const ProductCard = ({ product }) => {
         setButtonLoading(true);
 
         try {
-            await dispatch(addToCart({ userId, productId: product?.id, unit: 1 }));
+            if (user) {
+                await dispatch(addToCart({ userId, productId: product?.id, unit: 1 }));
+            }
+            else {
+                let cart = JSON.parse(localStorage.getItem('guest_cart')) || [];
+
+                const existingIndex = cart.findIndex(item => item.product.id === product.id);
+
+                if (existingIndex !== -1) {
+                    cart[existingIndex].unit += 1;
+                } else {
+                    cart.push({product:{ ...product},  unit: 1 });
+                }
+
+                localStorage.setItem('guest_cart', JSON.stringify(cart));
+
+            }
+
         } catch (error) {
             setShowError(true);
         } finally {
