@@ -14,7 +14,7 @@ export const signIn = createAsyncThunk(
             }
             
             localStorage.setItem('token', response.token);
-            localStorage.setItem('email', credentials.email); 
+            localStorage.setItem('email', response.data.email); 
             localStorage.setItem('isAuthenticate', true); 
             localStorage.setItem('userRole', JSON.stringify(response.data.roles)); 
             console.error(response.data);
@@ -155,7 +155,7 @@ export const renewToken = createAsyncThunk(
                 return rejectWithValue(response.errors[0].message);
             }
             localStorage.setItem('token', response.token);
-            localStorage.setItem('email', email); 
+            localStorage.setItem('email', response.data.email); 
             localStorage.setItem('isAuthenticate', true); 
            
             return response.data;
