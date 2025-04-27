@@ -39,9 +39,9 @@ const SignIn = (props) => {
     const validate = () => {
         const newErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(inputs.email)) {
+        /* if (!emailRegex.test(inputs.email)) {
             newErrors.email = 'Invalid email format';
-        }
+        } */
         if (inputs.password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters long';
         }
