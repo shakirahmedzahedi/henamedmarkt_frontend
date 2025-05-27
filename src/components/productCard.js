@@ -175,8 +175,24 @@ const ProductCard = ({ product }) => {
                     borderRadius: 2,
                 }}
             >
-                <CardActionArea sx={{ flexGrow: 1 }}>
-                    <Link to={`/productDetails/${product?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                {/* <CardActionArea sx={{ flexGrow: 1 }}> */}
+                    <Link 
+                    to={`/productDetails/${product?.id}`} 
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                    onClick={() => {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                          event: 'view_content', // custom GTM event
+                          ecommerce: {
+                            content_type: 'product',
+                            content_ids: [product?.id],
+                            content_name: product?.title,
+                            value: Number(calculateDiscountedPrice()),
+                            currency: 'BDT'
+                          }
+                        });
+                    }}
+                    >
                         <CardMedia
                             component="img"
                             image={product?.thumbnail}
@@ -184,7 +200,7 @@ const ProductCard = ({ product }) => {
                             loading="lazy"
                             sx={{
                                 width: '100%',
-                                height: { xs: 150, sm: 180, md: 180, lg: 200 },
+                                height: { xs: 220, sm: 220, md: 220, lg: 260 },
                                 objectFit: 'cover'
                             }}
                         />
@@ -196,7 +212,7 @@ const ProductCard = ({ product }) => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
-                                minHeight: 140,
+                                minHeight: 100,
                             }}
                         >
                             <Typography
@@ -254,7 +270,7 @@ const ProductCard = ({ product }) => {
                             )}
                         </CardContent>
                     </Link>
-                </CardActionArea>
+                {/* </CardActionArea> */}
 
                 {/* <Box display="flex" gap={1} p={1}>
                     <Button
@@ -269,7 +285,7 @@ const ProductCard = ({ product }) => {
                         {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                 </Box> */}
-                <Box display="flex" gap={1} p={1}>
+                <Box display="flex" gap={.5} p={0.3}>
                     <Button
                         disabled={product?.stock <= 0}
                         variant="contained"
@@ -283,7 +299,8 @@ const ProductCard = ({ product }) => {
                             alignItems: 'center',
                         }}
                     >
-                        <AddShoppingCartOutlinedIcon />
+                        {/* <AddShoppingCartOutlinedIcon /> */}
+                        Add To Cart
                     </Button>
 
                     <Button

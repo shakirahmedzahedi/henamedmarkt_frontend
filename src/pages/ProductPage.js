@@ -65,16 +65,16 @@ const ProductPage = ({ filter }) => {
 
 
     return (
-        <Box sx={{ padding: .5, minHeight: '78vh', ml: { xs: .5, sm: 3, md: 11, lg: 15, xl: 23 }, mr: { xs: .5, sm: 3, md: 11, lg: 15, xl: 23 }, pb:9 }}>
+        <Box sx={{ padding: .5, minHeight: '78vh', ml: { xs: .5, sm: 3, md: 11, lg: 15, xl: 23 }, mr: { xs: .5, sm: 3, md: 11, lg: 15, xl: 23 }, pb:10, mt:6 }}>
             <Box sx={{ textAlign: 'center' }}>
                 <Typography variant='h1' align='left' color={'primary'} sx={{  fontSize: { xs: '20px', md: '24px', lg: '36px' } }}>
                   {getTitle(filter)}
                 </Typography>
             </Box>
-            <Divider sx={{ bgcolor: 'info.dark', minHeight: '.2vh' }} />
-            <Grid container alignItems="center" justifyContent="left" spacing={1} mt={2}>
+            <Divider  mb={.5} sx={{ bgcolor: 'info.dark', minHeight: '.2vh', }} />
+            <Grid container alignItems="center" justifyContent="left" spacing={.5} mt={.5}>
                 {filteredProducts?.map((product, index) => (
-                    <Grid key={product.id} item xs={6} sm={3} md={3} lg={2.4} xl={2} sx={{ mt: 2/* , display: 'flex', justifyContent: 'center'  */}}>
+                    <Grid key={product.id} item xs={6} sm={3} md={3} lg={2.4} xl={2} sx={{ mt: 0/* , display: 'flex', justifyContent: 'center'  */}}>
 
                         <ProductCard product={product} />
 
