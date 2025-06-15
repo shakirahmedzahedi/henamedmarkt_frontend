@@ -503,6 +503,16 @@ const Checkout = () => {
                     total,
                   }}
                   style={{ textDecoration: 'none' }}
+                  onClick={() => {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                      event: 'begin_checkout',
+                      ecommerce: {
+                        currency: 'BDT',
+                        value: total,
+                      }
+                    });
+                  }}
                 >
                   <Button
                     variant="contained"
