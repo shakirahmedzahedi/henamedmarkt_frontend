@@ -168,6 +168,23 @@ const PaymentPage = () => {
     try {
       setButtonLoading(true);
       const result = await dispatch(addNewOrder(orderRequest)).unwrap(); // Unwrap to handle success/failure
+      window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'purchase',
+      ecommerce: {
+        transaction_id: result?.id, // Make sure this exists in response
+        value: result?.total,       // Total order value
+        currency: 'BDT',
+        shipping: result?.shippingCharge,
+        coupon: result?.discountCouponNumber || '',
+        items: result?.articles?.map(item => ({
+          item_id: item.product?.id,
+          item_name: item.product?.title,
+          price: item.product?.price,
+          quantity: item.unit
+        })) || []
+      }
+    });
       if (discountCoupon) {
         dispatch(clearCoupon());
       }
