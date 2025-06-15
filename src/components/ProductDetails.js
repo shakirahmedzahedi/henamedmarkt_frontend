@@ -34,6 +34,17 @@ const ProductDetails = () => {
   const handleAddToCart = async () => {
 
     setIsProcessing(true); // Start processing (blur and loader)
+    window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'add_to_cart', // Custom event name
+            ecommerce: {
+                content_type: 'product',
+                content_ids: [product?.id],
+                content_name: product?.title,
+                value: Number(calculateDiscountedPrice()),
+                currency: 'BDT'
+            }
+        });
     try {
       //await dispatch(addToCart({ userId, productId: product?.id, unit: quantity }));
       if (user) {

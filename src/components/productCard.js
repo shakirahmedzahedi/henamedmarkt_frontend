@@ -53,6 +53,17 @@ const ProductCard = ({ product }) => {
 
     const handleAddToCart = async () => {
         setButtonLoading(true);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'add_to_cart', // Custom event name
+            ecommerce: {
+                content_type: 'product',
+                content_ids: [product?.id],
+                content_name: product?.title,
+                value: Number(calculateDiscountedPrice()),
+                currency: 'BDT'
+            }
+        });
 
         try {
             if (user) {
@@ -300,7 +311,7 @@ const ProductCard = ({ product }) => {
                         }}
                     >
                         {/* <AddShoppingCartOutlinedIcon /> */}
-                        Add To Cart
+                        ADD TO CART
                     </Button>
 
                     <Button
