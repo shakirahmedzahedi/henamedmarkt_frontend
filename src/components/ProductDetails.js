@@ -41,7 +41,7 @@ const ProductDetails = () => {
                 content_type: 'product',
                 content_ids: [product?.id],
                 content_name: product?.title,
-                value: Number(calculateDiscountedPrice()),
+                value: Number(0),
                 currency: 'BDT'
             }
         });
